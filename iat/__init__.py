@@ -237,13 +237,13 @@ class Player(BasePlayer):
     sports = models.StringField(
         widget=widgets.RadioSelect,
         choices=[
-            ('Football', 'Football'),
+            ('Futból', 'Futból'),
             ('Basketball', 'Basketball'),
-            ('Tennis', 'Tennis'),
-            ('Swimming', 'Swimming'),
-            ('Other', 'Other'),
+            ('Tenis', 'Tenis'),
+            ('Natación', 'Natación'),
+            ('Otro', 'Otro'),
         ],
-        label="¿Cuál es tu deporte favorito?"
+        label="¿Qué deporte prefieres?"
     )
     random_number = models.IntegerField(label="Número aleatorio entre 1 y 20", min=1, max=20)
     dscore1 = models.FloatField()  # D-score del primer IAT
@@ -1205,6 +1205,7 @@ class DictatorOffer(Page):
             #       f"(valor mínimo para elegir la etiqueta explícita). Valor aleatorio generado: {rand_val:.2f}. "
             #       f"Resultado: {display_label}")
 
+        player.participant.vars[f'visible_category_round_{player.round_number}'] = display_label
         return dict(
             category=display_label,
             endowment=Constants.endowment,
@@ -1234,17 +1235,14 @@ class ResultsDictador(Page):
         dictator_round_numbers = [15, 16, 17, 18]
         for rnd in dictator_round_numbers:
             p = player.in_round(rnd)
-            assigned = p.group.assigned
-            if assigned is None:
-                assigned = 0  # O cualquier valor predeterminado que tenga sentido en tu contexto
-
+            visible_cat = player.participant.vars.get(f'visible_category_round_{rnd}', None)
             dictator_offers.append({
                 'round': rnd,
-                'category': p.group.field_maybe_none('dictator_category').capitalize() if p.group.field_maybe_none(
-                    'dictator_category') else "Sin categoría asignada",
+                'category': visible_cat.capitalize() if visible_cat else "Sin categoría asignada",
                 'kept': p.group.kept,
-                'assigned': assigned,
+                'assigned': p.group.assigned or 0,
             })
+
         return dict(
             dictator_offers=dictator_offers
         )
