@@ -16,20 +16,7 @@ DICT = {
     'felidae': ['cat', 'tiger', 'lynx', 'wildcat', 'cougar'],
     'white': ['word1', 'word2', 'word3', 'word4', 'word5'],
     'black': ['word1', 'word2', 'word3', 'word4', 'word5'],
-    'images:canidae': [
-        "320px-Black_Labrador_Retriever_-_Male_IMG_3323.jpg",
-        "247px-Kolmården_Wolf.jpg",
-        "207px-2009-Coyote-Yosemite.jpg",
-        "Vulpes_vulpes_ssp_fulvus.jpg",
-        "320px-Black-backed_jackal_(Canis_mesomelas_mesomelas)_2.jpg",
-    ],
-    "images:felidae": [
-        "320px-Cat_August_2010-4.jpg",
-        "320px-Walking_tiger_female.jpg",
-        "159px-Lynx_lynx2.jpg",
-        "Felis_silvestris_silvestris_Luc_Viatour.jpg",
-        "320px-Mountain_Lion_in_Glacier_National_Park.jpg",
-    ],
+
     'images:white': [
             "euroam1.png",
             "euroam2.png",
@@ -45,6 +32,20 @@ DICT = {
             "africanam4.png",
             "africanam5.png",
             "africanam6.png",
+    ],
+    'images:canidae': [
+        "320px-Black_Labrador_Retriever_-_Male_IMG_3323.jpg",
+        "247px-Kolmården_Wolf.jpg",
+        "207px-2009-Coyote-Yosemite.jpg",
+        "Vulpes_vulpes_ssp_fulvus.jpg",
+        "320px-Black-backed_jackal_(Canis_mesomelas_mesomelas)_2.jpg",
+    ],
+    "images:felidae": [
+        "320px-Cat_August_2010-4.jpg",
+        "320px-Walking_tiger_female.jpg",
+        "159px-Lynx_lynx2.jpg",
+        "Felis_silvestris_silvestris_Luc_Viatour.jpg",
+        "320px-Mountain_Lion_in_Glacier_National_Park.jpg",
     ],
     'positive': ['amusement', 'fun', 'friendship', 'happyness', 'joy'],
     'negative': ['anger', 'hate', 'fear', 'panic', 'sickness'],

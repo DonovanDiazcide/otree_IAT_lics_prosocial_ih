@@ -142,6 +142,22 @@ def creating_session(self):
     for param in defaults:
         session.params[param] = session.config.get(param, defaults[param])
 
+
+    # Asignar orden de rondas del IAT solo en la primera ronda
+    if self.round_number == 1:
+        for player in self.get_players():
+            blocks.iat_ordering = random.choice([
+                list(range(1, 15)),  # Orden directo: 1-14
+                list(range(8, 15)) + list(range(1, 8))  # Orden invertido: 8-14,1-7
+            ])
+            player.participant.vars['iat_round_order'] = blocks.iat_ordering
+            print(blocks.iat_ordering)
+
+        # Aleatorizar las categorías del Dictador para las rondas 15-18
+        shuffled_categories = Constants.categories.copy()
+        random.shuffle(shuffled_categories)
+        session.vars['shuffled_dictator_categories'] = shuffled_categories
+
     block = get_block_for_round(self.round_number, session.params)
 
     self.practice = block.get('practice', False)
@@ -149,21 +165,6 @@ def creating_session(self):
     self.primary_right = block.get('right', {}).get('primary', "")
     self.secondary_left = block.get('left', {}).get('secondary', "")
     self.secondary_right = block.get('right', {}).get('secondary', "")
-
-    # Asignar orden de rondas del IAT solo en la primera ronda
-    if self.round_number == 1:
-        for player in self.get_players():
-            iat_ordering = random.choice([
-                list(range(1, 15)),  # Orden directo: 1-14
-                list(range(8, 15)) + list(range(1, 8))  # Orden invertido: 8-14,1-7
-            ])
-            player.participant.vars['iat_round_order'] = iat_ordering
-            #print(iat_ordering)
-
-        # Aleatorizar las categorías del Dictador para las rondas 15-18
-        shuffled_categories = Constants.categories.copy()
-        random.shuffle(shuffled_categories)
-        session.vars['shuffled_dictator_categories'] = shuffled_categories
 
         #print("shuffled categories:", shuffled_categories)
 
@@ -186,7 +187,6 @@ def get_block_for_round(rnd, params):
     else:
         # Retorna un bloque vacío o predeterminado para rondas que no lo necesitan
         return {}
-
 
 def thumbnails_for_block(block, params):
     """Return image urls for each category in block.
@@ -430,23 +430,26 @@ class Trial(ExtraModel):
 
 def generate_trial(player: Player) -> Trial:
     """Create new question for a player"""
-    block = get_block_for_round(player.round_number, player.session.params)
+    actual_round = get_actual_iat_round(player)
+    block = get_block_for_round(actual_round, player.session.params)
     chosen_side = random.choice(['left', 'right'])
     chosen_cls = random.choice(list(block[chosen_side].keys()))
     chosen_cat = block[chosen_side][chosen_cls]
     stimulus = random.choice(stimuli.DICT[chosen_cat])
+
+# 27 de febrero del 2025. esto era lo que faltaba para que las imágnes se mostraran correctamente.
 
     player.iteration += 1
     return Trial.create(
         player=player,
         iteration=player.iteration,
         timestamp=time.time(),
-        #
         stimulus_cls=chosen_cls,
         stimulus_cat=chosen_cat,
         stimulus=stimulus,
         correct=chosen_side,
     )
+
 
 
 def get_current_trial(player: Player):
