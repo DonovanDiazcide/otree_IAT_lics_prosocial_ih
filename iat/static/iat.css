@@ -76,24 +76,24 @@ img.stimulus {
 
 /* Adaptación para el IAT en celular */
 
-/* Media Queries para dispositivos móviles */
+/* Media Query para dispositivos móviles */
 @media (max-width: 600px) {
+    /* Opcional: podrías incluso cambiar la disposición a columna:
     .corners-container {
         flex-direction: column;
-        align-items: center;
     }
-    div.category {
-        font-size: large;
+    */
+    img.category,
+    img.stimulus {
+        width: 80px;  /* Ajusta a tu gusto */
+        max-width: 100%;
+        height: auto;
     }
-    img.category {
-        width: 80px;
-    }
+
     p.stimulus {
         font-size: large;
     }
-    img.stimulus {
-        width: 200px;
-    }
+
     .feedback {
         width: 90%;
     }

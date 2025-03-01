@@ -3,12 +3,14 @@
 {{ endblock }}
 
 {% block styles  %}
+    <!-- Meta viewport para que se vea bien en móviles -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{% static 'iat.css' %}" rel="stylesheet"/>
 {% endblock %}
 
 {{ block content }}
     <div class="corners-container">
+        <!-- Esquina Izquierda -->
         <div class="left corner">
             {{ if params.primary_images }}
                 {{ if 'primary' in thumbnails.left }}
@@ -30,6 +32,14 @@
                 {{ endif }}
             {{ endif }}
         </div>
+
+        <!-- Estímulo en el centro -->
+        <div class="stimulus-container m-1">
+            <p class="stimulus" id="stimulus"></p>
+            <img class="stimulus" id="stimulus-img">
+        </div>
+
+        <!-- Esquina Derecha -->
         <div class="right corner">
             {{ if params.primary_images }}
                 {{ if 'primary' in thumbnails.right }}
@@ -51,11 +61,6 @@
                 {{ endif }}
             {{ endif }}
         </div>
-    </div>
-
-    <div class="stimulus-container m-1">
-        <p class="stimulus" id="stimulus"></p>
-        <img class="stimulus" id="stimulus-img">
     </div>
 
     <div class="feedback input-group">
