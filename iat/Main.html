@@ -2,8 +2,8 @@
     {{ block.title }}
 {{ endblock }}
 
-{% block styles  %}
-    <!-- Meta viewport para que se vea bien en móviles -->
+{% block styles %}
+    <!-- Meta viewport para vista en móviles -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{% static 'iat.css' %}" rel="stylesheet"/>
 {% endblock %}
@@ -33,10 +33,31 @@
             {{ endif }}
         </div>
 
-        <!-- Estímulo en el centro -->
-        <div class="stimulus-container m-1">
-            <p class="stimulus" id="stimulus"></p>
-            <img class="stimulus" id="stimulus-img">
+        <!-- CENTRO: Primero se ven las INSTRUCCIONES. Al tocarlas, se inicia el juego y aparece el estímulo. -->
+        <div class="stimulus-container m-1" id="center-area">
+            <!-- Instrucciones visibles al inicio -->
+            <div id="instructions" class="instructions" onclick="startGame()">
+                <hr/>
+                <p>Press <span class="key">{{ lkeys }}</span> or touch top-left corner for
+                    {{ if 'primary' in labels.left }} <span class="primary">{{ labels.left.primary }}</span> {{ endif }}
+                    {{ if 'primary' in labels.left and 'secondary' in labels.left }} or {{ endif }}
+                    {{ if 'secondary' in labels.left }} <span class="secondary">{{ labels.left.secondary }}</span> {{ endif }}
+                </p>
+                <p>Press <span class="key">{{ rkeys }}</span> or touch top-right corner for
+                    {{ if 'primary' in labels.right }} <span class="primary">{{ labels.right.primary }}</span> {{ endif }}
+                    {{ if 'primary' in labels.right and 'secondary' in labels.right }} or {{ endif }}
+                    {{ if 'secondary' in labels.right }} <span class="secondary">{{ labels.right.secondary }}</span> {{ endif }}
+                </p>
+                <div id="start-help">
+                    <p><b>To begin</b>, press SPACE or touch this text.</p>
+                </div>
+            </div>
+
+            <!-- Estímulo oculto inicialmente -->
+            <div id="stimulus-block" class="hidden">
+                <p class="stimulus" id="stimulus"></p>
+                <img class="stimulus" id="stimulus-img">
+            </div>
         </div>
 
         <!-- Esquina Derecha -->
@@ -63,29 +84,13 @@
         </div>
     </div>
 
+    <!-- Feedback e Input -->
     <div class="feedback input-group">
         <input type="text" id="answer-inp" class="form-control" readonly>
         <div class="invalid-feedback" id="warning-txt"></div>
     </div>
 
-    <div class="instructions">
-        <hr/>
-        <p>Press <span class="key">{{ lkeys }}</span> or touch top-left corner for
-            {{ if 'primary' in labels.left  }} <span class="primary">{{ labels.left.primary }}</span> {{ endif }}
-            {{ if 'primary' in labels.left and 'secondary' in labels.left }} or {{ endif }}
-            {{ if 'secondary' in labels.left }} <span class="secondary">{{ labels.left.secondary }}</span> {{ endif }}
-        </p>
-        <p>Press <span class="key">{{ rkeys }}</span> or touch top-right corner  for
-            {{ if 'primary' in labels.right }} <span class="primary">{{ labels.right.primary }}</span> {{ endif }}
-            {{ if 'primary' in labels.right and 'secondary' in labels.right }} or {{ endif }}
-            {{ if 'secondary' in labels.right }} <span class="secondary">{{ labels.right.secondary }}</span> {{ endif }}
-        </p>
-
-        <div id="start-help">
-            <p><b>To begin</b>, press SPACE or touch middle of the screen.</p>
-        </div>
-    </div>
-
+    <!-- Barra de progreso -->
     <progress id="progress-bar" max="{{ num_iterations }}" value="0"></progress>
 
     {{ if DEBUG }}
@@ -95,7 +100,18 @@
 
 {{ endblock }}
 
-{{ block scripts }}
+{% block scripts %}
 <script src="{{ static 'iat.js' }}"></script>
 {{ if DEBUG }}<script src="{{ static 'iat_cheating.js' }}"></script>{{ endif }}
-{{ endblock }}
+
+<!-- Pequeña función para iniciar el juego al tocar las instrucciones -->
+<script>
+function startGame() {
+    // Ocultar instrucciones
+    document.getElementById('instructions').classList.add('hidden');
+    // Mostrar estímulo
+    document.getElementById('stimulus-block').classList.remove('hidden');
+    // Aquí puedes añadir la lógica que inicia el IAT, si aplica
+}
+</script>
+{% endblock %}
