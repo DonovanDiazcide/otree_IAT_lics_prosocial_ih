@@ -74,3 +74,27 @@ img.stimulus {
     text-align: center;
 }
 
+/* Adaptación para el IAT en celular */
+
+/* Media Queries para dispositivos móviles */
+@media (max-width: 600px) {
+    .corners-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    div.category {
+        font-size: large;
+    }
+    img.category {
+        width: 80px;
+    }
+    p.stimulus {
+        font-size: large;
+    }
+    img.stimulus {
+        width: 200px;
+    }
+    .feedback {
+        width: 90%;
+    }
+}

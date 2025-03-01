@@ -3,6 +3,7 @@
 {{ endblock }}
 
 {% block styles  %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{% static 'iat.css' %}" rel="stylesheet"/>
 {% endblock %}
 
@@ -61,7 +62,6 @@
         <input type="text" id="answer-inp" class="form-control" readonly>
         <div class="invalid-feedback" id="warning-txt"></div>
     </div>
-
 
     <div class="instructions">
         <hr/>
