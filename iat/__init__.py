@@ -4,7 +4,7 @@ import random
 from otree.api import *
 from otree import settings
 from . import stimuli
-from . import stats
+from . import stats.
 from . import blocks
 import math
 from statistics import mean, stdev
