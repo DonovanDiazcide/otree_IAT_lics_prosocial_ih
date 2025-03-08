@@ -20,7 +20,7 @@ Configurable parameters (in session config):
 
 0. download/unzip content of this repo into some working directory, or clone it using git 
    ```bash
-   git clone https://github.com/DonovanDiazcide/IAT_LICS
+   git clone https://github.com/DonovanDiazcide/otree_IAT_lics_prosocial_ih
    cd IAT_LICS
    ```
 1. create and activate virtualenv in working directory
