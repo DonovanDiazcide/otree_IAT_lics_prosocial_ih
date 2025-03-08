@@ -10,11 +10,11 @@ import math
 from statistics import mean, stdev
 from decimal import Decimal
 
+
 doc = """
 Implicit Association Test, draft
 """
 from statistics import mean, stdev
-
 
 def dscore1(data3: list, data4: list, data6: list, data7: list):
     # Filtrar valores demasiado largos.
