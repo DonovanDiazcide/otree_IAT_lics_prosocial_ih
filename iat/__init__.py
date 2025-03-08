@@ -10,7 +10,9 @@ import math
 from statistics import mean, stdev
 from decimal import Decimal
 
-#ayudita
+#ayudita.
+# ok, ya me di cuenta de como funciona esto.
+
 
 doc = """
 Implicit Association Test, draft
