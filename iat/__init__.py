@@ -11,7 +11,7 @@ from statistics import mean, stdev
 from decimal import Decimal
 
 #ayudita.
-# ok, ya me di cuenta de como funciona esto.x<zxz<a
+# ok, ya me di cuenta de como funciona esto.x<zxz<a...
 
 
 doc = """
