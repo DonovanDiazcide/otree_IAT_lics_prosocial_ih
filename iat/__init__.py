@@ -10,7 +10,7 @@ import math
 from statistics import mean, stdev
 from decimal import Decimal
 
-#ayudita.
+#ayudita. hola ola
 # ok, ya me di cuenta de como funciona esto.x<zxz<a...
 
 
