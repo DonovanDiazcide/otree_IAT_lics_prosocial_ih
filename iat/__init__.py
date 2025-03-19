@@ -670,7 +670,6 @@ def play_game(player: Player, message: dict):
 
 
 # PAGES
-
 class Intro(Page):
     # comentario en caso de ser necesario: cambié está página para que se
     # pudiera mostrar los labels correctos de inicios del IAT, pero causó un
