@@ -809,7 +809,7 @@ class PreguntaM(Page):
         if not values.get('moral_question'):
             return "Por favor, responde la pregunta antes de continuar."
 
-
+#pie
 # acá el detalle es que las validaciones de los campos están mal, aunque fáciles de cambiar, no lo haré ahora. 4 de febrero del 2025.
 class IATAssessmentPage(Page):
     form_model = 'player'
