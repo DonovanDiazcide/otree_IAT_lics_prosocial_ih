@@ -10,7 +10,7 @@ import math
 from statistics import mean, stdev
 from decimal import Decimal
 
-#ayudita. hola ola. picsa. quiero ver diferencias.
+#ayudita. hola ola. picsa. quiero ver diferencias. rama nueva.
 # ok, ya me di cuenta de como funciona esto.x<zxz<a...
 
 doc = """
