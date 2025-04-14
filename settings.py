@@ -52,6 +52,15 @@ SECRET_KEY = "2015765205890"
 # generating session configs for all varieties of features
 import sys
 
+ROOMS = [
+    dict(
+        name='IAT_experiment',
+        display_name='IAT_experiment',
+        participant_label_file='_rooms/econ101.txt',
+    ),
+    dict(name='live_demo', display_name='Room for live demo (no participant labels)'),
+]
+
 
 if sys.argv[1] == 'test':
     MAX_ITERATIONS = 5
