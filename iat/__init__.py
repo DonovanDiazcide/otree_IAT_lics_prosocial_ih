@@ -440,7 +440,6 @@ def generate_trial(player: Player) -> Trial:
     stimulus = random.choice(stimuli.DICT[chosen_cat])
 
 # 27 de febrero del 2025. esto era lo que faltaba para que las imágnes se mostraran correctamente.
-
     player.iteration += 1
     return Trial.create(
         player=player,
@@ -451,8 +450,6 @@ def generate_trial(player: Player) -> Trial:
         stimulus=stimulus,
         correct=chosen_side,
     )
-
-
 
 def get_current_trial(player: Player):
     """Get last (current) question for a player"""
@@ -541,131 +538,91 @@ def custom_export(players):
 
 
 def play_game(player: Player, message: dict):
-    """Main game workflow
-    Implemented as reactive scheme: receive message from vrowser, react, respond.
+    try:
+        session = player.session
+        my_id = player.id_in_group
+        ret_params = session.params
+        max_iters = get_num_iterations_for_round(player)
+        now = time.time()
+        current = get_current_trial(player)
+        message_type = message.get('type')
 
-    Generic game workflow, from server point of view:
-    - receive: {'type': 'load'} -- empty message means page loaded
-    - check if it's game start or page refresh midgame
-    - respond: {'type': 'status', 'progress': ...}
-    - respond: {'type': 'status', 'progress': ..., 'trial': data} -- in case of midgame page reload
-
-    - receive: {'type': 'next'} -- request for a next/first trial
-    - generate new trial
-    - respond: {'type': 'trial', 'trial': data}
-
-    - receive: {'type': 'answer', 'answer': ...} -- user answered the trial
-    - check if the answer is correct
-    - respond: {'type': 'feedback', 'is_correct': true|false} -- feedback to the answer
-
-    When done solving, client should explicitely request next trial by sending 'next' message
-
-    Field 'progress' is added to all server responses to indicate it on page.
-
-    To indicate max_iteration exhausted in response to 'next' server returns 'status' message with iterations_left=0
-    """
-    session = player.session
-    my_id = player.id_in_group
-    ret_params = session.params
-    max_iters = get_num_iterations_for_round(player)
-
-    now = time.time()
-    # the current trial or none
-    current = get_current_trial(player)
-
-    message_type = message['type']
-
-    # print("iteration:", player.iteration)
-    # print("current:", current)
-    # print("received:", message)
-
-    # page loaded
-    if message_type == 'load':
-        p = get_progress(player)
-        if current:
-            return {my_id: dict(type='status', progress=p, trial=encode_trial(current))}
-        else:
-            return {my_id: dict(type='status', progress=p)}
-
-    # client requested new trial
-    if message_type == "next":
-        if current is not None:
-            if current.response is None:
-                raise RuntimeError("trying to skip over unsolved trial")
-            if now < current.timestamp + ret_params["trial_delay"]:
-                raise RuntimeError("retrying too fast")
-            if current.iteration == max_iters:
-                return {
-                    my_id: dict(
-                        type='status', progress=get_progress(player), iterations_left=0
-                    )
-                }
-        # generate new trial
-        z = generate_trial(player)
-        p = get_progress(player)
-        return {my_id: dict(type='trial', trial=encode_trial(z), progress=p)}
-
-    # client gives an answer to current trial
-    if message_type == "answer":
-        if current is None:
-            raise RuntimeError("trying to answer no trial")
-
-        if current.response is not None:  # it's a retry
-            if now < current.response_timestamp + ret_params["retry_delay"]:
-                raise RuntimeError("retrying too fast")
-
-            # undo last updation of player progress
-            player.num_trials -= 1
-            if current.is_correct:
-                player.num_correct -= 1
+        # Caso "load": la página se ha cargado
+        if message_type == 'load':
+            p = get_progress(player)
+            if current:
+                return {my_id: dict(type='status', progress=p, trial=encode_trial(current))}
             else:
-                player.num_failed -= 1
+                return {my_id: dict(type='status', progress=p)}
 
-        # check answer
-        answer = message["answer"]
+        # Caso "next": solicitud de un nuevo trial
+        elif message_type == 'next':
+            if current is not None:
+                if current.response is None:
+                    return {my_id: dict(type='error', message="Debes resolver el trial actual antes de continuar.")}
+                if now < current.timestamp + ret_params["trial_delay"]:
+                    return {my_id: dict(type='error', message="Estás intentando avanzar demasiado rápido.")}
+                if current.iteration == max_iters:
+                    return {my_id: dict(type='status', progress=get_progress(player), iterations_left=0)}
+            # Generar y retornar un nuevo trial
+            new_trial = generate_trial(player)
+            p = get_progress(player)
+            return {my_id: dict(type='trial', trial=encode_trial(new_trial), progress=p)}
 
-        if answer == "" or answer is None:
-            raise ValueError("bogus answer")
+        # Caso "answer": el jugador envía una respuesta
+        elif message_type == "answer":
+            if current is None:
+                return {my_id: dict(type='error', message="No hay trial activo para responder.")}
+            # Si ya se respondió previamente, se trata de un reintento
+            if current.response is not None:
+                if now < current.response_timestamp + ret_params["retry_delay"]:
+                    return {my_id: dict(type='error', message="Estás respondiendo demasiado rápido.")}
+                # Revertir la actualización previa del progreso
+                player.num_trials -= 1
+                if current.is_correct:
+                    player.num_correct -= 1
+                else:
+                    player.num_failed -= 1
 
-        current.response = answer
-        current.reaction_time = message["reaction_time"]
-        current.is_correct = current.correct == answer
-        current.response_timestamp = now
+            answer = message.get("answer")
+            if not answer:
+                return {my_id: dict(type='error', message="Respuesta inválida.")}
+            current.response = answer
+            current.reaction_time = message.get("reaction_time", 0)
+            current.is_correct = (current.correct == answer)
+            current.response_timestamp = now
 
-        # update player progress
-        if current.is_correct:
-            player.num_correct += 1
+            if current.is_correct:
+                player.num_correct += 1
+            else:
+                player.num_failed += 1
+            player.num_trials += 1
+
+            p = get_progress(player)
+            return {my_id: dict(type='feedback', is_correct=current.is_correct, progress=p)}
+
+        # Caso "cheat": modo de depuración en DEBUG para generar datos automáticamente
+        elif message_type == "cheat" and settings.DEBUG:
+            m = float(message.get('reaction', 0))
+            if current:
+                current.delete()
+            for i in range(player.iteration, max_iters):
+                t = generate_trial(player)
+                t.iteration = i
+                t.timestamp = now + i
+                t.response = t.correct
+                t.is_correct = True
+                t.response_timestamp = now + i
+                t.reaction_time = random.gauss(m, 0.3)
+            return {my_id: dict(type='status', progress=get_progress(player), iterations_left=0)}
+
+        # Mensaje no reconocido
         else:
-            player.num_failed += 1
-        player.num_trials += 1
+            return {my_id: dict(type='error', message="Mensaje no reconocido del cliente.")}
 
-        p = get_progress(player)
-        return {
-            my_id: dict(
-                type='feedback',
-                is_correct=current.is_correct,
-                progress=p,
-            )
-        }
-
-    if message_type == "cheat" and settings.DEBUG:
-        # generate remaining data for the round
-        m = float(message['reaction'])
-        if current:
-            current.delete()
-        for i in range(player.iteration, max_iters):
-            t = generate_trial(player)
-            t.iteration = i
-            t.timestamp = now + i
-            t.response = t.correct
-            t.is_correct = True
-            t.response_timestamp = now + i
-            t.reaction_time = random.gauss(m, 0.3)
-        return {
-            my_id: dict(type='status', progress=get_progress(player), iterations_left=0)
-        }
-
-    raise RuntimeError("unrecognized message from client")
+    except Exception as e:
+        # Captura cualquier error inesperado y lo devuelve en el mensaje de error
+        return {player.id_in_group: dict(type='error', message=str(e))}
 
 
 # PAGES

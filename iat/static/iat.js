@@ -1,8 +1,3 @@
-/*Test para branches en github*/
-/*segunda prueba*/
-
-
-
 class Model {
     /** hold all current game state */
     constructor() {
