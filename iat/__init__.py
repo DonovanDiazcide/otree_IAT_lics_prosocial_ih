@@ -626,6 +626,7 @@ def play_game(player: Player, message: dict):
 
 
 # PAGES
+
 class Intro(Page):
     # comentario en caso de ser necesario: cambié está página para que se
     # pudiera mostrar los labels correctos de inicios del IAT, pero causó un
@@ -766,6 +767,17 @@ class PreguntaM(Page):
             return "Por favor, responde la pregunta antes de continuar."
 #pie
 # acá el detalle es que las validaciones de los campos están mal, aunque fáciles de cambiar, no lo haré ahora. 4 de febrero del 2025.
+class InstruccionesGenerales(Page):
+    form_model = 'player'
+    @staticmethod
+    def is_displayed(player):
+        # Mostrar esta página solo una vez por participante
+        return player.participant.vars.get('user_generales_completed', False) == False
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        # Marcar que la información ya fue recopilada
+        player.participant.vars['user_generales_completed'] = True
+
 class IATAssessmentPage(Page):
     form_model = 'player'
     form_fields = [
@@ -1209,6 +1221,7 @@ class ResultsDictador(Page):
 
 
 page_sequence = [
+    InstruccionesGenerales,
     UserInfo,
     PreguntaM,
     Intro,

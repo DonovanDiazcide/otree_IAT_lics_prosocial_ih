@@ -1,0 +1,144 @@
+{% extends "global/Page.html" %}
+{% block title %}
+    Instrucciones generales.
+{% endblock %}
+
+{% block styles %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.0/nouislider.min.css" rel="stylesheet"/>
+<style>
+    /* Contenedor principal */
+    .page-container {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 30px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        font-family: Arial, sans-serif;
+        color: #333;
+        line-height: 1.5;
+    }
+    h1, h2, h3 {
+        text-align: center;
+        margin-top: 1em;
+        margin-bottom: 0.5em;
+        color: #2c3e50;
+    }
+    .pending-section {
+        background: #fdf2e9;
+        border-left: 4px solid #e67e22;
+        padding: 1em 1.5em;
+        margin-bottom: 2em;
+    }
+    .pending-section h3 {
+        margin-top: 0;
+    }
+    .pending-section ul {
+        margin: 0.5em 0 0 1.2em;
+    }
+    .stage {
+        margin-bottom: 2em;
+    }
+    .stage h3 {
+        margin-bottom: 0.3em;
+        color: #2980b9;
+    }
+    .stage p, .stage li {
+        margin-bottom: 0.6em;
+    }
+    .image-container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1em;
+        margin: 1.5em 0;
+    }
+    .image-container img {
+        max-width: 100%;
+        height: auto;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .note {
+        font-style: italic;
+        color: #7f8c8d;
+        text-align: center;
+        margin-top: 1em;
+    }
+    hr {
+        border: none;
+        border-top: 1px solid #ecf0f1;
+        margin: 3em 0;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-container">
+
+  <h1>Bienvenido al Experimento</h1>
+  <p>Gracias por participar en este proyecto de investigación. El objetivo de este estudio es analizar si los principios morales explícitos (a veces) difieren de las intuiciones morales, y si los individuos están dispuestos a comprometerse a actuar de manera contraria a estas intuiciones.</p>
+
+  <hr>
+
+  <div class="stage">
+    <h2>¿En qué consiste el experimento?</h2>
+
+    <h3>Etapa 1: Encuesta</h3>
+    <p>En esta etapa recabaremos tu información personal: nombre, edad, deporte preferido. Posteriormente se te realizará una pregunta moral abierta.</p>
+
+    <h3>Etapa 2: Prueba de Asociación Implícita (IAT)</h3>
+    <p>Realizarás dos pruebas de IAT. Cada una consta de siete rondas, en las que clasificarás lo más rápido posible varias imágenes en dos categorías:</p>
+    <ul>
+      <li><strong>IAT Felidae / Canidae</strong></li>
+      <li><strong>IAT Personas Caucásicas / Personas Afrodescendientes</strong></li>
+    </ul>
+
+    <div class="image-container">
+      <img src="attachment:4eb6bfd8-324e-4b74-9f0c-d21cc15f8607" alt="Categorías Felidae/Canidae">
+      <img src="attachment:5be60f60-c639-43e0-8780-06ccb3c8bb3a" alt="Categorías Caucásicas/Afrodescendientes">
+    </div>
+
+    <p>El orden de las dos pruebas será aleatorio. Las imágenes aparecerán en el centro; las etiquetas de categoría, en las esquinas superior izquierda y derecha.</p>
+    <p><strong>En computadora:</strong> presiona “f” para la categoría izquierda y “j” para la derecha.</p>
+    <p><strong>En tablet o celular (horizontal):</strong> toca la esquina correspondiente.</p>
+
+    <div class="image-container">
+      <img src="attachment:fe4304f5-93e5-479d-8f0e-1a803adddad9" alt="Ejemplo vista computadora">
+      <img src="attachment:a4c80aa4-e676-4636-bfb6-b5e573e46a11" alt="Ejemplo vista celular">
+      <img src="attachment:5cde32f6-3e83-4e0d-a43e-ed2e26308f3c" alt="Ejemplo vista tableta">
+    </div>
+  </div>
+
+  <div class="stage">
+    <h3>Etapa 3: Adivinanza incentivada</h3>
+    <p>Tu resultado de IAT está en el rango <strong>–2 a 2</strong>. Podrá corresponder a uno de estos cuatro tramos:</p>
+    <div class="image-container">
+      <img src="attachment:bf0a7510-58df-4e34-90db-3094b6b2a069" alt="Rangos de puntuación IAT">
+    </div>
+    <p>Selecciona mediante la barra clickeable el rango en el que crees que está tu puntuación. Si aciertas, recibirás una compensación.</p>
+    <div class="image-container">
+      <img src="attachment:440448bb-f9a4-483e-aa40-bafb86f0f327" alt="Barra de selección">
+      <img src="attachment:8e2999c4-a4fe-489b-9b79-17a8c76adce3" alt="Ejemplo selección">
+    </div>
+  </div>
+
+  <div class="stage">
+    <h3>Etapa 4: Información del IAT</h3>
+    <p>Existe un <strong>80 %</strong> de probabilidad de informarte tu resultado si está dentro de tu rango; <strong>20 %</strong> de que no se revele en caso contrario.</p>
+    <ul>
+      <li>Si tu IAT está dentro de tu rango, podrás ajustar la probabilidad entre 80 % y 20 %.</li>
+      <li>Si está fuera, lo mismo.</li>
+    </ul>
+  </div>
+
+  <div class="stage">
+    <h3>Etapa 5: Juegos del dictador</h3>
+    <p>Jugarás 4 vueltas del dictador contra cada categoría (*felidae*, *canidae*, *blanco*, *negro*). La información que recibas depende de tus respuestas anteriores y las probabilidades que configures.</p>
+    <p class="note">Duración aproximada: 20 minutos.</p>
+  </div>
+
+</div>
+    {{ next_button }}
+{% endblock %}
