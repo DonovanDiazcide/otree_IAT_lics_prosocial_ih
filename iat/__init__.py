@@ -410,7 +410,7 @@ def set_payoffs(group: Group):
 class Trial(ExtraModel):
     """A record of single iteration
     Keeps corner categories from round setup to simplify furher analysis.
-    The stimulus class is for appropriate styling on page.
+    The stimulus class is for appropriate styling on page.   
     """
 
     player = models.Link(Player)
