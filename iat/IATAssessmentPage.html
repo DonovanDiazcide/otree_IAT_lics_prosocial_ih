@@ -470,80 +470,72 @@
 
 
   function getAssociationIAT1(lower, upper) {
-      // 1. Si todo el rango está en valores positivos
-      if (lower >= 0) {
-          var clas = getClassification(upper);
-          if (clas === "Neutral") {
-              return "Neutral";
-          } else {
-              return clas + " a gato+feliz, perro+triste";
-          }
+      // 1. Todo dentro de neutral
+      if (lower >= -0.15 && upper <= 0.15) {
+          return "Neutral";
       }
-      // 2. Si todo el rango está en valores negativos
-      else if (upper <= 0) {
+      // 2. Sólo negativo (todo por debajo de -0.15 o cruza neutral-negativo)
+      else if (upper <= -0.15 || (lower < -0.15 && upper <= 0.15)) {
           var clas = getClassification(lower);
-          if (clas === "Neutral") {
-              return "Neutral";
-          } else {
-              return clas + " a gato+triste, perro+feliz";
-          }
+          return clas === "Neutral"
+              ? "Neutral"
+              : clas + " a gato+triste, perro+feliz";
       }
-      // 3. Si el rango cruza 0, combinar ambas
+      // 3. Sólo positivo (todo por encima de 0.15 o cruza neutral-positivo)
+      else if (lower >= 0.15 || (lower >= -0.15 && upper > 0.15)) {
+          var clas = getClassification(upper);
+          return clas === "Neutral"
+              ? "Neutral"
+              : clas + " a gato+feliz, perro+triste";
+      }
+      // 4. Cruza ambos lados
       else {
           var negClass = getClassification(lower);
           var posClass = getClassification(upper);
-
           var negAssoc = (negClass === "Neutral")
               ? "Neutral"
               : negClass + " a gato+triste, perro+feliz";
           var posAssoc = (posClass === "Neutral")
               ? "Neutral"
               : posClass + " a gato+feliz, perro+triste";
-
-          if (negAssoc === posAssoc) {
-              return negAssoc; // ambos lados dan la misma asociación
-          } else {
-              return negAssoc + " y " + posAssoc;
-          }
+          return negAssoc === posAssoc
+              ? negAssoc
+              : negAssoc + " y " + posAssoc;
       }
   }
 
   function getAssociationIAT2(lower, upper) {
-      // 1. Si todo el rango está en valores positivos
-      if (lower >= 0) {
-          var clas = getClassification(upper);
-          if (clas === "Neutral") {
-              return "Neutral";
-          } else {
-              return clas + " a blanco+feliz, negro+triste";
-          }
+      // 1. Todo dentro de neutral
+      if (lower >= -0.15 && upper <= 0.15) {
+          return "Neutral";
       }
-      // 2. Si todo el rango está en valores negativos
-      else if (upper <= 0) {
+      // 2. Sólo negativo
+      else if (upper <= -0.15 || (lower < -0.15 && upper <= 0.15)) {
           var clas = getClassification(lower);
-          if (clas === "Neutral") {
-              return "Neutral";
-          } else {
-              return clas + " a blanco+triste, negro+feliz";
-          }
+          return clas === "Neutral"
+              ? "Neutral"
+              : clas + " a blanco+triste, negro+feliz";
       }
-      // 3. Si el rango cruza 0, combinar ambas
+      // 3. Sólo positivo
+      else if (lower >= 0.15 || (lower >= -0.15 && upper > 0.15)) {
+          var clas = getClassification(upper);
+          return clas === "Neutral"
+              ? "Neutral"
+              : clas + " a blanco+feliz, negro+triste";
+      }
+      // 4. Cruza ambos lados
       else {
           var negClass = getClassification(lower);
           var posClass = getClassification(upper);
-
           var negAssoc = (negClass === "Neutral")
               ? "Neutral"
               : negClass + " a blanco+triste, negro+feliz";
           var posAssoc = (posClass === "Neutral")
               ? "Neutral"
               : posClass + " a blanco+feliz, negro+triste";
-
-          if (negAssoc === posAssoc) {
-              return negAssoc;
-          } else {
-              return negAssoc + " y " + posAssoc;
-          }
+          return negAssoc === posAssoc
+              ? negAssoc
+              : negAssoc + " y " + posAssoc;
       }
   }
 
