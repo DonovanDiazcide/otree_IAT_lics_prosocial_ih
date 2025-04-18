@@ -166,6 +166,7 @@
         text-align: center;
     }
 </style>
+
 {% endblock %}
 
 
@@ -190,7 +191,7 @@
           <tbody>
             <tr>
               <td>[-0.15, 0.15]</td>
-              <td><strong>Neutral</strong>:</td>
+              <td><strong>Neutral</strong></td>
             </tr>
             <tr>
               <td>[-0.35, -0.16]</td>
@@ -222,7 +223,7 @@
           <tbody>
             <tr>
               <td>[-0.15, 0.15]</td>
-              <td><strong>Neutral</strong>:</td>
+              <td><strong>Neutral</strong></td>
             </tr>
             <tr>
               <td>[0.16, 0.35]</td>
@@ -261,7 +262,7 @@
           <tbody>
             <tr>
               <td>[-0.15, 0.15]</td>
-              <td><strong>Neutral</strong>:</td>
+              <td><strong>Neutral</strong></td>
             </tr>
             <tr>
               <td>[-0.35, -0.16]</td>
@@ -293,7 +294,7 @@
           <tbody>
             <tr>
               <td>[-0.15, 0.15]</td>
-              <td><strong>Neutral</strong>:</td>
+              <td><strong>Neutral</strong></td>
             </tr>
             <tr>
               <td>[0.16, 0.35]</td>
@@ -365,7 +366,14 @@
     <div class="slider-section">
       <label>
           <h3>¿Cuál sería para ti un rango moralmente aceptable para el IAT gato/perro?</h3>
-          <br> Actualmente estás seleccionando:
+      </label>
+          <p>Dado que ya conoces los rangos de puntuaciones y asociaciones de la prueba, ¿cuál consideras que
+          es el rango de puntuación y asociación moralmente aceptable para este IAT? <br> Puedes seleccionar el límite superior e
+          inferior de tu rango de puntuación y asociación mediante esta barra, cuyos límites puedes mover con el mouse, touchpad o
+          pantalla. Tienes dos textos: en el primero te indicamos el rango de puntuación que actualmente estás seleccionando
+          y en el segundo te mostramos la o las asociaciones que actualmente estés seleccionando</p>
+          <br>
+        <label> Actualmente estás seleccionando:
         <span class="range-display" id="display_iat1_range"></span>
       </label>
       <div id="slider_iat1" class="slider"></div>
@@ -449,139 +457,157 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.0/nouislider.min.js"></script>
 <script>
-  // Función para determinar la clasificación en función del valor
+  // Función para determinar la clasificación en función del valor (incluye umbrales inclusivos)
   function getClassification(value) {
       var absVal = Math.abs(value);
-      if (absVal < 0.15) {
+      if (absVal <= 0.15) {
           return "Neutral";
-      } else if (absVal < 0.35) {
+      } else if (absVal <= 0.35) {
           return "Asociación leve";
-      } else if (absVal < 0.65) {
+      } else if (absVal <= 0.65) {
           return "Asociación moderada";
       } else {
           return "Asociación fuerte";
       }
   }
 
-  // LÓGICA ACTUALIZADA:
-  // Muestra solo la asociación positiva si todo el rango >= 0
-  // Solo la asociación negativa si todo el rango <= 0
-  // O ambas si cruza 0
-
-
+  // LÓGICA ACTUALIZADA PARA IAT1 (Felidae/Canidae)
   function getAssociationIAT1(lower, upper) {
       // 1. Todo dentro de neutral
       if (lower >= -0.15 && upper <= 0.15) {
           return "Neutral";
       }
-      // 2. Sólo negativo (todo por debajo de -0.15 o cruza neutral-negativo)
-      else if (upper <= -0.15 || (lower < -0.15 && upper <= 0.15)) {
-          var clas = getClassification(lower);
-          return clas === "Neutral"
-              ? "Neutral"
-              : clas + " a gato+triste, perro+feliz";
+      // 2. Sólo negativo (todos ≤ -0.15)
+      else if (upper <= -0.15) {
+          var c1 = getClassification(lower);
+          var c2 = getClassification(upper);
+          var classes = [];
+          if (c1 !== "Neutral") classes.push(c1);
+          if (c2 !== c1 && c2 !== "Neutral") classes.push(c2);
+          return classes
+            .map(function(cl){ return cl + " a felidae+triste, canidae+feliz"; })
+            .join(" y ");
       }
-      // 3. Sólo positivo (todo por encima de 0.15 o cruza neutral-positivo)
-      else if (lower >= 0.15 || (lower >= -0.15 && upper > 0.15)) {
-          var clas = getClassification(upper);
-          return clas === "Neutral"
-              ? "Neutral"
-              : clas + " a gato+feliz, perro+triste";
+      // 3. Sólo positivo (todos ≥ 0.15)
+      else if (lower >= 0.15) {
+          var c1 = getClassification(lower);
+          var c2 = getClassification(upper);
+          var classes = [];
+          if (c1 !== "Neutral") classes.push(c1);
+          if (c2 !== c1 && c2 !== "Neutral") classes.push(c2);
+          return classes
+            .map(function(cl){ return cl + " a felidae+feliz, canidae+triste"; })
+            .join(" y ");
       }
-      // 4. Cruza ambos lados
+      // 4. Cruza zonas (negativo ↔ neutral ↔ positivo)
       else {
-          var negClass = getClassification(lower);
-          var posClass = getClassification(upper);
-          var negAssoc = (negClass === "Neutral")
-              ? "Neutral"
-              : negClass + " a gato+triste, perro+feliz";
-          var posAssoc = (posClass === "Neutral")
-              ? "Neutral"
-              : posClass + " a gato+feliz, perro+triste";
-          return negAssoc === posAssoc
-              ? negAssoc
-              : negAssoc + " y " + posAssoc;
+          var parts = [];
+          // Parte negativa
+          if (lower < -0.15) {
+              var cn = getClassification(lower);
+              if (cn !== "Neutral") parts.push(cn + " a felidae+triste, canidae+feliz");
+          }
+          // Parte neutral
+          if (lower <  0.15 && upper > -0.15) {
+              parts.push("Neutral");
+          }
+          // Parte positiva
+          if (upper > 0.15) {
+              var cp = getClassification(upper);
+              if (cp !== "Neutral") parts.push(cp + " a felidae+feliz, canidae+triste");
+          }
+          return parts.join(" y ");
       }
   }
 
+  // LÓGICA ACTUALIZADA PARA IAT2 (Persona caucásica/Persona afrodescendiente)
   function getAssociationIAT2(lower, upper) {
-      // 1. Todo dentro de neutral
       if (lower >= -0.15 && upper <= 0.15) {
           return "Neutral";
       }
-      // 2. Sólo negativo
-      else if (upper <= -0.15 || (lower < -0.15 && upper <= 0.15)) {
-          var clas = getClassification(lower);
-          return clas === "Neutral"
-              ? "Neutral"
-              : clas + " a blanco+triste, negro+feliz";
+      else if (upper <= -0.15) {
+          var c1 = getClassification(lower);
+          var c2 = getClassification(upper);
+          var classes = [];
+          if (c1 !== "Neutral") classes.push(c1);
+          if (c2 !== c1 && c2 !== "Neutral") classes.push(c2);
+          return classes
+            .map(function(cl){ return cl + " a persona afrodescendiente+feliz, persona caucásica+triste"; })
+            .join(" y ");
       }
-      // 3. Sólo positivo
-      else if (lower >= 0.15 || (lower >= -0.15 && upper > 0.15)) {
-          var clas = getClassification(upper);
-          return clas === "Neutral"
-              ? "Neutral"
-              : clas + " a blanco+feliz, negro+triste";
+      else if (lower >= 0.15) {
+          var c1 = getClassification(lower);
+          var c2 = getClassification(upper);
+          var classes = [];
+          if (c1 !== "Neutral") classes.push(c1);
+          if (c2 !== c1 && c2 !== "Neutral") classes.push(c2);
+          return classes
+            .map(function(cl){ return cl + " a persona caucásica+feliz, persona afrodescendiente+triste"; })
+            .join(" y ");
       }
-      // 4. Cruza ambos lados
       else {
-          var negClass = getClassification(lower);
-          var posClass = getClassification(upper);
-          var negAssoc = (negClass === "Neutral")
-              ? "Neutral"
-              : negClass + " a blanco+triste, negro+feliz";
-          var posAssoc = (posClass === "Neutral")
-              ? "Neutral"
-              : posClass + " a blanco+feliz, negro+triste";
-          return negAssoc === posAssoc
-              ? negAssoc
-              : negAssoc + " y " + posAssoc;
+          var parts = [];
+          if (lower < -0.15) {
+              var cn = getClassification(lower);
+              if (cn !== "Neutral") parts.push(cn + " a persona afrodescendiente+feliz, persona caucásica+triste");
+          }
+          if (lower <  0.15 && upper > -0.15) {
+              parts.push("Neutral");
+          }
+          if (upper > 0.15) {
+              var cp = getClassification(upper);
+              if (cp !== "Neutral") parts.push(cp + " a persona caucásica+feliz, persona afrodescendiente+triste");
+          }
+          return parts.join(" y ");
       }
   }
 
-  // IAT1: Crear slider de doble handle
+  // IAT1: slider de doble handle
   var sliderIAT1 = document.getElementById('slider_iat1');
   noUiSlider.create(sliderIAT1, {
-      start: [-1, 1],
+      start: [-0.15, 0.15],
       connect: true,
       range: { 'min': -2, 'max': 2 },
       step: 0.01
   });
-  var iat1Lower = document.getElementById('iat1_lower_limit');
-  var iat1Upper = document.getElementById('iat1_upper_limit');
+  var iat1Lower   = document.getElementById('iat1_lower_limit');
+  var iat1Upper   = document.getElementById('iat1_upper_limit');
   var displayIAT1 = document.getElementById('display_iat1_range');
-  var assocIAT1 = document.getElementById('assoc_iat1');
+  var assocIAT1   = document.getElementById('assoc_iat1');
 
-  sliderIAT1.noUiSlider.on('update', function (values, handle) {
+  sliderIAT1.noUiSlider.on('update', function (values) {
       var lowerVal = parseFloat(values[0]);
       var upperVal = parseFloat(values[1]);
-      iat1Lower.value = lowerVal;
-      iat1Upper.value = upperVal;
+      iat1Lower.value   = lowerVal;
+      iat1Upper.value   = upperVal;
       displayIAT1.textContent = '[' + lowerVal.toFixed(2) + ', ' + upperVal.toFixed(2) + ']';
-      assocIAT1.textContent = "Actualmente, tu rango moral se clasifica como: " + getAssociationIAT1(lowerVal, upperVal);
+      assocIAT1.innerHTML     = "Actualmente, tu rango moral se clasifica como:<br>"
+                                + getAssociationIAT1(lowerVal, upperVal);
   });
 
-  // IAT2: Crear slider de doble handle
+  // IAT2: slider de doble handle
   var sliderIAT2 = document.getElementById('slider_iat2');
   noUiSlider.create(sliderIAT2, {
-      start: [-1, 1],
+      start: [-0.15, 0.15],
       connect: true,
       range: { 'min': -2, 'max': 2 },
       step: 0.01
   });
-  var iat2Lower = document.getElementById('iat2_lower_limit');
-  var iat2Upper = document.getElementById('iat2_upper_limit');
+  var iat2Lower   = document.getElementById('iat2_lower_limit');
+  var iat2Upper   = document.getElementById('iat2_upper_limit');
   var displayIAT2 = document.getElementById('display_iat2_range');
-  var assocIAT2 = document.getElementById('assoc_iat2');
+  var assocIAT2   = document.getElementById('assoc_iat2');
 
-  sliderIAT2.noUiSlider.on('update', function (values, handle) {
+  sliderIAT2.noUiSlider.on('update', function (values) {
       var lowerVal = parseFloat(values[0]);
       var upperVal = parseFloat(values[1]);
-      iat2Lower.value = lowerVal;
-      iat2Upper.value = upperVal;
+      iat2Lower.value   = lowerVal;
+      iat2Upper.value   = upperVal;
       displayIAT2.textContent = '[' + lowerVal.toFixed(2) + ', ' + upperVal.toFixed(2) + ']';
-      assocIAT2.innerHTML = "Actualmente, tu rango moral se clasifica como:<br>" + getAssociationIAT2(lowerVal, upperVal);
+      assocIAT2.innerHTML     = "Actualmente, tu rango moral se clasifica como:<br>"
+                                + getAssociationIAT2(lowerVal, upperVal);
   });
 </script>
+
 
 {% endblock %}

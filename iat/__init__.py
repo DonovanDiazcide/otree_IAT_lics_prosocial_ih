@@ -233,26 +233,68 @@ class Player(BasePlayer):
     iteration = models.IntegerField(initial=0)  # Contador para iteraciones del jugador
     num_trials = models.IntegerField(initial=0)  # Número total de intentos del jugador
     num_correct = models.IntegerField(initial=0)  # Número de respuestas correctas
+    edad = models.IntegerField(label="Edad", min=18, max=120, )
     num_failed = models.IntegerField(initial=0)  # Número de respuestas incorrectas
-    name = models.StringField(label="Nombre")
-    age = models.IntegerField(label="Edad", min=0, max=99)
-    sports = models.StringField(
-        widget=widgets.RadioSelect,
+    sexo = models.StringField(
+        label="¿Cuál es tu sexo?",
         choices=[
-            ('Futból', 'Futból'),
-            ('Basketball', 'Basketball'),
-            ('Tenis', 'Tenis'),
-            ('Natación', 'Natación'),
-            ('Otro', 'Otro'),
-        ],
-        label="¿Qué deporte prefieres?"
+            ('M', 'Masculino'),
+            ('F', 'Femenino'),
+            ('NB', 'No binario'),
+            ('ND', 'Prefiero no decirlo')
+        ]
     )
+
     random_number = models.IntegerField(label="Número aleatorio entre 1 y 20", min=1, max=20)
+    ha_participado = models.StringField(
+        label="¿Has participado en experimentos previamente?",
+        choices=['Sí', 'No'],
+        blank = True,  # <--- permitimos valor nulo al inicio
+
+    )
+
+    num_experimentos = models.IntegerField(
+        label="¿En cuántos?",
+        min=0,
+        blank=True
+    )
+
     dscore1 = models.FloatField()  # D-score del primer IAT
     dscore2 = models.FloatField()  # D-score del segundo IAT
 
     # Nuevo campo para la pregunta moral
     moral_question = models.StringField(label="Aquí va una pregunta moral", blank=True)
+
+    # nuevo campo de preguntas morales, con algunas de relleno:
+    # 1. Pregunta central — moralidad vs intuición (alta carga reflexiva)
+    preguntaM1 = models.LongStringField(
+        label="Describe una situación en la que sabías cuál era la acción moralmente correcta según tus principios, pero intuitivamente sentías que debías actuar de otra manera. ¿Qué hiciste y por qué?"
+    )
+
+    # 2. Principios personales — moralidad autónoma
+    preguntaM2 = models.LongStringField(
+        label="¿Qué significa para ti actuar de forma moralmente correcta, incluso cuando nadie te está observando?"
+    )
+
+    # 3. Aplicación práctica de valores — contexto cotidiano
+    preguntaM3 = models.LongStringField(
+        label="Piensa en una decisión difícil que hayas tomado recientemente. ¿Qué valores o principios influyeron en lo que decidiste?"
+    )
+
+    # 4. Dilema cotidiano — tensión entre normas y práctica
+    preguntaM4 = models.LongStringField(
+        label="¿Hay alguna regla o norma moral que consideres importante, pero que a veces te resulte difícil seguir? ¿Por qué?"
+    )
+
+    # 5. Pregunta proyectiva — diseño ideal (relleno con carga valorativa)
+    preguntaM5 = models.LongStringField(
+        label="Si fueras responsable de diseñar una escuela ideal, ¿qué valores te gustaría que se enseñaran desde temprana edad?"
+    )
+
+    # (opcional) 6. Pregunta de relleno informal — preferencias personales
+    preguntaM6 = models.LongStringField(
+        label="¿Cuál es una cualidad que más valoras en otras personas (por ejemplo: creatividad, lealtad, inteligencia, honestidad)? ¿Por qué?"
+    )
 
     iat2_self_assessment = models.StringField(
         label="¿Cómo crees que te fue en el IAT de blanco y negro?",
@@ -722,33 +764,29 @@ class RoundN(Page):
 
 class UserInfo(Page):
     form_model = 'player'
-    form_fields = ['name', 'age', 'sports', 'random_number']
+    form_fields = ['edad', 'sexo', 'ha_participado', 'num_experimentos']
 
     @staticmethod
     def is_displayed(player):
-        # Mostrar esta página solo una vez por participante
-        return player.participant.vars.get('user_info_completed', False) == False
+        return not player.participant.vars.get('user_info_completed', False)
+
+    @staticmethod
+    def error_message(player, values):
+        if values['ha_participado'] == 'Sí' and values['num_experimentos'] is None:
+            return "Por favor indica en cuántos experimentos has participado."
+
 
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
-        # Guardar valores en participant.vars si deseas usarlos globalmente
         participant = player.participant
-        if not player.name:
-            player.name = "Anónimo"
-        if not player.age:
-            player.age = 18
-        if not player.sports:
-            player.sports = "Sin especificar"
-        if not player.random_number:
-            player.random_number = 0
-
-        # Marcar que la información ya fue recopilada
+        if player.ha_participado != 'Sí':
+            player.num_experimentos = 0
         participant.vars['user_info_completed'] = True
 
 
 class PreguntaM(Page):
     form_model = 'player'
-    form_fields = ['moral_question']
+    form_fields = ['preguntaM1', 'preguntaM2', 'preguntaM3', 'preguntaM4', 'preguntaM5', 'preguntaM6']
 
     @staticmethod
     def is_displayed(player):
@@ -762,9 +800,11 @@ class PreguntaM(Page):
 
     @staticmethod
     def error_message(player, values):
-        # Validar que el campo moral_question no esté vacío
-        if not values.get('moral_question'):
-            return "Por favor, responde la pregunta antes de continuar."
+        # Validar que ninguno de los campos esté vacío
+        preguntas = ['preguntaM1', 'preguntaM2', 'preguntaM3', 'preguntaM4', 'preguntaM5', 'preguntaM6']
+        for p in preguntas:
+            if not values.get(p):
+                return "Por favor, responde todas las preguntas antes de continuar."
 #pie
 # acá el detalle es que las validaciones de los campos están mal, aunque fáciles de cambiar, no lo haré ahora. 4 de febrero del 2025.
 class InstruccionesGenerales(Page):
