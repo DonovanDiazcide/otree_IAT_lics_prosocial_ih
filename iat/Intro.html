@@ -1,22 +1,76 @@
 {{ block title }}
-    Implicit Association Test
+    Etapa 2: Prueba de asociación implícita
 {{ endblock }}
 
 {% block styles  %}
     <link href="{% static 'iat.css' %}" rel="stylesheet"/>
+    <style>
+    .image-container img {
+      max-width: 900px;
+      height: auto;
+      margin: 0 10px;
+    }
+    </style>
 {% endblock %}
 
 {{ block content }}
-    <p>This is demo implementation of the Implicit Association Test.</p>
 
-    <p>It measures association between primary and secondary categories.</p>
-
-    <p>In this setup the primary category is
-        <span class="primary">{{ labels.left.primary }}/{{ labels.right.primary }}</span>,
-        and secondary is
-        <span class="secondary">{{ labels.left.secondary }}/{{ labels.right.secondary }}</span>
+<h3>Instrucciones de la prueba: </h3>
+    <p>Realizarás una prueba de asociación implícita.</p>
+    <p>Cada prueba consta de siete rondas. En cada una, clasificarás lo más rápido que puedas varias imágenes que
+        podrán corresponder a una de dos categorías.
     </p>
 
-    {{ next_button }}
+    <p>Ahora mismo las categorías primarias son
+        <span class="primary">{{ labels.left.primary }}/{{ labels.right.primary }}</span>,
+        y las secundarias son
+        <span class="secondary">{{ labels.left.secondary }}/{{ labels.right.secondary }}</span>.
+        A continuación verás nuevamente las categorías junto con las imágenes que deberás clasificar para cada una :
+    </p>
 
+    <div class="image-container">
+        {% if labels.left.primary == 'felidae' or labels.left.primary == 'Felidae' %}
+            {% if labels.right.primary == 'canidae' or labels.right.primary == 'Canidae' %}
+                <img src="{% static 'images/IATFelidaeCanidae.png' %}"
+                     alt="Categorías Felidae/Canidae">
+            {% else %}
+                <img src="{% static 'images/IATFelidaeCanidae.png' %}"
+                     alt="Categorías Felidae/Canidae">
+                <img src="{% static 'images/IATBlancoNegr.png' %}"
+                     alt="Categorías Caucásicas/Afrodescendientes">
+            {% endif %}
+        {% elif labels.left.primary == 'caucásico' or labels.left.primary == 'Caucásico' %}
+            {% if labels.right.primary == 'afrodescendiente' or labels.right.primary == 'Afrodescendiente' %}
+                <img src="{% static 'images/IATBlancoNegr.png' %}"
+                     alt="Categorías Caucásicas/Afrodescendientes">
+            {% else %}
+                <img src="{% static 'images/IATFelidaeCanidae.png' %}"
+                     alt="Categorías Felidae/Canidae">
+                <img src="{% static 'images/IATBlancoNegr.png' %}"
+                     alt="Categorías Caucásicas/Afrodescendientes">
+            {% endif %}
+        {% else %}
+            <img src="{% static 'images/IATFelidaeCanidae.png' %}"
+                 alt="Categorías Felidae/Canidae">
+            <img src="{% static 'images/IATBlancoNegr.png' %}"
+                 alt="Categorías Caucásicas/Afrodescendientes">
+        {% endif %}
+    </div>
+<br>
+<h4>Cómo clasificar las imágenes</h4>
+<p>
+  Verás distintas imágenes en el centro de la pantalla. Tendrás que clasificarlas según la categoría que corresponda, las categorías aparecerán en las esquinas superiores
+    de la pantalla. Dependiendo del dispositivo donde te encuentrés deberás hacer lo siguiente:
+</p>
+<p>
+  <strong>En computadora:</strong>
+  Usa las teclas <code>F</code> y <code>J</code> para clasificar cada imagen según corresponda a la categoría izquierda o derecha.
+</p>
+<p>
+  <strong>En tablet o celular (modo horizontal):</strong>
+  Toca la esquina superior izquierda o derecha de la pantalla para indicar la categoría correspondiente.
+</p>
+
+
+    {{ next_button }}
 {{ endblock }}

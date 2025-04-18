@@ -1,7 +1,5 @@
 {% extends "global/Page.html" %}
-{% block title %}
-    Instrucciones generales.
-{% endblock %}
+{% load static %}
 
 {% block styles %}
 <link href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.0/nouislider.min.css" rel="stylesheet"/>
@@ -80,44 +78,54 @@
   <h1>Bienvenido al Experimento</h1>
   <p>Gracias por participar en este proyecto de investigación. El objetivo de este estudio es analizar si los principios morales explícitos (a veces) difieren de las intuiciones morales, y si los individuos están dispuestos a comprometerse a actuar de manera contraria a estas intuiciones.</p>
 
-  <hr>
-
   <div class="stage">
     <h2>¿En qué consiste el experimento?</h2>
 
     <h3>Etapa 1: Encuesta</h3>
-    <p>En esta etapa recabaremos tu información personal: nombre, edad, deporte preferido. Posteriormente se te realizará una pregunta moral abierta.</p>
+    <p>En esta etapa se recabará tu información personal: nombre, edad, deporte preferido. Posteriormente se te realizará una pregunta moral abierta.</p>
 
     <h3>Etapa 2: Prueba de Asociación Implícita (IAT)</h3>
-    <p>Realizarás dos pruebas de IAT. Cada una consta de siete rondas, en las que clasificarás lo más rápido posible varias imágenes en dos categorías:</p>
-    <ul>
-      <li><strong>IAT Felidae / Canidae</strong></li>
-      <li><strong>IAT Personas Caucásicas / Personas Afrodescendientes</strong></li>
-    </ul>
+    <p>Realizarás dos pruebas de asociación implícita (IAT por sus siglas en inglés). Cada prueba consta de siete rondas.
+        En cada una, clasificarás lo más rápido que puedas varias imágenes que podrán corresponder a una de dos categorías.
+        Uno de los IAT tendrá las categorías felidae y canidae y otro tendrá las categorías persona caucásica y persona
+        afrodescendiente. A continuación te presentaremos las imágenes que clasificarás en las diferentes las categorías: </p>
 
     <div class="image-container">
-      <img src="attachment:4eb6bfd8-324e-4b74-9f0c-d21cc15f8607" alt="Categorías Felidae/Canidae">
-      <img src="attachment:5be60f60-c639-43e0-8780-06ccb3c8bb3a" alt="Categorías Caucásicas/Afrodescendientes">
+    <img src="{% static 'images/IATFelidaeCanidae.png' %}" alt="Categorías Felidae/Canidae">
+        <img src="{% static 'images/IATBlancoNegr.png' %}" alt="Categorías Caucásicas/Afrodescendientes">
     </div>
 
-    <p>El orden de las dos pruebas será aleatorio. Las imágenes aparecerán en el centro; las etiquetas de categoría, en las esquinas superior izquierda y derecha.</p>
-    <p><strong>En computadora:</strong> presiona “f” para la categoría izquierda y “j” para la derecha.</p>
-    <p><strong>En tablet o celular (horizontal):</strong> toca la esquina correspondiente.</p>
+    <p>El orden en el que jugarás las dos pruebas será determinado de manera aleatoria. Las imágenes que clasificarás
+        aparecerán en el centro de la pantalla, las categorías aparecerán en la esquina superior izquierda y en la esquina
+        superior derecha de la pantalla. Podrás realizar esta prueba en diferentes dispositivos electrónicos,
+        la forma en como realizarás la clasificación será: </p>
+    <p><strong>En computadora:</strong> clasificarás varias imágenes usando dos teclas de tu teclado, la “F” y la “J”.
+        Estas teclas corresponden a las categorías que aparecen en la esquina superior izquierda y  esquina superior
+        derecha  de la pantalla, respectivamente. </p>
+    <p><strong>En tableta o celular (en orientación horizontal):</strong> clasificarás varias imágenes tocando la esquina superior izquierda o
+        esquina superior derecha  de tu pantalla, según corresponda. </p>
 
     <div class="image-container">
-      <img src="attachment:fe4304f5-93e5-479d-8f0e-1a803adddad9" alt="Ejemplo vista computadora">
-      <img src="attachment:a4c80aa4-e676-4636-bfb6-b5e573e46a11" alt="Ejemplo vista celular">
-      <img src="attachment:5cde32f6-3e83-4e0d-a43e-ed2e26308f3c" alt="Ejemplo vista tableta">
+        <img src="{% static 'images/IATcomputadora1.png' %}" alt="Categorías Felidae/Canidae">
+        <img src="{% static 'images/IATcomputadora2.png' %}" alt="Categorías Felidae/Canidae">
     </div>
+    En algunas rondas (la 3, 4, 6 y 7) verás en total cuatro categorías, la manera de realizar la clasficación será la misma, tendrás que elegir
+      si la imagen del centro pertenece a alguna categoría que se encuentra en la esquina superior izquierda o derecha.
+    <div class="image-container">
+      <img src="{% static 'images/IATcomputadora3.png' %}" alt="Categorías Felidae/Canidae">
+         <img src="{% static 'images/IATcomputadora4.png' %}" alt="Categorías Felidae/Canidae">
+        <img src="{% static 'images/IATcomputadora5.png' %}" alt="Categorías Felidae/Canidae">
+      </div>
   </div>
 
   <div class="stage">
-    <h3>Etapa 3: Adivinanza incentivada</h3>
-    <p>Tu resultado de IAT está en el rango <strong>–2 a 2</strong>. Podrá corresponder a uno de estos cuatro tramos:</p>
+    <h3>Etapa 3: Adivinanza incentivada del IAT </h3>
+      <p> Por el diseño de la prueba, el resultado del IAT se encuentra entre el intervalo <strong>-2 a 2</strong>. Tu resultado podrá corresponder a alguno de los siguientes 4 rangos puntuaciones y asociaciones:</p>
     <div class="image-container">
-      <img src="attachment:bf0a7510-58df-4e34-90db-3094b6b2a069" alt="Rangos de puntuación IAT">
+         <img src="{% static 'images/PuntuacionesIAT.png' %}" alt="Rangos de puntuación IAT">
     </div>
-    <p>Selecciona mediante la barra clickeable el rango en el que crees que está tu puntuación. Si aciertas, recibirás una compensación.</p>
+    <p>Después se te pedirá que, a través de la siguiente barra clickeable, selecciones el rango de puntuación y asociación donde crees que se encuentra tu IAT, solo
+        en caso de que aciertes, te daremos una compensación monetaria por ello. </p>
     <div class="image-container">
       <img src="attachment:440448bb-f9a4-483e-aa40-bafb86f0f327" alt="Barra de selección">
       <img src="attachment:8e2999c4-a4fe-489b-9b79-17a8c76adce3" alt="Ejemplo selección">

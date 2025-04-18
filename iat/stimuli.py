@@ -14,10 +14,10 @@ import csv
 DICT = {
     'canidae': ['dog', 'wolf', 'coyote', 'fox', 'jackal'],
     'felidae': ['cat', 'tiger', 'lynx', 'wildcat', 'cougar'],
-    'white': ['word1', 'word2', 'word3', 'word4', 'word5'],
-    'black': ['word1', 'word2', 'word3', 'word4', 'word5'],
+    'caucásico': ['word1', 'word2', 'word3', 'word4', 'word5'],
+    'afrodescendiente': ['word1', 'word2', 'word3', 'word4', 'word5'],
 
-    'images:white': [
+    'images:caucásico': [
             "euroam1.png",
             "euroam2.png",
             "euroam3.png",
@@ -25,7 +25,7 @@ DICT = {
             "euroam5.png",
             "euroam6.png",
     ],
-    "images:black": [
+    "images:afrodescendiente": [
             "africanam1.png",
             "africanam2.png",
             "africanam3.png",
@@ -47,16 +47,16 @@ DICT = {
         "Felis_silvestris_silvestris_Luc_Viatour.jpg",
         "320px-Mountain_Lion_in_Glacier_National_Park.jpg",
     ],
-    'positive': ['amusement', 'fun', 'friendship', 'happyness', 'joy'],
-    'negative': ['anger', 'hate', 'fear', 'panic', 'sickness'],
-    'emojis:positive': [
+    'felíz': ['amusement', 'fun', 'friendship', 'happyness', 'joy'],
+    'triste': ['anger', 'hate', 'fear', 'panic', 'sickness'],
+    'emojis:emojis positivos': [
         "emoji_u263a.png",
         "emoji_u1f600.png",
         "emoji_u1f601.png",
         "emoji_u1f60a.png",
         "emoji_u1f60d.png",
     ],
-    'emojis:negative': [
+    'emojis:emojis negativos': [
         "emoji_u2639.png",
         "emoji_u1f612.png",
         "emoji_u1f616.png",

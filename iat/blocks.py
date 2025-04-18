@@ -1,4 +1,4 @@
-"""Setup of rounds
+"""Configuración de rondas
 Categories are configured in session config like:
 ```primary = ['male', 'female'], secondary = ['work', 'family']```
 Numbers in block config corresponds to 1st and 2nd element of corresponding pair
@@ -9,111 +9,111 @@ import random
 BLOCKS1 = {
     # Rondas 1 a 7 (primer bloque: categorías 1 y 2)
     1: {
-        'title': "Round 1 (practice)",
+        'title': "Ronda 1 (práctica)",
         'practice': True,
         'left': {'primary': 1},
         'right': {'primary': 2},
     },
     2: {
-        'title': "Round 2 (practice)",
+        'title': "Ronda 2 (práctica)",
         'practice': True,
         'left': {'secondary': 1},
         'right': {'secondary': 2},
     },
     3: {
-        'title': "Round 3",
+        'title': "Ronda 3",
         'practice': False,
         'left': {'primary': 1, 'secondary': 1},
         'right': {'primary': 2, 'secondary': 2},
     },
     4: {
-        'title': "Round 4",
+        'title': "Ronda 4",
         'practice': False,
         'left': {'primary': 1, 'secondary': 1},
         'right': {'primary': 2, 'secondary': 2},
     },
     5: {
-        'title': "Round 5 (practice)",
+        'title': "Ronda 5 (práctica)",
         'practice': True,
         'left': {'primary': 2},
         'right': {'primary': 1},
     },
     6: {
-        'title': "Round 6",
+        'title': "Ronda 6",
         'practice': False,
         'left': {'primary': 2, 'secondary': 1},
         'right': {'primary': 1, 'secondary': 2},
     },
     7: {
-        'title': "Round 7",
+        'title': "Ronda 7",
         'practice': False,
         'left': {'primary': 2, 'secondary': 1},
         'right': {'primary': 1, 'secondary': 2},
     },
     # Rondas 8 a 14 (segundo bloque: categorías 3 y 4)
     8: {
-        'title': "Round 1 (practice)",
+        'title': "Ronda 1 (práctica)",
         'practice': True,
         'left': {'primary': 3},
         'right': {'primary': 4},
     },
     9: {
-        'title': "Round 2 (practice)",
+        'title': "Ronda 2 (práctica)",
         'practice': True,
         'left': {'secondary': 1},
         'right': {'secondary': 2},
     },
     10: {
-        'title': "Round 3",
+        'title': "Ronda 3",
         'practice': False,
         'left': {'primary': 3, 'secondary': 1},
         'right': {'primary': 4, 'secondary': 2},
     },
     11: {
-        'title': "Round 4",
+        'title': "Ronda 4",
         'practice': False,
         'left': {'primary': 3, 'secondary': 1},
         'right': {'primary': 4, 'secondary': 2},
     },
     12: {
-        'title': "Round 5 (practice)",
+        'title': "Ronda 5 (práctica)",
         'practice': True,
         'left': {'primary': 4},
         'right': {'primary': 3},
     },
     13: {
-        'title': "Round 6",
+        'title': "Ronda 6",
         'practice': False,
         'left': {'primary': 4, 'secondary': 1},
         'right': {'primary': 3, 'secondary': 2},
     },
     14: {
-        'title': "Round 7",
+        'title': "Ronda 7",
         'practice': False,
         'left': {'primary': 4, 'secondary': 1},
         'right': {'primary': 3, 'secondary': 2},
     },
     # Bloques adicionales: feedback, juego y agradecimiento
     15: {
-        'title': "Round 15 (FeedbackIAT, results, game)",
+        'title': "Ronda 15 (FeedbackIAT, resultados, juego)",
         'practice': False,
         'left': {'primary': '', 'secondary': ''},
         'right': {'primary': '', 'secondary': ''}
     },
     16: {
-        'title': "Round 16 (game)",
+        'title': "Ronda 16 (juego)",
         'practice': False,
         'left': {'primary': '', 'secondary': ''},
         'right': {'primary': '', 'secondary': ''}
     },
     17: {
-        'title': "Round 17 (game)",
+        'title': "Ronda 17 (juego)",
         'practice': False,
         'left': {'primary': '', 'secondary': ''},
         'right': {'primary': '', 'secondary': ''}
     },
     18: {
-        'title': "Round 18 (game)",
+        'title': "Ronda 18 (juego)",
         'practice': False,
         'left': {'primary': '', 'secondary': ''},
         'right': {'primary': '', 'secondary': ''}
@@ -130,111 +130,111 @@ BLOCKS1 = {
 BLOCKS2 = {
     # Rondas 1 a 7: invertimos el orden de las categorías primarias (2 y 1)
     1: {
-        'title': "Round 1 (practice)",
+        'title': "Ronda 1 (práctica)",
         'practice': True,
         'left': {'primary': 3},
         'right': {'primary': 4},
     },
     2: {
-        'title': "Round 2 (practice)",
+        'title': "Ronda 2 (práctica)",
         'practice': True,
         'left': {'secondary': 1},
         'right': {'secondary': 2},
     },
     3: {
-        'title': "Round 3",
+        'title': "Ronda 3",
         'practice': False,
         'left': {'primary': 3, 'secondary': 1},
         'right': {'primary': 4, 'secondary': 2},
     },
     4: {
-        'title': "Round 4",
+        'title': "Ronda 4",
         'practice': False,
         'left': {'primary': 3, 'secondary': 1},
         'right': {'primary': 4, 'secondary': 2},
     },
     5: {
-        'title': "Round 5 (practice)",
+        'title': "Ronda 5 (práctica)",
         'practice': True,
         'left': {'primary': 3},
         'right': {'primary': 4},
     },
     6: {
-        'title': "Round 6",
+        'title': "Ronda 6",
         'practice': False,
         'left': {'primary': 3, 'secondary': 2},
         'right': {'primary': 4, 'secondary': 1},
     },
     7: {
-        'title': "Round 7",
+        'title': "Ronda 7",
         'practice': False,
         'left': {'primary': 3, 'secondary': 2},
         'right': {'primary': 4, 'secondary': 1},
     },
     # Rondas 8 a 14: para el segundo bloque, invertimos el orden (4 y 3)
     8: {
-        'title': "Round 1 (practice)",
+        'title': "Ronda 1 (práctica)",
         'practice': True,
         'left': {'primary': 1},
         'right': {'primary': 2},
     },
     9: {
-        'title': "Round 2 (practice)",
+        'title': "Ronda 2 (práctica)",
         'practice': True,
         'left': {'secondary': 1},
         'right': {'secondary': 2},
     },
     10: {
-        'title': "Round 3",
+        'title': "Ronda 3",
         'practice': False,
         'left': {'primary': 1, 'secondary': 1},
         'right': {'primary': 2, 'secondary': 2},
     },
     11: {
-        'title': "Round 4",
+        'title': "Ronda 4",
         'practice': False,
         'left': {'primary': 2, 'secondary': 1},
-        'right': {'primary':1, 'secondary': 2},
+        'right': {'primary': 1, 'secondary': 2},
     },
     12: {
-        'title': "Round 5 (practice)",
+        'title': "Ronda 5 (práctica)",
         'practice': True,
         'left': {'primary': 1},
         'right': {'primary': 2},
     },
     13: {
-        'title': "Round 6",
+        'title': "Ronda 6",
         'practice': False,
         'left': {'primary': 1, 'secondary': 1},
         'right': {'primary': 2, 'secondary': 2},
     },
     14: {
-        'title': "Round 7",
+        'title': "Ronda 7",
         'practice': False,
         'left': {'primary': 1, 'secondary': 1},
         'right': {'primary': 2, 'secondary': 2},
     },
     # Bloques adicionales: feedback, juego y agradecimiento (idénticos a BLOCKS1)
     15: {
-        'title': "Round 15 (FeedbackIAT, results, game)",
+        'title': "Ronda 15 (FeedbackIAT, resultados, juego)",
         'practice': False,
         'left': {'primary': '', 'secondary': ''},
         'right': {'primary': '', 'secondary': ''}
     },
     16: {
-        'title': "Round 16 (game)",
+        'title': "Ronda 16 (juego)",
         'practice': False,
         'left': {'primary': '', 'secondary': ''},
         'right': {'primary': '', 'secondary': ''}
     },
     17: {
-        'title': "Round 17 (game)",
+        'title': "Ronda 17 (juego)",
         'practice': False,
         'left': {'primary': '', 'secondary': ''},
         'right': {'primary': '', 'secondary': ''}
     },
     18: {
-        'title': "Round 18 (game)",
+        'title': "Ronda 18 (juego)",
         'practice': False,
         'left': {'primary': '', 'secondary': ''},
         'right': {'primary': '', 'secondary': ''}
