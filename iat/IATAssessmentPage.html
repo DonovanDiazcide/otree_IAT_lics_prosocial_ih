@@ -1,5 +1,5 @@
 {% block title %}
-    Etapa 3: Etapa de Adivinanza incentivada de tu resultado del IAT
+    Etapa 3: Etapa de adivinanza incentivada de tu resultado del IAT
 {% endblock %}
 
 {% block styles %}
@@ -13,17 +13,18 @@
     }
 
     /* 1. Form más ancho y adaptativo */
-    form {
-        max-width: 90%;
-        width: 100%;
-        margin: 40px auto;
-        padding: 30px;
-        background-color: #fff;
-        border-radius: 10px;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-        box-sizing: border-box;
-    }
-
+/* 1. Form más ancho y adaptativo */
+form {
+/* Ancho máximo de formulario */
+max-width: 1200px;
+/* Ocupa todo el ancho disponible para mantener centrado */
+width: 100%;
+margin: 40px auto;
+padding: 30px;
+background-color: #fff;
+border-radius: 10px;
+box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+box-sizing: border-box;
     h2, h3 {
         color: #333;
         text-align: center;
@@ -324,43 +325,70 @@
     <!-- ====================== IAT1: Gato/Perro ====================== -->
     <!-- Radio Buttons (7 columnas) con Neutral en el centro (opción 4) -->
     <div class="iat-container">
-      <!-- Opción 1: Asociación fuerte a gato+triste, perro+feliz -->
-      <label class="iat-column">
-        <input type="radio" name="iat1_self_assessment" value="Asociación fuerte a gato+triste, perro+feliz" />
-        <div class="text"><strong>Fuerte</strong><br>gato+triste,<br>perro+feliz</div>
-      </label>
-      <!-- Opción 2: Asociación moderada a gato+triste, perro+feliz -->
-      <label class="iat-column">
-        <input type="radio" name="iat1_self_assessment" value="Asociación moderada a gato+triste, perro+feliz" />
-        <div class="text"><strong>Moderada</strong><br>gato+triste,<br>perro+feliz</div>
-      </label>
-      <!-- Opción 3: Asociación leve a gato+triste, perro+feliz -->
-      <label class="iat-column">
-        <input type="radio" name="iat1_self_assessment" value="Asociación leve a gato+triste, perro+feliz" />
-        <div class="text"><strong>Leve</strong><br>gato+triste,<br>perro+feliz</div>
-      </label>
-      <!-- Opción 4: Neutral (centrado) -->
-      <label class="iat-column">
-        <input type="radio" name="iat1_self_assessment" value="Neutral" />
-        <div class="text"><strong>Neutral</strong></div>
-      </label>
-      <!-- Opción 5: Asociación leve a gato+feliz, perro+triste -->
-      <label class="iat-column">
-        <input type="radio" name="iat1_self_assessment" value="Asociación leve a gato+feliz, perro+triste" />
-        <div class="text"><strong>Leve</strong><br>gato+feliz,<br>perro+triste</div>
-      </label>
-      <!-- Opción 6: Asociación moderada a gato+feliz, perro+triste -->
-      <label class="iat-column">
-        <input type="radio" name="iat1_self_assessment" value="Asociación moderada a gato+feliz, perro+triste" />
-        <div class="text"><strong>Moderada</strong><br>gato+feliz,<br>perro+triste</div>
-      </label>
-      <!-- Opción 7: Asociación fuerte a gato+feliz, perro+triste -->
-      <label class="iat-column">
-        <input type="radio" name="iat1_self_assessment" value="Asociación fuerte a gato+feliz, perro+triste" />
-        <div class="text"><strong>Fuerte</strong><br>gato+feliz,<br>perro+triste</div>
-      </label>
+  <!-- Opción 1: Fuerte canidae+feliz, felidae+triste -->
+  <label class="iat-column">
+    <input type="radio" name="iat1_self_assessment" value="Fuerte: canidae+feliz, felidae+triste" />
+    <div class="text">
+      <strong>Fuerte</strong><br>
+      canidae+feliz, felidae+triste<br>
+      <span style="font-size:0.8rem">(Rango: [-2, -0.66])</span>
     </div>
-    {{ formfield_errors 'iat1_self_assessment' }}
+  </label>
+  <!-- Opción 2: Moderada canidae+feliz, felidae+triste -->
+  <label class="iat-column">
+    <input type="radio" name="iat1_self_assessment" value="Moderada: canidae+feliz, felidae+triste" />
+    <div class="text">
+      <strong>Moderada</strong><br>
+      canidae+feliz, felidae+triste<br>
+      <span style="font-size:0.8rem">(Rango: [-0.65, -0.36])</span>
+    </div>
+  </label>
+  <!-- Opción 3: Leve canidae+feliz, felidae+triste -->
+  <label class="iat-column">
+    <input type="radio" name="iat1_self_assessment" value="Leve: canidae+feliz, felidae+triste" />
+    <div class="text">
+      <strong>Leve</strong><br>
+      canidae+feliz, felidae+triste<br>
+      <span style="font-size:0.8rem">(Rango: [-0.35, -0.16])</span>
+    </div>
+  </label>
+  <!-- Opción 4: Neutral -->
+  <label class="iat-column">
+    <input type="radio" name="iat1_self_assessment" value="Neutral" />
+    <div class="text">
+      <strong>Neutral</strong><br>
+      <span style="font-size:0.8rem">(Rango: [-0.15, 0.15])</span>
+    </div>
+  </label>
+  <!-- Opción 5: Leve felidae+feliz, canidae+triste -->
+  <label class="iat-column">
+    <input type="radio" name="iat1_self_assessment" value="Leve: felidae+feliz, canidae+triste" />
+    <div class="text">
+      <strong>Leve</strong><br>
+      felidae+feliz, canidae+triste<br>
+      <span style="font-size:0.8rem">(Rango: [0.16, 0.35])</span>
+    </div>
+  </label>
+  <!-- Opción 6: Moderada felidae+feliz, canidae+triste -->
+  <label class="iat-column">
+    <input type="radio" name="iat1_self_assessment" value="Moderada: felidae+feliz, canidae+triste" />
+    <div class="text">
+      <strong>Moderada</strong><br>
+      felidae+feliz, canidae+triste<br>
+      <span style="font-size:0.8rem">(Rango: [0.36, 0.65])</span>
+    </div>
+  </label>
+  <!-- Opción 7: Fuerte felidae+feliz, canidae+triste -->
+  <label class="iat-column">
+    <input type="radio" name="iat1_self_assessment" value="Fuerte: felidae+feliz, canidae+triste" />
+    <div class="text">
+      <strong>Fuerte</strong><br>
+      felidae+feliz, canidae+triste<br>
+      <span style="font-size:0.8rem">(Rango: [0.66, 2])</span>
+    </div>
+  </label>
+</div>
+{{ formfield_errors 'iat1_self_assessment' }}
 
     <!-- Range Slider (Double-handle) para iat1_lower_limit e iat1_upper_limit -->
     <div class="slider-section">
@@ -393,44 +421,71 @@
 </p>
 
     <!-- Radio Buttons (7 columnas) con Neutral centrado -->
-    <div class="iat-container">
-      <!-- Opción 1: Asociación fuerte a blanco+triste, negro+feliz -->
-      <label class="iat-column">
-        <input type="radio" name="iat2_self_assessment" value="Asociación fuerte a blanco+triste, negro+feliz" />
-        <div class="text"><strong>Fuerte</strong><br>blanco+triste,<br>negro+feliz</div>
-      </label>
-      <!-- Opción 2: Asociación moderada a blanco+triste, negro+feliz -->
-      <label class="iat-column">
-        <input type="radio" name="iat2_self_assessment" value="Asociación moderada a blanco+triste, negro+feliz" />
-        <div class="text"><strong>Moderada</strong><br>blanco+triste,<br>negro+feliz</div>
-      </label>
-      <!-- Opción 3: Asociación leve a blanco+triste, negro+feliz -->
-      <label class="iat-column">
-        <input type="radio" name="iat2_self_assessment" value="Asociación leve a blanco+triste, negro+feliz" />
-        <div class="text"><strong>Leve</strong><br>blanco+triste,<br>negro+feliz</div>
-      </label>
-      <!-- Opción 4: Neutral (centrado) -->
-      <label class="iat-column">
-        <input type="radio" name="iat2_self_assessment" value="Neutral" />
-        <div class="text"><strong>Neutral</strong></div>
-      </label>
-      <!-- Opción 5: Asociación leve a blanco+feliz, negro+triste -->
-      <label class="iat-column">
-        <input type="radio" name="iat2_self_assessment" value="Asociación leve a blanco+feliz, negro+triste" />
-        <div class="text"><strong>Leve</strong><br>blanco+feliz,<br>negro+triste</div>
-      </label>
-      <!-- Opción 6: Asociación moderada a blanco+feliz, negro+triste -->
-      <label class="iat-column">
-        <input type="radio" name="iat2_self_assessment" value="Asociación moderada a blanco+feliz, negro+triste" />
-        <div class="text"><strong>Moderada</strong><br>blanco+feliz,<br>negro+triste</div>
-      </label>
-      <!-- Opción 7: Asociación fuerte a blanco+feliz, negro+triste -->
-      <label class="iat-column">
-        <input type="radio" name="iat2_self_assessment" value="Asociación fuerte a blanco+feliz, negro+triste" />
-        <div class="text"><strong>Fuerte</strong><br>blanco+feliz,<br>negro+triste</div>
-      </label>
+   <div class="iat-container">
+  <!-- Opción 1: Fuerte afrodescendiente+feliz, caucásico+triste -->
+  <label class="iat-column">
+    <input type="radio" name="iat2_self_assessment" value="Fuerte: afrodescendiente+feliz, caucásico+triste" />
+    <div class="text">
+      <strong>Fuerte</strong><br>
+      afrodescendiente+feliz, caucásico+triste<br>
+      <span style="font-size:0.8rem">(Rango: [-2, -0.66])</span>
     </div>
-    {{ formfield_errors 'iat2_self_assessment' }}
+  </label>
+  <!-- Opción 2: Moderada afrodescendiente+feliz, caucásico+triste -->
+  <label class="iat-column">
+    <input type="radio" name="iat2_self_assessment" value="Moderada: afrodescendiente+feliz, caucásico+triste" />
+    <div class="text">
+      <strong>Moderada</strong><br>
+      afrodescendiente+feliz, caucásico+triste<br>
+      <span style="font-size:0.8rem">(Rango: [-0.65, -0.36])</span>
+    </div>
+  </label>
+  <!-- Opción 3: Leve afrodescendiente+feliz, caucásico+triste -->
+  <label class="iat-column">
+    <input type="radio" name="iat2_self_assessment" value="Leve: afrodescendiente+feliz, caucásico+triste" />
+    <div class="text">
+      <strong>Leve</strong><br>
+      afrodescendiente+feliz, caucásico+triste<br>
+      <span style="font-size:0.8rem">(Rango: [-0.35, -0.16])</span>
+    </div>
+  </label>
+  <!-- Opción 4: Neutral -->
+  <label class="iat-column">
+    <input type="radio" name="iat2_self_assessment" value="Neutral" />
+    <div class="text">
+      <strong>Neutral</strong><br>
+      <span style="font-size:0.8rem">(Rango: [-0.15, 0.15])</span>
+    </div>
+  </label>
+  <!-- Opción 5: Leve caucásico+feliz, afrodescendiente+triste -->
+  <label class="iat-column">
+    <input type="radio" name="iat2_self_assessment" value="Leve: caucásico+feliz, afrodescendiente+triste" />
+    <div class="text">
+      <strong>Leve</strong><br>
+      caucásico+feliz, afrodescendiente+triste<br>
+      <span style="font-size:0.8rem">(Rango: [0.16, 0.35])</span>
+    </div>
+  </label>
+  <!-- Opción 6: Moderada caucásico+feliz, afrodescendiente+triste -->
+  <label class="iat-column">
+    <input type="radio" name="iat2_self_assessment" value="Moderada: caucásico+feliz, afrodescendiente+triste" />
+    <div class="text">
+      <strong>Moderada</strong><br>
+      caucásico+feliz, afrodescendiente+triste<br>
+      <span style="font-size:0.8rem">(Rango: [0.36, 0.65])</span>
+    </div>
+  </label>
+  <!-- Opción 7: Fuerte caucásico+feliz, afrodescendiente+triste -->
+  <label class="iat-column">
+    <input type="radio" name="iat2_self_assessment" value="Fuerte: caucásico+feliz, afrodescendiente+triste" />
+    <div class="text">
+      <strong>Fuerte</strong><br>
+      caucásico+feliz, afrodescendiente+triste<br>
+      <span style="font-size:0.8rem">(Rango: [0.66, 2])</span>
+    </div>
+  </label>
+</div>
+{{ formfield_errors 'iat2_self_assessment' }}
 
     <!-- Range Slider (Double-handle) para iat2_lower_limit e iat2_upper_limit -->
     <div class="slider-section">
