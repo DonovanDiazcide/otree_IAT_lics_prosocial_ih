@@ -7,6 +7,7 @@ SESSION_CONFIGS = [
         num_demo_participants=4,
         app_sequence=["iat"],
         primary_images=True,
+        #para cambiar las categorías simplemente hay que ir a stimuly.py y cambiar la etiqueta del diccionario de imágenes o palabras, luego cambiarlo acá.
         primary=['images:felidae', 'images:canidae', 'images:caucásico', "images:afrodescendiente"],
         secondary_images=True,
         secondary=['emojis:emojis positivos', 'emojis:emojis negativos'],

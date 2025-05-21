@@ -1259,11 +1259,12 @@ class ResultsDictador(Page):
             dictator_offers=dictator_offers
         )
 
+# ay,NVIDIA, te odio jaja
 
 page_sequence = [
     InstruccionesGenerales,
     UserInfo,
-    PreguntaM,
+    #PreguntaM,
     Intro,
     RoundN,  # Rondas 1-14: IAT
     IATAssessmentPage,  # Ronda 15: Evaluación del IAT
