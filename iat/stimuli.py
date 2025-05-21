@@ -33,7 +33,8 @@ DICT = {
             "africanam5.png",
             "africanam6.png",
     ],
-    'images:canidae': [
+    # ojo, esto era gato/canidae
+    'images:': [
         "320px-Black_Labrador_Retriever_-_Male_IMG_3323.jpg",
         "247px-Kolmården_Wolf.jpg",
         "207px-2009-Coyote-Yosemite.jpg",
@@ -50,6 +51,7 @@ DICT = {
     'felíz': ['amusement', 'fun', 'friendship', 'happyness', 'joy'],
     'triste': ['anger', 'hate', 'fear', 'panic', 'sickness'],
     'emojis:emojis positivos': [
+        #aquí le puedo pedir a chatgpt que genere pngs de las midmas dimensiones al igual que la imagen de etc.
         "emoji_u263a.png",
         "emoji_u1f600.png",
         "emoji_u1f601.png",
