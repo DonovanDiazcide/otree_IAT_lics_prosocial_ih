@@ -7,16 +7,45 @@ SESSION_CONFIGS = [
         num_demo_participants=4,
         app_sequence=["iat"],
         primary_images=True,
-        #para cambiar las categorías simplemente hay que ir a stimuly.py y cambiar la etiqueta del diccionario de imágenes o palabras, luego cambiarlo acá.
-        primary=['images:felidae', 'images:canidae', 'images:caucásico', "images:afrodescendiente"],
+        # para cambiar las categorías simplemente hay que ir a stimuly.py...
+        primary=['images:felidae', 'images:canidae', 'images:caucásico', 'images:afrodescendiente'],
         secondary_images=True,
         secondary=['emojis:emojis positivos', 'emojis:emojis negativos'],
-        num_iterations={1: 5, 2: 5, 3: 10, 4: 20, 5: 5, 6: 10, 7: 20,
-                        8: 5, 9: 5, 10: 10, 11: 20, 12: 5, 13: 10, 14: 20,
-                        15: 1, 16: 1, 17: 1, 18: 1,
-                        },
+        iat_tasks = [
+            {
+                "primary": ['images:felidae', 'images:canidae'],
+                "secondary": ['emojis:emojis positivos', 'emojis:emojis negativos'],
+                "primary_images": True,
+                "secondary_images": True
+            },
+            {
+                "primary": ["images:caucásico", "images:afrodescendiente"],
+                "secondary": ["positive", "negative"],
+                "primary_images": True,
+                "secondary_images": True
+            },
+            {   # ← Abrimos la llave que faltaba
+                "primary": ['images:felidae2', 'images:canidae2'],
+                "secondary": ['emojis:emojis positivos', 'emojis:emojis negativos'],
+                "primary_images": True,
+                "secondary_images": True
+            },  # ← Cerramos y ponemos coma para separar del siguiente dict
+            {
+                "primary": ["images:caucásico2", "images:afrodescendiente2"],
+                "secondary": ["positive", "negative"],
+                "primary_images": True,
+                "secondary_images": True
+            }
+        ],
+         # ← cierras iat_tasks aquí
+        num_iterations={
+            1: 5, 2: 5, 3: 10, 4: 20, 5: 5, 6: 10, 7: 20,
+            8: 5, 9: 5, 10: 10, 11: 20, 12: 5, 13: 10, 14: 20,
+            15: 1, 16: 1, 17: 1, 18: 1,
+        },
     ),
 ]
+
 
 # if you set a property in SESSION_CONFIG_DEFAULTS, it will be inherited by all configs
 # in SESSION_CONFIGS, except those that explicitly override it.

@@ -1,5 +1,6 @@
 import time
 import random
+
 # from .admin_report_functions import *
 from otree.api import *
 from otree import settings
@@ -11,8 +12,6 @@ from statistics import mean, stdev
 from decimal import Decimal
 
 # comentarios
-
-
 doc = """
 Implicit Association Test, draft
 """
@@ -100,15 +99,16 @@ def dscore2(data10: list, data13: list, data11: list, data14: list):
     return dscore_mean2
 
 
+
 class Constants(BaseConstants):
     name_in_url = 'iat'
     players_per_group = None
-    num_rounds = 18  # 14 para IAT + 4 para dictador
+    num_rounds = 18 + 14  # 14 para IAT + 4 para dictador, +14 de los demás IAT.
 
     keys = {"f": 'left', "j": 'right'}
     trial_delay = 0.250
     endowment = Decimal('100')  # Añadido para dictador
-    categories = ['perro', 'gato', 'blanco', 'negro']  # Categorías para el Dictador
+    categories = ['perro', 'gato', 'blanco', 'negro', 'Personas con discapacidad física', 'Personas sin discapacidad física', ]  # Categorías para el Dictador
 
 
 def url_for_image(filename):
@@ -401,6 +401,144 @@ class Player(BasePlayer):
         label="¿Cuánto te gustaría ofrecer?"
     )
 
+    # ——— Cuestionario grupo 1 —————
+
+    compr1_q1 = models.StringField(
+        choices=[
+            ['A', 'Un puntaje positivo indica que mi sesgo implícito es igual al promedio de cientos de miles de participantes. Un puntaje de cero indica que mi sesgo implícito favorece al grupo A más que cientos de miles de participantes. '],
+            ['B', 'Un puntaje positivo indica que mi sesgo implícito es igual al promedio de cientos de miles de participantes. Un puntaje negativo indica que mi sesgo implícito favorece al grupo A más que cientos de miles de participantes. '],
+            ['C', 'Un puntaje de cero indica que mi sesgo implícito es igual al promedio de cientos de miles de participantes. Un puntaje positivo indica que mi sesgo implícito favorece al grupo A más que cientos de miles de participantes. '],
+            ['D', 'Un puntaje de cero indica que mi sesgo implícito es igual al promedio de cientos de miles de participantes. Un puntaje negativo indica que mi sesgo implícito favorece al grupo A más que cientos de miles de participantes. '],
+            ['E', 'Un puntaje negativo indica que mi sesgo implícito es igual al promedio de cientos de miles de participantes. Un puntaje de cero indica que mi sesgo implícito favorece al grupo A más que cientos de miles de participantes. '],
+            ['F', 'Un puntaje negativo indica que mi sesgo implícito es igual al promedio de cientos de miles de participantes. Un puntaje positivo indica que mi sesgo implícito favorece al grupo A más que cientos de miles de participantes.'],
+        ],
+        blank=True,
+        widget=widgets.RadioSelect,
+        label="Supón que haces una prueba de asociación implícita que involucra a grupos A y B, en donde el grupo B es el grupo “base”. ¿Qué puntaje indicaría que tu sesgo implícito es igual al promedio de cientos de miles de participantes? ¿Qué puntaje indicaría que tu sesgo implícito favorece al grupo A más que el promedio de cientos de miles de participantes?"
+    )
+
+    # Pregunta 2 para grupo 1 (ahora radio, no múltiple)
+    compr1_q2 = models.StringField(
+        choices=[
+            ['A',
+             'Primero, hay una base de datos con cientos de miles de participantes que ya tomaron la prueba. Segundo, fue desarrollado por académicos.'],
+            ['B',
+             'Primero, está ligado a comportamientos relevantes en el mundo real. Segundo, es difícil de manipular ya que mide tu respuesta automática, sin que hayas tenido tiempo de pensar.'],
+            ['C', 'Primero, no existen otras pruebas para medir sesgos. Segundo, es fácil de implementar.'],
+        ],
+        blank=True,
+        widget=widgets.RadioSelect,
+        label="¿Cuáles son las dos características que hacen que la Prueba de Asociación Implícita sea una manera robusta de medir sesgos que tal vez ni siquiera sabías que tenías?"
+    )
+
+    compr1_order = models.LongStringField(
+        blank=True,
+        label="Arrastra las etapas para ponerlas en el orden correcto:"
+    )
+
+    compr1_q4 = models.StringField(
+        choices=[
+            ['A', 'Tomas una sola decisión sobre todos los grupos a los cuales puedes afectar monetariamente en la Etapa 6: decides directamente si se te informa o no sobre la identidad de todos los grupos cuando estés en la Etapa 6.'],
+            ['B', 'Tomas una decisión para cada grupo a los cuales puedes afectar monetariamente en la Etapa 6: decides directamente si se te informa o no sobre la identidad de cada grupo cuando estés en la Etapa 6.'],
+            ['C', 'Nos vas a decir si quieres que te revelemos la identidad de los grupos correspondientes a una decisión dependiendo de si tu puntaje en la prueba de asociación implícita cayó debajo, dentro o arriba del rango que consideras aceptable. '],
+        ],
+        blank=True,
+        widget=widgets.RadioSelect,
+        label="En la Etapa 5 (qué información revelar en la Etapa 6), ¿cómo tomas la decisión de qué se te revela en la Etapa 6?"
+    )
+
+    compr1_q5 = models.StringField(
+        choices=[
+            ['A', 'Te revelamos la identidad de los grupos A y B. No te revelamos la identidad de los grupos C y D.'],
+            ['B', 'Te revelamos la identidad de los grupos A y B con 80% de probabilidad, y con 20% de probabilidad no te revelamos la identidad de los grupos A y B. No te revelamos la identidad de los grupos C y D.'],
+            ['C', 'Te revelamos la identidad de los grupos A y B. No te revelamos la identidad de los grupos C y D con 80% de probabilidad, y con 20% de probabilidad sí te revelamos la identidad de los grupos C y D. '],
+            ['D', 'Te revelamos la identidad de los grupos A y B con 80% de probabilidad, y con 20% de probabilidad no te revelamos la identidad de los grupos A y B. No te revelamos la identidad de los grupos C y D con 80% de probabilidad, y con 20% de probabilidad sí te revelamos la identidad de los grupos C y D.'],
+        ],
+        blank=True,
+        widget=widgets.RadioSelect,
+        label="Supón que nos indicas que quieres que en la Etapa 6 te revelemos la identidad de los grupos A y B, y que no te revelemos la identidad de los grupos C y D. ¿Qué haríamos en la práctica?"
+    )
+
+    compr1_q6 = models.StringField(
+        choices=[
+            ['A', 'Ninguna decisión involucra a los grupos de personas sobre las que te preguntamos en las pruebas de la Etapa 2, y sólo vamos a incluir decisiones que no afecten a las personas sobre las que te preguntamos en la Etapa 2. '],
+            ['B', 'No todas las decisiones involucran a los grupos de personas sobre las que te preguntamos en las pruebas de la Etapa 2, y es posible que incluyamos decisiones que no afecten a algunas de las personas sobre las que te preguntamos en la Etapa 2. '],
+            ['C', 'Todas las decisiones involucran a los grupos de personas sobre las que te preguntamos en las pruebas de la Etapa 2, y ninguna decisión van a incluir a grupos de personas sobre las que no te preguntamos en la Etapa 2.'],
+        ],
+        blank=True,
+        widget=widgets.RadioSelect,
+        label="Escoge la opción correcta sobre tus decisiones en la Etapa 6."
+    )
+
+    # ——— Cuestionario grupo 2 —————
+
+    compr2_q1 = models.StringField(
+        choices=[
+            ['A', 'Un puntaje positivo indica que mi sesgo implícito es igual al promedio de cientos de miles de participantes. Un puntaje de cero indica que mi sesgo implícito favorece al grupo A más que cientos de miles de participantes. '],
+            ['B', 'Un puntaje positivo indica que mi sesgo implícito es igual al promedio de cientos de miles de participantes. Un puntaje negativo indica que mi sesgo implícito favorece al grupo A más que cientos de miles de participantes.'],
+            ['C', 'Un puntaje de cero indica que mi sesgo implícito es igual al promedio de cientos de miles de participantes. Un puntaje positivo indica que mi sesgo implícito favorece al grupo A más que cientos de miles de participantes. '],
+            ['D', 'Un puntaje de cero indica que mi sesgo implícito es igual al promedio de cientos de miles de participantes. Un puntaje negativo indica que mi sesgo implícito favorece al grupo A más que cientos de miles de participantes. '],
+            ['E', 'Un puntaje negativo indica que mi sesgo implícito es igual al promedio de cientos de miles de participantes. Un puntaje de cero indica que mi sesgo implícito favorece al grupo A más que cientos de miles de participantes. '],
+            ['F', 'Un puntaje negativo indica que mi sesgo implícito es igual al promedio de cientos de miles de participantes. Un puntaje positivo indica que mi sesgo implícito favorece al grupo A más que cientos de miles de participantes.'],
+        ],
+        blank=True,
+        widget=widgets.RadioSelect,
+        label="Supón que haces una prueba de asociación implícita que involucra a grupos A y B, en donde el grupo B es el grupo “base”. ¿Qué puntaje indicaría que tu sesgo implícito es igual al promedio de cientos de miles de participantes? ¿Qué puntaje indicaría que tu sesgo implícito favorece al grupo A más que el promedio de cientos de miles de participantes?"
+    )
+
+    # Pregunta 2 para grupo 2 (igual)
+    compr2_q2 = models.StringField(
+        choices=[
+            ['A',
+             'Primero, hay una base de datos con cientos de miles de participantes que ya tomaron la prueba. Segundo, fue desarrollado por académicos.'],
+            ['B',
+             'Primero, está ligado a comportamientos relevantes en el mundo real. Segundo, es difícil de manipular ya que mide tu respuesta automática, sin que hayas tenido tiempo de pensar.'],
+            ['C', 'Primero, no existen otras pruebas para medir sesgos. Segundo, es fácil de implementar.'],
+        ],
+        blank=True,
+        widget=widgets.RadioSelect,
+        label="¿Cuáles son las dos características que hacen que la Prueba de Asociación Implícita sea una manera robusta de medir sesgos que tal vez ni siquiera sabías que tenías?"
+    )
+
+    compr2_order = models.LongStringField(
+        blank=True,
+        label="Arrastra las etapas para ponerlas en el orden correcto:"
+    )
+
+    compr2_q4 = models.StringField(
+        choices=[
+            ['A', 'Tomas una sola decisión sobre todos los grupos a los cuales puedes afectar monetariamente en la Etapa 6: decides directamente si se te informa o no sobre la identidad de todos los grupos cuando estés en la Etapa 6.'],
+            ['B', 'Tomas una decisión para cada grupo a los cuales puedes afectar monetariamente en la Etapa 6: decides directamente si se te informa o no sobre la identidad de cada grupo cuando estés en la Etapa 6.'],
+            ['C', 'Nos vas a decir si quieres que te revelemos la identidad de los grupos correspondientes a una decisión dependiendo de si tu puntaje en la prueba de asociación implícita cayó debajo, dentro o arriba del rango que consideras aceptable.'],
+        ],
+        blank=True,
+        widget=widgets.RadioSelect,
+        label="En la Etapa 5 (qué información revelar en la Etapa 6), ¿cómo tomas la decisión de qué se te revela en la Etapa 6?"
+    )
+
+    compr2_q5 = models.StringField(
+        choices=[
+            ['A', 'Te revelamos la identidad de los grupos A y B. No te revelamos la identidad de los grupos C y D.'],
+            ['B', 'Te revelamos la identidad de los grupos A y B con 80% de probabilidad, y con 20% de probabilidad no te revelamos la identidad de los grupos A y B. No te revelamos la dentidad de los grupos C y D.'],
+            ['C', 'Te revelamos la identidad de los grupos A y B. No te revelamos la identidad de los grupos C y D con 80% de probabilidad, y con 20% de probabilidad sí te revelamos la identidad de los grupos C y D.'],
+            ['D', 'Te revelamos la identidad de los grupos A y B con 80% de probabilidad, y con 20% de probabilidad no te revelamos la identidad de los grupos A y B. No te revelamos la identidad de los grupos C y D con 80% de probabilidad, y con 20% de probabilidad sí te revelamos la identidad de los grupos C y D.'],
+        ],
+        blank=True,
+        widget=widgets.RadioSelect,
+        label="Supón que nos indicas que quieres que en la Etapa 6 te revelemos la identidad de los grupos A y B, y que no te revelemos la identidad de los grupos C y D. ¿Qué haríamos en la práctica?"
+    )
+
+    compr2_q6 = models.StringField(
+        choices=[
+            ['A', 'Ninguna decisión involucra a los grupos de personas sobre las que te preguntamos en las pruebas de la Etapa 2, y sólo vamos a incluir decisiones que no afecten a las personas sobre las que te preguntamos en la Etapa 2.'],
+            ['B', 'No todas las decisiones involucran a los grupos de personas sobre las que te preguntamos en las pruebas de la Etapa 2, y es posible que incluyamos decisiones que no afecten a algunas de las personas sobre las que te preguntamos en la Etapa 2.'],
+            ['C', 'Todas las decisiones involucran a los grupos de personas sobre las que te preguntamos en las pruebas de la Etapa 2, y ninguna decisión van a incluir a grupos de personas sobre las que no te preguntamos en la Etapa 2.'],
+        ],
+        blank=True,
+        widget=widgets.RadioSelect,
+        label="Escoge la opción correcta sobre tus decisiones en la Etapa 6."
+    )
+
 
 class Group(BaseGroup):
     dictator_category = models.StringField(
@@ -668,6 +806,12 @@ def play_game(player: Player, message: dict):
 
 
 # PAGES
+# sobre los cambios del 25 de mayo del 2025: pre-correr el experimento: pensé que tenía que agregar muchas rondas para las instrucciones nuevas, pero simplemente
+# puedo agregar páginas para que se muestren en un orden que tenga sentido. Qué tranquilidad.
+
+
+
+
 
 class Intro(Page):
     # comentario en caso de ser necesario: cambié está página para que se
@@ -807,16 +951,272 @@ class PreguntaM(Page):
                 return "Por favor, responde todas las preguntas antes de continuar."
 #pie
 # acá el detalle es que las validaciones de los campos están mal, aunque fáciles de cambiar, no lo haré ahora. 4 de febrero del 2025.
-class InstruccionesGenerales(Page):
+class Comprension1(Page):
     form_model = 'player'
+    form_fields = [
+        'compr1_q1',
+        'compr1_q2',
+        'compr1_order',
+        'compr1_q4',
+        'compr1_q5',
+        'compr1_q6',
+    ]
+
+    @staticmethod
+    def is_displayed(player: Player):
+        # Sólo si el orden ES [1..14]
+        return player.participant.vars.get('iat_round_order') == list(range(1, 15))
+
+    @staticmethod
+    def vars_for_template(player):
+        stages = [
+            "Sociodemográfica",
+            "Pruebas de asociación implícita",
+            "Adivinas tus puntajes en las pruebas de la Etapa 2",
+            "Rango aceptable de puntajes en las pruebas de la Etapa 2",
+            "Qué información revelar en las decisiones de la Etapa 6",
+            "Decisiones monetarias que pueden afectar a grupos de la Etapa 2",
+        ]
+        return {'stages': stages}
+
+    @staticmethod
+    def error_message(player: Player, values):
+        # Requiere que TODOS los campos tengan valor
+        for field in Comprension1.form_fields:
+            if not values.get(field):
+                return "Por favor, responde todas las preguntas antes de continuar."
+
+
+
+class Comprension2(Page):
+    form_model = 'player'
+    form_fields = [
+        'compr2_q1',
+        'compr2_q2',
+        'compr2_order',
+        'compr2_q4',
+        'compr2_q5',
+        'compr2_q6',
+    ]
+
+    @staticmethod
+    def is_displayed(player: Player):
+        # Sólo si el orden ES [8..14,1..7]
+        return player.participant.vars.get('iat_round_order') == (
+            list(range(8, 15)) + list(range(1, 8))
+        )
+
+    @staticmethod
+    def vars_for_template(player):
+        stages = [
+            "Sociodemográfica",
+            "Pruebas de asociación implícita",
+            "Adivinas tus puntajes en las pruebas de la Etapa 2",
+            "Rango aceptable de puntajes en las pruebas de la Etapa 2",
+            "Qué información revelar en las decisiones de la Etapa 6",
+            "Decisiones monetarias que pueden afectar a grupos de la Etapa 2",
+        ]
+        return {'stages': stages}
+
+    @staticmethod
+    def error_message(player: Player, values):
+        # Requiere que TODOS los campos tengan valor
+        for field in Comprension2.form_fields:
+            if not values.get(field):
+                return "Por favor, responde todas las preguntas antes de continuar."
+
+# Feedback para el grupo 1
+class Feedback1(Page):
+    @staticmethod
+    def is_displayed(player: Player):
+        return player.participant.vars.get('iat_round_order', []) == list(range(1, 15))
+
+    @staticmethod
+    def vars_for_template(player: Player):
+        # Respuestas correctas
+        correct = {
+            'compr1_q1': 'E',
+            'compr1_q2': ['B'],
+            'compr1_order': "",
+            'compr1_q4': 'C',
+            'compr1_q5': 'D',
+            'compr1_q6': 'B',
+        }
+        # Explicaciones
+        explanation = {
+            'compr1_q1': (
+                "Tu puntaje se compara con los datos de Project Implicit, una base con cientos de miles de participantes. "
+                "Una puntuación de cero representa el promedio de dicha base. La interpretación del puntaje depende "
+                "de cuál de los dos grupos es el grupo “base” para fines de la comparación. En la pregunta, el grupo B "
+                "es el grupo “base”. Un puntaje positivo indicaría que, comparado a la base de datos de Project Implicit, "
+                "el/la participante asocia con mayor facilidad a los del grupo B con los atributos positivos en comparación "
+                "con la asociación que hace con los del grupo A. Un puntaje negativo indica una asociación relativamente "
+                "más fuerte de los del grupo A con atributos positivos en comparación con la asociación con los del grupo B."
+            ),
+            'compr1_q2': (
+                "Como mostramos con los estudios que mencionamos, hay mucha evidencia que la Prueba de Asociación Implícita "
+                "está ligada a comportamientos relevantes en el mundo real. A diferencia de otras pruebas, la Prueba de Asociación "
+                "Implícita es difícil de manipular ya que mide tu respuesta automática—tu primera reacción, sin haber tenido tiempo "
+                "para pensar."
+            ),
+            'compr1_order': ("Sociodemográfica, Pruebas de asociación implícita, Adivinas tus puntajes en las pruebas de la Etapa 2, "
+                            "Rango aceptable de puntajes en las pruebas de la Etapa 2, Qué información revelar en las decisiones de la Etapa 6, "
+                            "Decisiones monetarias que pueden afectar a grupos de la Etapa 2"),
+            'compr1_q4': (
+                "No es directa la decisión sobre la información que se te revela—no te vamos a preguntar simplemente si quieres "
+                "que se te revele la información sobre cada grupo. En vez de eso, la decisión va a depender de tus puntajes en "
+                "las pruebas de asociación implícita y en el rango de puntajes aceptables que nos diste en la cuarta etapa."
+            ),
+            'compr1_q5': (
+                "Te revelamos la identidad de los grupos A y B con 80% de probabilidad, y con 20% de probabilidad no te revelamos "
+                "la identidad de los grupos A y B. No te revelamos la identidad de los grupos C y D con 80% de probabilidad, y con "
+                "20% de probabilidad sí te revelamos la identidad de los grupos C y D."
+            ),
+            'compr1_q6': (
+                "No todas las decisiones involucran a los grupos de personas sobre las que te preguntamos en la Etapa 2, y es posible "
+                "que incluyamos decisiones que afecten a grupos de personas sobre las que no te preguntamos en la Etapa 2."
+            ),
+        }
+        # Labels manuales
+        labels = {
+            'compr1_q1': "Supón que haces una prueba de asociación implícita que involucra a grupos A y B, en donde el grupo B es el grupo “base”. ¿Qué puntaje indicaría que tu sesgo implícito es igual al promedio de cientos de miles de participantes? ¿Qué puntaje indicaría que tu sesgo implícito favorece al grupo A más que el promedio de cientos de miles de participantes?",
+            'compr1_q2': "¿Cuáles son las dos características que hace que la Prueba de Asociación Implícita sea una manera robusta de medir sesgos que tal vez ni siquiera sabías que tenías?",
+            'compr1_order': "Arrastra las etapas para ponerlas en el orden correcto:" ,
+            'compr1_q4': "En la Etapa 5 (qué información revelar en la Etapa 6), ¿cómo tomas la decisión de qué se te revela en la Etapa 6?",
+            'compr1_q5': "Supón que nos indicas que quieres que en la Etapa 6 te revelemos la identidad de los grupos A y B, y que no te revelemos la identidad de los grupos C y D. ¿Qué haríamos en la práctica?",
+            'compr1_q6': "Escoge la opción correcta sobre tus decisiones en la Etapa 6.",
+        }
+
+        feedback = []
+        for field in ['compr1_q1', 'compr1_q2', 'compr1_order', 'compr1_q4', 'compr1_q5', 'compr1_q6']:
+            your = getattr(player, field)
+            corr = correct[field]
+            is_corr = (your == corr) if not isinstance(corr, list) else (set(your or []) == set(corr))
+            feedback.append({
+                'label': labels[field],
+                'your_answer': your,
+                'correct_answer': corr,
+                'is_correct': is_corr,
+                'explanation': explanation[field],
+            })
+        return {'feedback': feedback}
+
+# Feedback para el grupo 2
+class Feedback2(Page):
+
+    @staticmethod
+    def is_displayed(player: Player):
+        return player.participant.vars.get('iat_round_order', []) == ([8, 9, 10, 11, 12, 13, 14] + list(range(1, 8)))
+
+    @staticmethod
+    def vars_for_template(player: Player):
+        # Respuestas correctas
+        correct = {
+            'compr2_q1': 'E',
+            'compr2_q2': ['B'],
+            'compr2_order': "Sociodemográfica, Pruebas de asociación implícita, Adivinas tus puntajes en las pruebas de la Etapa 2, "
+                            "Rango aceptable de puntajes en las pruebas de la Etapa 2, Qué información revelar en las decisiones "
+                            "de la Etapa 6, Decisiones monetarias que pueden afectar a grupos de la Etapa 2",
+            'compr2_q4': 'C',
+            'compr2_q5': 'D',
+            'compr2_q6': 'B',
+        }
+        # Explicaciones (idénticas a las de Feedback1, copiadas manualmente)
+        explanation = {
+            'compr2_q1': (
+                "Tu puntaje se compara con los datos de Project Implicit, una base con cientos de miles de participantes. "
+                "Una puntuación de cero representa el promedio de dicha base. La interpretación del puntaje depende "
+                "de cuál de los dos grupos es el grupo “base” para fines de la comparación. En la pregunta, el grupo B "
+                "es el grupo “base”. Un puntaje positivo indicaría que, comparado a la base de datos de Project Implicit, "
+                "el/la participante asocia con mayor facilidad a los del grupo B con los atributos positivos en comparación "
+                "con la asociación que hace con los del grupo A. Un puntaje negativo indica una asociación relativamente "
+                "más fuerte de los del grupo A con atributos positivos en comparación con la asociación con los del grupo B."
+            ),
+            'compr2_q2': (
+                "Como mostramos con los estudios que mencionamos, hay mucha evidencia que la Prueba de Asociación Implícita "
+                "está ligada a comportamientos relevantes en el mundo real. A diferencia de otras pruebas, la Prueba de Asociación "
+                "Implícita es difícil de manipular ya que mide tu respuesta automática—tu primera reacción, sin haber tenido tiempo "
+                "para pensar."
+            ),
+            'compr2_order': (
+                "El orden correcto de las etapas es: Sociodemográfica; Pruebas de asociación implícita; Adivinas tus puntajes "
+                "en las pruebas de la Etapa 2; Rango aceptable de puntajes en las pruebas de la Etapa 2; Qué información revelar "
+                "en las decisiones de la Etapa 6; Decisiones monetarias que pueden afectar a grupos de la Etapa 2."
+            ),
+            'compr2_q4': (
+                "Es directa la decisión—siguiendo el ejemplo, te preguntaríamos simplemente si quieres que se te revele la información "
+                "sobre indígenas y mestizo. Si en la Etapa 6 tomas una decisión que afecta a mestizos e indígenas, te vamos a reportar "
+                "que esa decisión va a afectar a indígenas sólo si así nos lo indicaste."
+            ),
+            'compr2_q5': (
+                "Te revelamos la identidad de los grupos A y B con 80% de probabilidad, y con 20% de probabilidad no te revelamos la "
+                "identidad de los grupos A y B. No te revelamos la identidad de los grupos C y D con 80% de probabilidad, y con 20% "
+                "de probabilidad sí te revelamos la identidad de los grupos C y D."
+            ),
+            'compr2_q6': (
+                "No todas las decisiones involucran a los grupos de personas sobre las que te preguntamos en la Etapa 2, y es posible "
+                "que incluyamos decisiones que afecten a grupos de personas sobre las que no te preguntamos en la Etapa 2."
+            ),
+        }
+        # Labels manuales (igual a los que pusiste en tu modelo)
+        labels = {
+            'compr2_q1': "Supón que haces una prueba de asociación implícita que involucra a grupos A y B, en donde el grupo B es el grupo “base”. ¿Qué puntaje indicaría que tu sesgo implícito es igual al promedio de cientos de miles de participantes? ¿Qué puntaje indicaría que tu sesgo implícito favorece al grupo A más que el promedio de cientos de miles de participantes?",
+            'compr2_q2': "¿Cuáles son las dos características que hace que la Prueba de Asociación Implícita sea una manera robusta de medir sesgos que tal vez ni siquiera sabías que tenías?",
+            'compr2_order': "Arrastra las etapas para ponerlas en el orden correcto:",
+            'compr2_q4': "En la Etapa 5 (qué información revelar en la Etapa 6), ¿cómo tomas la decisión de qué se te revela en la Etapa 6?",
+            'compr2_q5': "Supón que nos indicas que quieres que en la Etapa 6 te revelemos la identidad de los grupos A y B, y que no te revelemos la identidad de los grupos C y D. ¿Qué haríamos en la práctica?",
+            'compr2_q6': "Escoge la opción correcta sobre tus decisiones en la Etapa 6.",
+        }
+
+        feedback = []
+        for field in ['compr2_q1', 'compr2_q2', 'compr2_order', 'compr2_q4', 'compr2_q5', 'compr2_q6']:
+            your = getattr(player, field)
+            corr = correct[field]
+            is_corr = (your == corr) if not isinstance(corr, list) else (set(your or []) == set(corr))
+            feedback.append({
+                'label': labels[field],
+                'your_answer': your,
+                'correct_answer': corr,
+                'is_correct': is_corr,
+                'explanation': explanation[field],
+            })
+        return {'feedback': feedback}
+
+
+class InstruccionesGenerales(Page):
     @staticmethod
     def is_displayed(player):
-        # Mostrar esta página solo una vez por participante
-        return player.participant.vars.get('user_generales_completed', False) == False
+        return not player.participant.vars.get('user_generales1_completed', False)
+
     @staticmethod
-    def before_next_page(player: Player, timeout_happened):
-        # Marcar que la información ya fue recopilada
-        player.participant.vars['user_generales_completed'] = True
+    def before_next_page(player, timeout_happened):
+        player.participant.vars['user_generales1_completed'] = True
+
+
+class InstruccionesGenerales2(Page):
+    @staticmethod
+    def is_displayed(player):
+        return (
+            player.participant.vars.get('user_generales1_completed', False)
+            and not player.participant.vars.get('user_generales2_completed', False)
+        )
+
+    @staticmethod
+    def before_next_page(player, timeout_happened):
+        player.participant.vars['user_generales2_completed'] = True
+
+class InstruccionesGenerales3(Page):
+    @staticmethod
+    def is_displayed(player):
+        return (
+            player.participant.vars.get('user_generales2_completed', False)
+            and not player.participant.vars.get('user_generales3_completed', False)
+        )
+
+    @staticmethod
+    def before_next_page(player, timeout_happened):
+        player.participant.vars['user_generales3_completed'] = True
+
 
 class IATAssessmentPage(Page):
     form_model = 'player'
@@ -1262,7 +1662,12 @@ class ResultsDictador(Page):
 # ay,NVIDIA, te odio jaja
 
 page_sequence = [
-    InstruccionesGenerales,
+    Comprension1,
+    Comprension2,
+    Feedback1,
+    Feedback2,
+    InstruccionesGenerales2,
+    InstruccionesGenerales3,
     UserInfo,
     #PreguntaM,
     Intro,
@@ -1277,109 +1682,3 @@ page_sequence = [
 ]
 
 
-# página que podría ser útil, probablemente no.
-class Results(Page):
-    @staticmethod
-    def is_displayed(player):
-        # Mostrar la página de resultados en la ronda 14
-        return player.round_number == 15
-
-    @staticmethod
-    def vars_for_template(player: Player):
-        def extract(rnd):
-            # Extraer tiempos de reacción de las rondas especificadas
-            trials = [
-                t
-                for t in Trial.filter(player=player.in_round(rnd))
-                if t.reaction_time is not None
-            ]
-            values = [t.reaction_time for t in trials]
-            return values
-
-        # Extraer datos para el primer IAT (rondas 3, 4, 6, 7)
-        data3 = extract(3)
-        data4 = extract(4)
-        data6 = extract(6)
-        data7 = extract(7)
-        dscore1_result = dscore1(data3, data4, data6, data7)
-
-        # Extraer datos para el segundo IAT (rondas 10, 13, 11, 14)
-        data10 = extract(10)
-        data13 = extract(13)
-        data11 = extract(11)
-        data14 = extract(14)
-        dscore2_result = dscore2(data10, data13, data11, data14)
-
-        # Recuperar el orden de las rondas del IAT
-        iat_round_order = player.participant.vars.get('iat_round_order', [])
-
-        # Asignar dscore1 y dscore2 según el orden de las rondas
-        if iat_round_order == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]:
-            player.dscore1 = dscore1_result
-            player.dscore2 = dscore2_result
-        elif iat_round_order == [8, 9, 10, 11, 12, 13, 14, 1, 2, 3, 4, 5, 6, 7]:
-            player.dscore1 = dscore2_result
-            player.dscore2 = dscore1_result
-        else:
-            # Manejo de otros posibles órdenes, si los hay
-            player.dscore1 = dscore1_result
-            player.dscore2 = dscore2_result
-
-        # Obtener combinaciones de pares positivos y negativos para el primer IAT
-        pos_pairs_iat1 = labels_for_block(get_block_for_round(3, player.session.params))
-        neg_pairs_iat1 = labels_for_block(get_block_for_round(6, player.session.params))
-
-        # Obtener combinaciones de pares positivos y negativos para el segundo IAT
-        pos_pairs_iat2 = labels_for_block(get_block_for_round(10, player.session.params))
-        neg_pairs_iat2 = labels_for_block(get_block_for_round(13, player.session.params))
-
-        # Validar si los resultados están dentro o fuera de los rangos definidos
-        dscore1_in_range = (
-                player.dscore1 >= player.iat1_lower_limit and
-                player.dscore1 <= player.iat1_upper_limit
-        )
-        dscore2_in_range = (
-                player.dscore2 >= player.iat2_lower_limit and
-                player.dscore2 <= player.iat2_upper_limit
-        )
-
-        # Decidir si mostrar u ocultar resultados en base a las preferencias del usuario
-        show_dscore1 = (
-                (dscore1_in_range and not player.hide_iat1_info_in_range) or
-                (not dscore1_in_range and not player.hide_iat1_info_out_of_range)
-        )
-        show_dscore2 = (
-                (dscore2_in_range and not player.hide_iat2_info_in_range) or
-                (not dscore2_in_range and not player.hide_iat2_info_out_of_range)
-        )
-
-        # Manejar valores del jugador
-        player_name = player.field_maybe_none('name') or "Anónimo"
-        player_age = player.field_maybe_none('age') or 18
-        player_sports = player.field_maybe_none('sports') or "Sin especificar"
-        player_random_number = player.field_maybe_none('random_number') or 0
-        moral_question = player.field_maybe_none('moral_question') or "Sin respuesta"
-        iat1_self_assessment = player.field_maybe_none('iat1_self_assessment') or "No especificado"
-        iat1_assessment_probability = player.field_maybe_none('iat1_assessment_probability') or 0
-        iat2_self_assessment = player.field_maybe_none('iat2_self_assessment') or "No especificado"
-        iat2_assessment_probability = player.field_maybe_none('iat2_assessment_probability') or 0
-
-        return dict(
-            show_dscore1=show_dscore1,
-            show_dscore2=show_dscore2,
-            dscore1=dscore1_result if show_dscore1 else None,
-            dscore2=dscore2_result if show_dscore2 else None,
-            pos_pairs_iat1=pos_pairs_iat1,
-            neg_pairs_iat1=neg_pairs_iat1,
-            pos_pairs_iat2=pos_pairs_iat2,
-            neg_pairs_iat2=neg_pairs_iat2,
-            player_name=player_name,
-            player_age=player_age,
-            player_sports=player_sports,
-            player_random_number=player_random_number,
-            moral_question=moral_question,
-            iat1_self_assessment=iat1_self_assessment,
-            iat1_assessment_probability=iat1_assessment_probability,
-            iat2_self_assessment=iat2_self_assessment,
-            iat2_assessment_probability=iat2_assessment_probability,
-        )
