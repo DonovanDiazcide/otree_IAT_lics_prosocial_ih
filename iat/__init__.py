@@ -359,42 +359,48 @@ class Player(BasePlayer):
         label="¿Quieres que se te muestre información sobre personas homosexuales y heterosexuales al tomar una decisión con consecuencias monetarias, si tu puntaje en el IAT queda a la derecha de tu rango moralmente aceptable?",
         widget=widgets.RadioSelect,
         choices=[(True, "Sí"), (False, "No")],
-        blank=True
+        blank=True,
+        initial=False
     )
 
     iat1_probability_left = models.BooleanField(
         label="¿Quieres que se te revele la información sobre personas obesas y personas delgadas al tomar una decisión con consecuencias monetarias, si tu puntaje en el IAT queda a la izquierda de tu rango moralmente aceptable?",
         widget=widgets.RadioSelect,
         choices=[(True, "Sí"), (False, "No")],
-        blank=True
+        blank=True,
+        initial=False
     )
 
     iat2_probability_left = models.BooleanField(
         label="¿Quieres que se te revele la información sobre personas homosexuales y personas heterosexuales al tomar una decisión con consecuencias monetarias, si tu puntaje en el IAT queda a la izquierda de tu rango moralmente aceptable?",
         widget=widgets.RadioSelect,
         choices=[(True, "Sí"), (False, "No")],
-        blank=True
+        blank=True,
+        initial=False
     )
 
     iat1_probability_right = models.BooleanField(
         label="¿Quieres que se te revele la información sobre personas obesas y personas delgadas al tomar una decisión con consecuencias monetarias, si tu puntaje en el IAT queda a la derecha de tu rango moralmente aceptable?",
         widget=widgets.RadioSelect,
         choices=[(True, "Sí"), (False, "No")],
-        blank=True
+        blank=True,
+        initial=False
     )
 
     iat2_probability = models.BooleanField(
         label="¿Quieres que se te revele la información sobre personas homosexuales y personas heterosexuales al tomar una decisión con consecuencias monetarias, si tu puntaje en el IAT queda dentro de tu rango moralmente aceptable?",
         widget=widgets.RadioSelect,
         choices=[(True, "Sí"), (False, "No")],
-        blank=True
+        blank=True,
+        initial=False
     )
 
     iat1_probability = models.BooleanField(
         label="¿Quieres que se te revele la información sobre personas obesas y personas delgadas al tomar una decisión con consecuencias monetarias, si tu puntaje en el IAT queda dentro de tu rango moralmente aceptable?",
         widget=widgets.RadioSelect,
         choices=[(True, "Sí"), (False, "No")],
-        blank=True
+        blank=True,
+        initial=False
     )
 
     # Variables para capturar la asociación calculada (se asignan en DictatorIntroduction)
@@ -1578,19 +1584,7 @@ class MoralDecisionPageCerteza(Page):
             'iat2_upper_limit': player.iat2_upper_limit,
         }
 
-    @staticmethod
-    def error_message(player, values):
-        # Validar las probabilidades (0-100) y decimales
-        for field in ['iat1_probability', 'iat1_probability_out_of_range', 'iat2_probability',
-                      'iat2_probability_out_of_range']:
-            value = values.get(field)
-            if value is not None:
-                if value < 0 or value > 100:
-                    return f"El valor de {field} debe estar entre 0 y 100."
-                elif len(str(value).split('.')[-1]) > 2:
-                    return f"El valor de {field} no puede tener más de dos decimales."
-        return None
-
+   
 
 # queda por introducir la función que propuse para esta clase, está en esta página: https://chatgpt.com/g/g-p-6770700264fc81918f62555c338c6f02-literature-review-iat/c/67a0f18e-087c-800c-966d-f4186e249d2e?model=o3-mini-high
 class DictatorIntroduction(Page):
