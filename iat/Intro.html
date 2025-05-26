@@ -41,68 +41,32 @@
 {% endblock %}
 
 {% block content %}
-<h3>Instrucciones de la prueba:</h3>
-<p>Realizarás una prueba de asociación implícita.</p>
-<p>Cada prueba consta de siete rondas. En cada una, clasificarás <strong>lo más rápido que puedas</strong> varias imágenes que podrán corresponder a una de dos categorías.</p>
-
-<p>Ahora mismo las categorías son
-    <span class="primary"><strong>{{ labels.left.primary }}/{{ labels.right.primary }}</strong></span>
-    y
-    <span class="secondary"><strong>{{ labels.left.secondary }}/{{ labels.right.secondary }}</strong></span>.
-    A continuación verás las categorías junto con las imágenes que deberás clasificar:
-</p>
 
 <!-- Primera galería: tamaño completo -->
 <div class="image-container">
-    {% if labels.left.primary == 'felidae' or labels.left.primary == 'Felidae' %}
-        {% if labels.right.primary == 'canidae' or labels.right.primary == 'Canidae' %}
-            <img src="{% static 'images/IATFelidaeCanidae.png' %}" alt="Categorías Felidae/Canidae">
+    {% if labels.left.primary == 'Personas obesas' or labels.left.primary == 'Personas obesas' %}
+        {% if labels.right.primary == 'Personas delgadas' or labels.right.primary == 'Personas delgadas' %}
+            <img src="{% static 'images/IATObesoDelgado.png' %}" alt="Categorías Felidae/Canidae">
         {% else %}
-            <img src="{% static 'images/IATFelidaeCanidae.png' %}" alt="Categorías Felidae/Canidae">
-            <img src="{% static 'images/IATBlancoNegr.png' %}" alt="Categorías Caucásicas/Afrodescendientes">
+            <img src="{% static 'images/IATObesoDelgado.png' %}" alt="Categorías Felidae/Canidae">
+            <img src="{% static 'images/IATHeteroHomo.png' %}" alt="Categorías Caucásicas/Afrodescendientes">
         {% endif %}
-    {% elif labels.left.primary == 'caucásico' or labels.left.primary == 'Caucásico' %}
-        {% if labels.right.primary == 'afrodescendiente' or labels.right.primary == 'Afrodescendiente' %}
-            <img src="{% static 'images/IATBlancoNegr.png' %}" alt="Categorías Caucásicas/Afrodescendientes">
+    {% elif labels.left.primary == 'Personas homosexuales' or labels.left.primary == 'Personas homosexuales' %}
+        {% if labels.right.primary == 'Personas heterosexuales' or labels.right.primary == 'Personas heterosexuales' %}
+            <img src="{% static 'images/IATHeteroHomo.png' %}" alt="Categorías Caucásicas/Afrodescendientes">
         {% else %}
-            <img src="{% static 'images/IATFelidaeCanidae.png' %}" alt="Categorías Felidae/Canidae">
-            <img src="{% static 'images/IATBlancoNegr.png' %}" alt="Categorías Caucásicas/Afrodescendientes">
+            <img src="{% static 'images/IATObesoDelgado.png' %}" alt="Categorías Felidae/Canidae">
+            <img src="{% static 'images/IATHeteroHomo.png' %}" alt="Categorías Caucásicas/Afrodescendientes">
         {% endif %}
     {% else %}
-        <img src="{% static 'images/IATFelidaeCanidae.png' %}" alt="Categorías Felidae/Canidae">
-        <img src="{% static 'images/IATBlancoNegr.png' %}" alt="Categorías Caucásicas/Afrodescendientes">
+        <img src="{% static 'images/IATObesoDelgado.png' %}" alt="Categorías Felidae/Canidae">
+        <img src="{% static 'images/IATHeteroHomo.png' %}" alt="Categorías Caucásicas/Afrodescendientes">
     {% endif %}
 </div>
 
 <br>
 
-<h4>Cómo clasificar las imágenes</h4>
-<p>Verás distintas imágenes en el centro de la pantalla. Tendrás que clasificarlas según la categoría que corresponda, estas aparecerán en las
-    esquinas superiores de la pantalla. Dependiendo del dispositivo electrónico donde te encuentres deberás hacer lo siguiente: </p>
-<p><strong>En computadora:</strong> Usa las teclas <code>F</code> y <code>J</code> para clasificar cada imagen según corresponda a la categoría
-    de la izquierda o derecha</p>
-<p><strong>En tablet o celular (en orientación horizontal):</strong> Toca la esquina superior correspondiente.</p>
-<p>A continuación, algunos ejemplos:</p>
 
-<!-- Segunda galería: imágenes más pequeñas, centradas al 80% -->
-<div class="image-container small">
-    <h4>Antes de iniciar la prueba:</h4>
-    <img src="{% static 'images/IATcomputadora1.png' %}" alt="Computadora - antes">
-    <h4>Una vez iniciada la prueba:</h4>
-    <img src="{% static 'images/IATcomputadora2.png' %}" alt="Computadora - durante">
-</div>
-<h3>Nota: </h3>
-<p>En algunas rondas (3, 4, 6 y 7) verás cuatro categorías simultáneamente. La mecánica de clasificación es la misma.</p>
-
-<!-- Tercera galería: imágenes más pequeñas, centradas al 80% -->
-<div class="image-container small">
-<h4>Antes de iniciar la prueba:</h4>
-    <img src="{% static 'images/IATcomputadora3.png' %}" alt="Ejemplo 3 categorías">
-<h4>Una vez iniciada la prueba:</h4>
-    <img src="{% static 'images/IATcomputadora4.png' %}" alt="Ejemplo 4 categorías">
-<h4>Una vez iniciada la prueba:</h4>
-    <img src="{% static 'images/IATcomputadora5.png' %}" alt="Ejemplo 5 categorías">
-</div>
 
 {{ next_button }}
 {% endblock %}

@@ -60,20 +60,20 @@ BLOCKS1 = {
     9: {
         'title': "Ronda 2 (práctica)",
         'practice': True,
-        'left': {'secondary': 1},
-        'right': {'secondary': 2},
+        'left': {'secondary': 3},
+        'right': {'secondary': 4},
     },
     10: {
         'title': "Ronda 3",
         'practice': False,
-        'left': {'primary': 3, 'secondary': 1},
-        'right': {'primary': 4, 'secondary': 2},
+        'left': {'primary': 3, 'secondary': 3},
+        'right': {'primary': 4, 'secondary': 4},
     },
     11: {
         'title': "Ronda 4",
         'practice': False,
-        'left': {'primary': 3, 'secondary': 1},
-        'right': {'primary': 4, 'secondary': 2},
+        'left': {'primary': 3, 'secondary': 3},
+        'right': {'primary': 4, 'secondary': 4},
     },
     12: {
         'title': "Ronda 5 (práctica)",
@@ -84,14 +84,14 @@ BLOCKS1 = {
     13: {
         'title': "Ronda 6",
         'practice': False,
-        'left': {'primary': 4, 'secondary': 1},
-        'right': {'primary': 3, 'secondary': 2},
+        'left': {'primary': 4, 'secondary': 3},
+        'right': {'primary': 3, 'secondary': 4},
     },
     14: {
         'title': "Ronda 7",
         'practice': False,
-        'left': {'primary': 4, 'secondary': 1},
-        'right': {'primary': 3, 'secondary': 2},
+        'left': {'primary': 4, 'secondary': 3},
+        'right': {'primary': 3, 'secondary': 4},
     },
     # Bloques adicionales: feedback, juego y agradecimiento
     15: {
@@ -138,38 +138,38 @@ BLOCKS2 = {
     2: {
         'title': "Ronda 2 (práctica)",
         'practice': True,
-        'left': {'secondary': 1},
-        'right': {'secondary': 2},
+        'left': {'secondary': 3},
+        'right': {'secondary': 4},
     },
     3: {
         'title': "Ronda 3",
         'practice': False,
-        'left': {'primary': 3, 'secondary': 1},
-        'right': {'primary': 4, 'secondary': 2},
+        'left': {'primary': 3, 'secondary': 3},
+        'right': {'primary': 4, 'secondary': 4},
     },
     4: {
         'title': "Ronda 4",
         'practice': False,
-        'left': {'primary': 3, 'secondary': 1},
-        'right': {'primary': 4, 'secondary': 2},
+        'left': {'primary': 3, 'secondary': 3},
+        'right': {'primary': 4, 'secondary': 4},
     },
     5: {
         'title': "Ronda 5 (práctica)",
         'practice': True,
-        'left': {'primary': 3},
-        'right': {'primary': 4},
+        'left': {'primary': 4},
+        'right': {'primary': 3},
     },
     6: {
         'title': "Ronda 6",
         'practice': False,
-        'left': {'primary': 3, 'secondary': 2},
-        'right': {'primary': 4, 'secondary': 1},
+        'left': {'primary': 4, 'secondary': 3},
+        'right': {'primary': 3, 'secondary': 4},
     },
     7: {
         'title': "Ronda 7",
         'practice': False,
-        'left': {'primary': 3, 'secondary': 2},
-        'right': {'primary': 4, 'secondary': 1},
+        'left': {'primary': 4, 'secondary': 3},
+        'right': {'primary': 3, 'secondary': 4},
     },
     # Rondas 8 a 14: para el segundo bloque, invertimos el orden (4 y 3)
     8: {
@@ -193,26 +193,26 @@ BLOCKS2 = {
     11: {
         'title': "Ronda 4",
         'practice': False,
-        'left': {'primary': 2, 'secondary': 1},
-        'right': {'primary': 1, 'secondary': 2},
+        'left': {'primary': 1, 'secondary': 1},
+        'right': {'primary': 2, 'secondary': 2},
     },
     12: {
         'title': "Ronda 5 (práctica)",
         'practice': True,
-        'left': {'primary': 1},
-        'right': {'primary': 2},
+        'left': {'primary': 2},
+        'right': {'primary': 1},
     },
     13: {
         'title': "Ronda 6",
         'practice': False,
-        'left': {'primary': 1, 'secondary': 1},
-        'right': {'primary': 2, 'secondary': 2},
+        'left': {'primary': 2, 'secondary': 1},
+        'right': {'primary': 1, 'secondary': 2},
     },
     14: {
         'title': "Ronda 7",
         'practice': False,
-        'left': {'primary': 1, 'secondary': 1},
-        'right': {'primary': 2, 'secondary': 2},
+        'left': {'primary': 2, 'secondary': 1},
+        'right': {'primary': 1, 'secondary': 2},
     },
     # Bloques adicionales: feedback, juego y agradecimiento (idénticos a BLOCKS1)
     15: {

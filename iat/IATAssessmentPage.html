@@ -16,13 +16,13 @@
 /* 1. Form más ancho y adaptativo */
 form {
 /* Ancho máximo de formulario */
-max-width: 1200px;
+max-width: 5000px;
 /* Ocupa todo el ancho disponible para mantener centrado */
 width: 100%;
-margin: 40px auto;
-padding: 30px;
+margin: 1px auto;
+padding: 0px;
 background-color: #fff;
-border-radius: 10px;
+border-radius: 5px;
 box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 box-sizing: border-box;
     h2, h3 {
@@ -174,9 +174,9 @@ box-sizing: border-box;
 {% block content %}
 <p>Por el diseño de la prueba, el resultado del IAT se encuentra entre el rango <strong>-2</strong> y <strong>2</strong>:</p>
     <p>Tu resultado podrá corresponder a alguno de los siguientes 4 rangos puntuaciones y asociaciones:</p>
-<!-- IAT: Felidae/Canidae -->
+<!-- IAT: Personas obesas/Personas delgadas -->
 <div>
-  <h2>IAT: Felidae/Canidae</h2>
+  <h2>IAT: Personas obesas/Personas delgadas</h2>
   <div class="classification-wrapper">
     <!-- Clasificaciones Negativas -->
     <div class="classification-section">
@@ -196,15 +196,15 @@ box-sizing: border-box;
             </tr>
             <tr>
               <td>[-0.35, -0.16]</td>
-              <td><strong>Leve</strong>: <strong>canidae</strong> positivo, <strong>felidae</strong> negativo</td>
+              <td><strong>Leve</strong>: <strong>personas delgadas</strong> positivo, <strong>personas obesas</strong> negativo</td>
             </tr>
             <tr>
               <td>[-0.65, -0.36]</td>
-              <td><strong>Moderada</strong>: <strong>canidae</strong> positivo, <strong>felidae</strong> negativo</td>
+              <td><strong>Moderada</strong>: <strong>personas delgadas</strong> positivo, <strong>personas obesas</strong> negativo</td>
             </tr>
             <tr>
               <td>[-2, -0.66]</td>
-              <td><strong>Fuerte</strong>: <strong>canidae</strong> positivo, <strong>felidae</strong> negativo</td>
+              <td><strong>Fuerte</strong>: <strong>personas delgadas</strong> positivo, <strong>personas obesas</strong> negativo</td>
             </tr>
           </tbody>
         </table>
@@ -228,15 +228,15 @@ box-sizing: border-box;
             </tr>
             <tr>
               <td>[0.16, 0.35]</td>
-              <td><strong>Leve</strong>: <strong>felidae</strong> positivo, <strong>canidae</strong> negativo</td>
+              <td><strong>Leve</strong>: <strong>personas obesas</strong> positivo, <strong>personas delgadas</strong> negativo</td>
             </tr>
             <tr>
               <td>[0.36, 0.65]</td>
-              <td><strong>Moderada</strong>: <strong>felidae</strong> positivo, <strong>canidae</strong> negativo</td>
+              <td><strong>Moderada</strong>: <strong>personas obesas</strong> positivo, <strong>personas delgadas</strong> negativo</td>
             </tr>
             <tr>
               <td>[0.66, 2]</td>
-              <td><strong>Fuerte</strong>: <strong>felidae</strong> positivo, <strong>canidae</strong> negativo</td>
+              <td><strong>Fuerte</strong>: <strong>personas obesas</strong> positivo, <strong>personas delgadas</strong> negativo</td>
             </tr>
           </tbody>
         </table>
@@ -245,9 +245,9 @@ box-sizing: border-box;
   </div>
 </div>
 
-<!-- IAT: Blanco/Negro -->
+<!-- IAT: Personas homosexuales/Personas heterosexuales -->
 <div>
-  <h2>IAT: Personas caucásicas/Personas afrodescendientes</h2>
+  <h2>IAT: Personas homosexuales/Personas heterosexuales</h2>
   <div class="classification-wrapper">
     <!-- Clasificaciones Negativas -->
     <div class="classification-section">
@@ -267,15 +267,15 @@ box-sizing: border-box;
             </tr>
             <tr>
               <td>[-0.35, -0.16]</td>
-              <td><strong>Leve</strong>: <strong>afrodescendiente</strong> positivo, <strong>causcásico</strong> negativo</td>
+              <td><strong>Leve</strong>: <strong>personas heterosexuales</strong> positivo, <strong>personas homosexuales</strong> negativo</td>
             </tr>
             <tr>
               <td>[-0.65, -0.36]</td>
-              <td><strong>Moderada</strong>: <strong>afrodescendiente</strong> positivo, <strong>causcásico</strong> negativo</td>
+              <td><strong>Moderada</strong>: <strong>personas heterosexuales</strong> positivo, <strong>personas homosexuales</strong> negativo</td>
             </tr>
             <tr>
               <td>[-2, -0.66]</td>
-              <td><strong>Fuerte</strong>: <strong>afrodescendiente</strong> positivo, <strong>causcásico</strong> negativo</td>
+              <td><strong>Fuerte</strong>: <strong>personas heterosexuales</strong> positivo, <strong>personas homosexuales</strong> negativo</td>
             </tr>
           </tbody>
         </table>
@@ -299,101 +299,93 @@ box-sizing: border-box;
             </tr>
             <tr>
               <td>[0.16, 0.35]</td>
-              <td><strong>Leve</strong>: <strong>blanco</strong> positivo, <strong>negro</strong> negativo</td>
+              <td><strong>Leve</strong>: <strong>personas homosexuales</strong> positivo, <strong>personas heterosexuales</strong> negativo</td>
             </tr>
             <tr>
               <td>[0.36, 0.65]</td>
-              <td><strong>Moderada</strong>: <strong>blanco</strong> positivo, <strong>negro</strong> negativo</td>
+              <td><strong>Moderada</strong>: <strong>personas homosexuales</strong> positivo, <strong>personas heterosexuales</strong> negativo</td>
             </tr>
             <tr>
               <td>[0.66, 2]</td>
-              <td><strong>Fuerte</strong>: <strong>blanco</strong> positivo, <strong>negro</strong> negativo</td>
-            </tr>
-          </tbody>
+              <td><strong>Fuerte</strong>: <strong>personas homosexuales</strong> positivo, <strong>personas heterosexuales</strong> negativo</td>
+            </tbody>
         </table>
       </div>
     </div>
   </div>
 </div>
+
 
 <!-- Mensaje introductorio para la selección -->
-<h3>¿Cuál crees que es el rango de puntuación y asociación de tu IAT felidae - canidae?</h3>
-    <p> A través de la siguiente barra clickeable, selecciona el rango de puntuación y asociación donde crees que se encuentra tu IAT, solo en caso de que aciertes, te daremos una compensación monetaria por ello.
+<h3>¿Cuál crees que es el rango de puntuación y asociación de tu IAT Personas obesas - Personas delgadas?</h3>
+<p> A través de la siguiente barra clickeable, selecciona el rango de puntuación y asociación donde crees que se encuentra tu IAT, solo en caso de que aciertes, te daremos una compensación monetaria por ello.
 </p>
-    <form method="post">
+<form method="post">
 
-    <!-- ====================== IAT1: Gato/Perro ====================== -->
-    <!-- Radio Buttons (7 columnas) con Neutral en el centro (opción 4) -->
-    <div class="iat-container">
-  <!-- Opción 1: Fuerte canidae+feliz, felidae+triste -->
-  <label class="iat-column">
-    <input type="radio" name="iat1_self_assessment" value="Fuerte: canidae+feliz, felidae+triste" />
-    <div class="text">
-      <strong>Fuerte</strong><br>
-      canidae+feliz, felidae+triste<br>
-      <span style="font-size:0.8rem">(Rango: [-2, -0.66])</span>
-    </div>
-  </label>
-  <!-- Opción 2: Moderada canidae+feliz, felidae+triste -->
-  <label class="iat-column">
-    <input type="radio" name="iat1_self_assessment" value="Moderada: canidae+feliz, felidae+triste" />
-    <div class="text">
-      <strong>Moderada</strong><br>
-      canidae+feliz, felidae+triste<br>
-      <span style="font-size:0.8rem">(Rango: [-0.65, -0.36])</span>
-    </div>
-  </label>
-  <!-- Opción 3: Leve canidae+feliz, felidae+triste -->
-  <label class="iat-column">
-    <input type="radio" name="iat1_self_assessment" value="Leve: canidae+feliz, felidae+triste" />
-    <div class="text">
-      <strong>Leve</strong><br>
-      canidae+feliz, felidae+triste<br>
-      <span style="font-size:0.8rem">(Rango: [-0.35, -0.16])</span>
-    </div>
-  </label>
-  <!-- Opción 4: Neutral -->
-  <label class="iat-column">
-    <input type="radio" name="iat1_self_assessment" value="Neutral" />
-    <div class="text">
-      <strong>Neutral</strong><br>
-      <span style="font-size:0.8rem">(Rango: [-0.15, 0.15])</span>
-    </div>
-  </label>
-  <!-- Opción 5: Leve felidae+feliz, canidae+triste -->
-  <label class="iat-column">
-    <input type="radio" name="iat1_self_assessment" value="Leve: felidae+feliz, canidae+triste" />
-    <div class="text">
-      <strong>Leve</strong><br>
-      felidae+feliz, canidae+triste<br>
-      <span style="font-size:0.8rem">(Rango: [0.16, 0.35])</span>
-    </div>
-  </label>
-  <!-- Opción 6: Moderada felidae+feliz, canidae+triste -->
-  <label class="iat-column">
-    <input type="radio" name="iat1_self_assessment" value="Moderada: felidae+feliz, canidae+triste" />
-    <div class="text">
-      <strong>Moderada</strong><br>
-      felidae+feliz, canidae+triste<br>
-      <span style="font-size:0.8rem">(Rango: [0.36, 0.65])</span>
-    </div>
-  </label>
-  <!-- Opción 7: Fuerte felidae+feliz, canidae+triste -->
-  <label class="iat-column">
-    <input type="radio" name="iat1_self_assessment" value="Fuerte: felidae+feliz, canidae+triste" />
-    <div class="text">
-      <strong>Fuerte</strong><br>
-      felidae+feliz, canidae+triste<br>
-      <span style="font-size:0.8rem">(Rango: [0.66, 2])</span>
-    </div>
-  </label>
-</div>
-{{ formfield_errors 'iat1_self_assessment' }}
+  <!-- ====================== IAT1: Personas obesas/Personas delgadas ====================== -->
+  <div class="iat-container">
+    <label class="iat-column">
+      <input type="radio" name="iat1_self_assessment" value="Fuerte: personas delgadas+bueno, personas obesas+malo" />
+      <div class="text">
+        <strong>Fuerte</strong><br>
+        personas delgadas+bueno, personas obesas+malo<br>
+        <span style="font-size:0.8rem">(Rango: [-2, -0.66])</span>
+      </div>
+    </label>
+    <label class="iat-column">
+      <input type="radio" name="iat1_self_assessment" value="Moderada: personas delgadas+bueno, personas obesas+malo" />
+      <div class="text">
+        <strong>Moderada</strong><br>
+        personas delgadas+bueno, personas obesas+malo<br>
+        <span style="font-size:0.8rem">(Rango: [-0.65, -0.36])</span>
+      </div>
+    </label>
+    <label class="iat-column">
+      <input type="radio" name="iat1_self_assessment" value="Leve: personas delgadas+bueno, personas obesas+malo" />
+      <div class="text">
+        <strong>Leve</strong><br>
+        personas delgadas+bueno, personas obesas+malo<br>
+        <span style="font-size:0.8rem">(Rango: [-0.35, -0.16])</span>
+      </div>
+    </label>
+    <label class="iat-column">
+      <input type="radio" name="iat1_self_assessment" value="Neutral" />
+      <div class="text">
+        <strong>Neutral</strong><br>
+        <span style="font-size:0.8rem">(Rango: [-0.15, 0.15])</span>
+      </div>
+    </label>
+    <label class="iat-column">
+      <input type="radio" name="iat1_self_assessment" value="Leve: personas obesas+bueno, personas delgadas+malo" />
+      <div class="text">
+        <strong>Leve</strong><br>
+        personas obesas+bueno, personas delgadas+malo<br>
+        <span style="font-size:0.8rem">(Rango: [0.16, 0.35])</span>
+      </div>
+    </label>
+    <label class="iat-column">
+      <input type="radio" name="iat1_self_assessment" value="Moderada: personas obesas+bueno, personas delgadas+malo" />
+      <div class="text">
+        <strong>Moderada</strong><br>
+        personas obesas+bueno, personas delgadas+malo<br>
+        <span style="font-size:0.8rem">(Rango: [0.36, 0.65])</span>
+      </div>
+    </label>
+    <label class="iat-column">
+      <input type="radio" name="iat1_self_assessment" value="Fuerte: personas obesas+bueno, personas delgadas+malo" />
+      <div class="text">
+        <strong>Fuerte</strong><br>
+        personas obesas+bueno, personas delgadas+malo<br>
+        <span style="font-size:0.8rem">(Rango: [0.66, 2])</span>
+      </div>
+    </label>
+  </div>
+  {{ formfield_errors 'iat1_self_assessment' }}
 
     <!-- Range Slider (Double-handle) para iat1_lower_limit e iat1_upper_limit -->
     <div class="slider-section">
       <label>
-          <h3>¿Cuál sería para ti un rango moralmente aceptable para el IAT gato/perro?</h3>
+          <h3>¿Cuál sería para ti un rango moralmente aceptable para el IAT Persona obesa/Persona delgada?</h3>
       </label>
           <p>Dado que ya conoces los rangos de puntuaciones y asociaciones de la prueba, ¿cuál consideras que
           es el rango de puntuación y asociación moralmente aceptable para este IAT? <br> Puedes seleccionar el límite superior e
@@ -415,37 +407,36 @@ box-sizing: border-box;
 
     <hr>
 
-    <!-- ====================== IAT2: Blanco/Negro ====================== -->
-    <h3>¿Cuál crees que es el rango de puntuación y asociación de tu IAT persona caucásica y persona afrodescendiente?</h3>
-    <p> A través de la siguiente barra clickeable, selecciona el rango de puntuación y asociación donde crees que se encuentra tu IAT, solo en caso de que aciertes, te daremos una compensación monetaria por ello.
-</p>
+  <!-- ====================== IAT2: Personas homosexuales/Personas heterosexuales ====================== -->
+<h3>¿Cuál crees que es el rango de puntuación y asociación de tu IAT personas homosexuales y personas heterosexuales?</h3>
+<p> A través de la siguiente barra clickeable, selecciona el rango de puntuación y asociación donde crees que se encuentra tu IAT, solo en caso de que aciertes, te daremos una compensación monetaria por ello.</p>
 
-    <!-- Radio Buttons (7 columnas) con Neutral centrado -->
-   <div class="iat-container">
-  <!-- Opción 1: Fuerte afrodescendiente+feliz, caucásico+triste -->
+<!-- Radio Buttons (7 columnas) con Neutral centrado -->
+<div class="iat-container">
+  <!-- Opción 1: Fuerte personas heterosexuales+bueno, personas homosexuales+malo -->
   <label class="iat-column">
-    <input type="radio" name="iat2_self_assessment" value="Fuerte: afrodescendiente+feliz, caucásico+triste" />
+    <input type="radio" name="iat2_self_assessment" value="Fuerte: personas heterosexuales+bueno, personas homosexuales+malo" />
     <div class="text">
       <strong>Fuerte</strong><br>
-      afrodescendiente+feliz, caucásico+triste<br>
+      personas heterosexuales+bueno, personas homosexuales+malo<br>
       <span style="font-size:0.8rem">(Rango: [-2, -0.66])</span>
     </div>
   </label>
-  <!-- Opción 2: Moderada afrodescendiente+feliz, caucásico+triste -->
+  <!-- Opción 2: Moderada personas heterosexuales+bueno, personas homosexuales+malo -->
   <label class="iat-column">
-    <input type="radio" name="iat2_self_assessment" value="Moderada: afrodescendiente+feliz, caucásico+triste" />
+    <input type="radio" name="iat2_self_assessment" value="Moderada: personas heterosexuales+bueno, personas homosexuales+malo" />
     <div class="text">
       <strong>Moderada</strong><br>
-      afrodescendiente+feliz, caucásico+triste<br>
+      personas heterosexuales+bueno, personas homosexuales+malo<br>
       <span style="font-size:0.8rem">(Rango: [-0.65, -0.36])</span>
     </div>
   </label>
-  <!-- Opción 3: Leve afrodescendiente+feliz, caucásico+triste -->
+  <!-- Opción 3: Leve personas heterosexuales+bueno, personas homosexuales+malo -->
   <label class="iat-column">
-    <input type="radio" name="iat2_self_assessment" value="Leve: afrodescendiente+feliz, caucásico+triste" />
+    <input type="radio" name="iat2_self_assessment" value="Leve: personas heterosexuales+bueno, personas homosexuales+malo" />
     <div class="text">
       <strong>Leve</strong><br>
-      afrodescendiente+feliz, caucásico+triste<br>
+      personas heterosexuales+bueno, personas homosexuales+malo<br>
       <span style="font-size:0.8rem">(Rango: [-0.35, -0.16])</span>
     </div>
   </label>
@@ -457,30 +448,30 @@ box-sizing: border-box;
       <span style="font-size:0.8rem">(Rango: [-0.15, 0.15])</span>
     </div>
   </label>
-  <!-- Opción 5: Leve caucásico+feliz, afrodescendiente+triste -->
+  <!-- Opción 5: Leve personas homosexuales+bueno, personas heterosexuales+malo -->
   <label class="iat-column">
-    <input type="radio" name="iat2_self_assessment" value="Leve: caucásico+feliz, afrodescendiente+triste" />
+    <input type="radio" name="iat2_self_assessment" value="Leve: personas homosexuales+bueno, personas heterosexuales+malo" />
     <div class="text">
       <strong>Leve</strong><br>
-      caucásico+feliz, afrodescendiente+triste<br>
+      personas homosexuales+bueno, personas heterosexuales+malo<br>
       <span style="font-size:0.8rem">(Rango: [0.16, 0.35])</span>
     </div>
   </label>
-  <!-- Opción 6: Moderada caucásico+feliz, afrodescendiente+triste -->
+  <!-- Opción 6: Moderada personas homosexuales+bueno, personas heterosexuales+malo -->
   <label class="iat-column">
-    <input type="radio" name="iat2_self_assessment" value="Moderada: caucásico+feliz, afrodescendiente+triste" />
+    <input type="radio" name="iat2_self_assessment" value="Moderada: personas homosexuales+bueno, personas heterosexuales+malo" />
     <div class="text">
       <strong>Moderada</strong><br>
-      caucásico+feliz, afrodescendiente+triste<br>
+      personas homosexuales+bueno, personas heterosexuales+malo<br>
       <span style="font-size:0.8rem">(Rango: [0.36, 0.65])</span>
     </div>
   </label>
-  <!-- Opción 7: Fuerte caucásico+feliz, afrodescendiente+triste -->
+  <!-- Opción 7: Fuerte personas homosexuales+bueno, personas heterosexuales+malo -->
   <label class="iat-column">
-    <input type="radio" name="iat2_self_assessment" value="Fuerte: caucásico+feliz, afrodescendiente+triste" />
+    <input type="radio" name="iat2_self_assessment" value="Fuerte: personas homosexuales+bueno, personas heterosexuales+malo" />
     <div class="text">
       <strong>Fuerte</strong><br>
-      caucásico+feliz, afrodescendiente+triste<br>
+      personas homosexuales+bueno, personas heterosexuales+malo<br>
       <span style="font-size:0.8rem">(Rango: [0.66, 2])</span>
     </div>
   </label>
@@ -489,7 +480,7 @@ box-sizing: border-box;
 
     <!-- Range Slider (Double-handle) para iat2_lower_limit e iat2_upper_limit -->
     <div class="slider-section">
-        <h3>¿Cuál sería para ti un rango moralmente aceptable para el IAT persona caucásica/persona afrodescendiente?</h3>
+        <h3>¿Cuál sería para ti un rango moralmente aceptable para el IAT persona homosexual/persona heterosexual?</h3>
           <p>Dado que ya conoces los rangos de puntuaciones y asociaciones de la prueba, ¿cuál consideras que
           es el rango de puntuación y asociación moralmente aceptable para este IAT? <br> Puedes seleccionar el límite superior e
           inferior de tu rango de puntuación y asociación mediante esta barra, cuyos límites puedes mover con el mouse, touchpad o
@@ -526,92 +517,79 @@ box-sizing: border-box;
       }
   }
 
-  // LÓGICA ACTUALIZADA PARA IAT1 (Felidae/Canidae)
+  // LÓGICA PARA IAT1 (personas obesas/personas delgadas)
   function getAssociationIAT1(lower, upper) {
-      // 1. Todo dentro de neutral
       if (lower >= -0.15 && upper <= 0.15) {
           return "Neutral";
-      }
-      // 2. Sólo negativo (todos ≤ -0.15)
-      else if (upper <= -0.15) {
+      } else if (upper <= -0.15) {
           var c1 = getClassification(lower);
           var c2 = getClassification(upper);
           var classes = [];
           if (c1 !== "Neutral") classes.push(c1);
           if (c2 !== c1 && c2 !== "Neutral") classes.push(c2);
           return classes
-            .map(function(cl){ return cl + " a felidae+triste, canidae+feliz"; })
+            .map(function(cl){ return cl + " a personas delgadas+bueno, personas obesas+malo"; })
             .join(" y ");
-      }
-      // 3. Sólo positivo (todos ≥ 0.15)
-      else if (lower >= 0.15) {
+      } else if (lower >= 0.15) {
           var c1 = getClassification(lower);
           var c2 = getClassification(upper);
           var classes = [];
           if (c1 !== "Neutral") classes.push(c1);
           if (c2 !== c1 && c2 !== "Neutral") classes.push(c2);
           return classes
-            .map(function(cl){ return cl + " a felidae+feliz, canidae+triste"; })
+            .map(function(cl){ return cl + " a personas obesas+bueno, personas delgadas+malo"; })
             .join(" y ");
-      }
-      // 4. Cruza zonas (negativo ↔ neutral ↔ positivo)
-      else {
+      } else {
           var parts = [];
-          // Parte negativa
           if (lower < -0.15) {
               var cn = getClassification(lower);
-              if (cn !== "Neutral") parts.push(cn + " a felidae+triste, canidae+feliz");
+              if (cn !== "Neutral") parts.push(cn + " a personas delgadas+bueno, personas obesas+malo");
           }
-          // Parte neutral
           if (lower <  0.15 && upper > -0.15) {
               parts.push("Neutral");
           }
-          // Parte positiva
           if (upper > 0.15) {
               var cp = getClassification(upper);
-              if (cp !== "Neutral") parts.push(cp + " a felidae+feliz, canidae+triste");
+              if (cp !== "Neutral") parts.push(cp + " a personas obesas+bueno, personas delgadas+malo");
           }
           return parts.join(" y ");
       }
   }
 
-  // LÓGICA ACTUALIZADA PARA IAT2 (Persona caucásica/Persona afrodescendiente)
+  // LÓGICA PARA IAT2 (personas homosexuales/personas heterosexuales)
   function getAssociationIAT2(lower, upper) {
       if (lower >= -0.15 && upper <= 0.15) {
           return "Neutral";
-      }
-      else if (upper <= -0.15) {
+      } else if (upper <= -0.15) {
           var c1 = getClassification(lower);
           var c2 = getClassification(upper);
           var classes = [];
           if (c1 !== "Neutral") classes.push(c1);
           if (c2 !== c1 && c2 !== "Neutral") classes.push(c2);
           return classes
-            .map(function(cl){ return cl + " a persona afrodescendiente+feliz, persona caucásica+triste"; })
+            .map(function(cl){ return cl + " a personas heterosexuales+bueno, personas homosexuales+malo"; })
             .join(" y ");
-      }
-      else if (lower >= 0.15) {
+      } else if (lower >= 0.15) {
           var c1 = getClassification(lower);
           var c2 = getClassification(upper);
           var classes = [];
           if (c1 !== "Neutral") classes.push(c1);
           if (c2 !== c1 && c2 !== "Neutral") classes.push(c2);
           return classes
-            .map(function(cl){ return cl + " a persona caucásica+feliz, persona afrodescendiente+triste"; })
+            .map(function(cl){ return cl + " a personas homosexuales+bueno, personas heterosexuales+malo"; })
             .join(" y ");
-      }
-      else {
+      } else {
           var parts = [];
           if (lower < -0.15) {
               var cn = getClassification(lower);
-              if (cn !== "Neutral") parts.push(cn + " a persona afrodescendiente+feliz, persona caucásica+triste");
+              if (cn !== "Neutral") parts.push(cn + " a personas heterosexuales+bueno, personas homosexuales+malo");
           }
           if (lower <  0.15 && upper > -0.15) {
               parts.push("Neutral");
           }
           if (upper > 0.15) {
               var cp = getClassification(upper);
-              if (cp !== "Neutral") parts.push(cp + " a persona caucásica+feliz, persona afrodescendiente+triste");
+              if (cp !== "Neutral") parts.push(cp + " a personas homosexuales+bueno, personas heterosexuales+malo");
           }
           return parts.join(" y ");
       }
@@ -633,11 +611,10 @@ box-sizing: border-box;
   sliderIAT1.noUiSlider.on('update', function (values) {
       var lowerVal = parseFloat(values[0]);
       var upperVal = parseFloat(values[1]);
-      iat1Lower.value   = lowerVal;
-      iat1Upper.value   = upperVal;
+      iat1Lower.value = lowerVal;
+      iat1Upper.value = upperVal;
       displayIAT1.textContent = '[' + lowerVal.toFixed(2) + ', ' + upperVal.toFixed(2) + ']';
-      assocIAT1.innerHTML     = "Actualmente, tu rango moral se clasifica como:<br>"
-                                + getAssociationIAT1(lowerVal, upperVal);
+      assocIAT1.innerHTML = "Actualmente, tu rango moral se clasifica como:<br>" + getAssociationIAT1(lowerVal, upperVal);
   });
 
   // IAT2: slider de doble handle
@@ -656,13 +633,11 @@ box-sizing: border-box;
   sliderIAT2.noUiSlider.on('update', function (values) {
       var lowerVal = parseFloat(values[0]);
       var upperVal = parseFloat(values[1]);
-      iat2Lower.value   = lowerVal;
-      iat2Upper.value   = upperVal;
+      iat2Lower.value = lowerVal;
+      iat2Upper.value = upperVal;
       displayIAT2.textContent = '[' + lowerVal.toFixed(2) + ', ' + upperVal.toFixed(2) + ']';
-      assocIAT2.innerHTML     = "Actualmente, tu rango moral se clasifica como:<br>"
-                                + getAssociationIAT2(lowerVal, upperVal);
+      assocIAT2.innerHTML = "Actualmente, tu rango moral se clasifica como:<br>" + getAssociationIAT2(lowerVal, upperVal);
   });
 </script>
-
 
 {% endblock %}

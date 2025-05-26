@@ -1,8 +1,8 @@
 {% block title %}
-    Etapa 4: Información del IAT
+    Etapa 5: Qué información revelar en las desiciones de la etapa 6
 {% endblock %}
 
-{% block styles  %}
+{% block styles %}
     <link href="{% static 'iat.css' %}" rel="stylesheet"/>
     <style>
         body {
@@ -89,21 +89,25 @@
 
    <!-- Recuadro para recordar los límites definidos -->
     <div class="info-box">
-        <p><strong>Recordatorio de tu rango moralmente aceptable definido:</strong></p>
-        <p>IAT <strong>gato perro:</strong> {{ iat1_lower_limit }} a {{ iat1_upper_limit }}</p>
-        <p>IAT <strong>blanco negro: </strong>{{ iat2_lower_limit }} a {{ iat2_upper_limit }}</p>
+        <p><strong>Recordatorio de tu rango moralmente aceptable definido en la etapa 4:</strong></p>
+        <p><strong>IAT Personas obesas / personas delgadas: rango aceptable</strong> {{ iat1_lower_limit }} a {{ iat1_upper_limit }}</p>
+        <p><strong>IAT Personas homosexuales y heterosexuales: rango aceptable es de</strong> {{ iat2_lower_limit }} a {{ iat2_upper_limit }}</p>
     </div>
-
 
     <!-- Nuevo mensaje agregado -->
     <div class="info-box">
-        <p><strong>A continuación, tendrás la oportunidad de cambiar las probabilidades con las que se te revelará información cuando tomes una decisión decisión moral.</strong></p>
-        <p>Hay una probabilidad inicial del 80% de que si tus resultados de cada IAT por separado se encuentran dentro de tu rango moralmente aceptable, se te revele información sobre una decisión moral.</p>
-        <p><strong>¿Qué quieres hacer?</strong></p>
-    </div>
+<p>En esta Etapa 5 tomarás una decisión sobre qué información revelaremos en las decisiones de la Etapa 6—las decisiones con consecuencias monetarias. Decidirás si quieres que, en las decisiones que involucren a las personas mencionadas en las pruebas de la Etapa 2, se revele quiénes son los grupos de personas involucradas en tu decisión.</p>
 
+<p>Tu decisión en esta etapa depende de los puntajes obtenidos en las pruebas de asociación implícita y del rango de puntajes aceptables que definiste en la Etapa 4. Se considerarán tres casos: cuando tu puntaje esté debajo del rango aceptable, dentro del rango aceptable o por encima del rango aceptable. Para cada caso, podrás decidir si quieres que se revele la identidad de los grupos.</p>
 
+<p>En caso de que elijas que se revele la identidad en algún rango, habrá una probabilidad del 20% de que se haga lo contrario.
 
+<p>Recuerda que en la Etapa 6 no podrás saber con certeza en qué rango cayó tu puntaje en las pruebas de asociación implícita. Sin embargo, podrás ajustar tus decisiones basándote en la probabilidad y en la información que consideres más relevante.</p>
+
+<p><strong>A continuación, indica tu preferencia para cada situación:</strong></p>
+</div>
+
+    <p>Nota: si dejas en blanco algún campo, consideraremos que contestaste "sí"</p>
     {{ formfields }}
     {{ next_button }}
 

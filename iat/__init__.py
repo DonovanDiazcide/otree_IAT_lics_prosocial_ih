@@ -1,5 +1,6 @@
 import time
 import random
+import logging
 
 # from .admin_report_functions import *
 from otree.api import *
@@ -105,10 +106,10 @@ class Constants(BaseConstants):
     players_per_group = None
     num_rounds = 18 + 14  # 14 para IAT + 4 para dictador, +14 de los demás IAT.
 
-    keys = {"f": 'left', "j": 'right'}
+    keys = {"e": 'left', "i": 'right'}
     trial_delay = 0.250
     endowment = Decimal('100')  # Añadido para dictador
-    categories = ['perro', 'gato', 'blanco', 'negro', 'Personas con discapacidad física', 'Personas sin discapacidad física', ]  # Categorías para el Dictador
+    categories = ['Personas delgadas', 'Personas obesas', 'Personas homosexuales', 'Personas heterosexuales']  # Categorías para el Dictador
 
 
 def url_for_image(filename):
@@ -297,43 +298,43 @@ class Player(BasePlayer):
     )
 
     iat2_self_assessment = models.StringField(
-        label="¿Cómo crees que te fue en el IAT de blanco y negro?",
+        label="¿Cómo crees que te fue en el IAT de personas homosexuales y personas heterosexuales?",
         choices=[
             "Neutral",
-            "Asociación leve a blanco+feliz, negro+triste",
-            "Asociación leve a blanco+triste, negro+feliz",
-            "Asociación moderada a blanco+feliz, negro+triste",
-            "Asociación moderada a blanco+triste, negro+feliz",
-            "Asociación fuerte a blanco+feliz, negro+triste",
-            "Asociación fuerte a blanco+triste, negro+feliz",
+            "Asociación leve a personas homosexuales+feliz, personas heterosexuales+triste",
+            "Asociación leve a personas homosexuales+triste, personas heterosexuales+feliz",
+            "Asociación moderada a personas homosexuales+feliz, personas heterosexuales+triste",
+            "Asociación moderada a personas homosexuales+triste, personas heterosexuales+feliz",
+            "Asociación fuerte a personas homosexuales+feliz, personas heterosexuales+triste",
+            "Asociación fuerte a personas homosexuales+triste, personas heterosexuales+feliz",
         ],
         widget=widgets.RadioSelect
     )
 
     iat1_self_assessment = models.StringField(
-        label="¿Cómo crees que te fue en el IAT de gato y perro?",
+        label="¿Cómo crees que te fue en el IAT de personas obesas y personas delgadas?",
         choices=[
             "Neutral",
-            "Asociación leve a gato+feliz, perro+triste",
-            "Asociación leve a gato+triste, perro+feliz",
-            "Asociación moderada a gato+feliz, perro+triste",
-            "Asociación moderada a gato+triste, perro+feliz",
-            "Asociación fuerte a gato+feliz, perro+triste",
-            "Asociación fuerte a gato+triste, perro+feliz",
+            "Asociación leve a personas obesas+feliz, personas delgadas+triste",
+            "Asociación leve a personas obesas+triste, personas delgadas+feliz",
+            "Asociación moderada a personas obesas+feliz, personas delgadas+triste",
+            "Asociación moderada a personas obesas+triste, personas delgadas+feliz",
+            "Asociación fuerte a personas obesas+feliz, personas delgadas+triste",
+            "Asociación fuerte a personas obesas+triste, personas delgadas+feliz",
         ],
         widget=widgets.RadioSelect
     )
 
     # Variables para el rango moralmente aceptable del IAT 1. nota: hay que cambiar esto para que vayan de -2 a 2.
     iat2_lower_limit = models.FloatField(
-        label="¿Cuál es el límite inferior del rango moralmente aceptable para el IAT negro blanco?",
+        label="¿Cuál es el límite inferior del rango moralmente aceptable para el IAT personas homosexuales y personas heterosexuales?",
         help_text="Debe estar entre -2 y 2.",
         min=-2,
         max=2
     )
 
     iat2_upper_limit = models.FloatField(
-        label="¿Cuál es el límite superior del rango moralmente aceptable para el IAT negro blanco?",
+        label="¿Cuál es el límite superior del rango moralmente aceptable para el IAT personas homosexuales y personas heterosexuales?",
         help_text="Debe estar entre -2 y 2.",
         min=-2,
         max=2
@@ -341,44 +342,58 @@ class Player(BasePlayer):
 
     # Variables para el rango moralmente aceptable del IAT 2
     iat1_lower_limit = models.FloatField(
-        label="¿Cuál es el límite inferior del rango moralmente aceptable para el IAT gato perro?",
+        label="¿Cuál es el límite inferior del rango moralmente aceptable para el IAT personas obesas y personas delgadas?",
         help_text="Debe estar entre -2 y 2.",
         min=-2,
         max=2
     )
 
     iat1_upper_limit = models.FloatField(
-        label="¿Cuál es el límite superior del rango moralmente aceptable para el IAT gato perro?",
+        label="¿Cuál es el límite superior del rango moralmente aceptable para el IAT personas obesas y personas delgadas?",
         help_text="Debe estar entre -2 y 2.",
         min=-2,
         max=2
     )
 
-    iat1_probability = models.IntegerField(
-        label="Indica la probabilidad con la que se te revelará información de tu IAT gato perro si tu puntuación está dentro del rango moralmente aceptable:",
-        choices=[[80, "80"], [20, "20"]],
+    iat2_probability_right = models.BooleanField(
+        label="¿Quieres que se te muestre información sobre personas homosexuales y heterosexuales al tomar una decisión con consecuencias monetarias, si tu puntaje en el IAT queda a la derecha de tu rango moralmente aceptable?",
         widget=widgets.RadioSelect,
+        choices=[(True, "Sí"), (False, "No")],
         blank=True
     )
 
-    iat1_probability_out_of_range = models.IntegerField(
-        label="Indica la probabilidad con la que se te revelará información de tu IAT gato perro si tu puntuación está fuera del rango moralmente aceptable:",
-        choices=[[80, "80"], [20, "20"]],
+    iat1_probability_left = models.BooleanField(
+        label="¿Quieres que se te revele la información sobre personas obesas y personas delgadas al tomar una decisión con consecuencias monetarias, si tu puntaje en el IAT queda a la izquierda de tu rango moralmente aceptable?",
         widget=widgets.RadioSelect,
+        choices=[(True, "Sí"), (False, "No")],
         blank=True
     )
 
-    iat2_probability = models.IntegerField(
-        label="Indica la probabilidad con la que se te revelará información de tu IAT negro blanco si tu puntuación está dentro del rango moralmente aceptable:",
-        choices=[[80, "80"], [20, "20"]],
+    iat2_probability_left = models.BooleanField(
+        label="¿Quieres que se te revele la información sobre personas homosexuales y personas heterosexuales al tomar una decisión con consecuencias monetarias, si tu puntaje en el IAT queda a la izquierda de tu rango moralmente aceptable?",
         widget=widgets.RadioSelect,
+        choices=[(True, "Sí"), (False, "No")],
         blank=True
     )
 
-    iat2_probability_out_of_range = models.IntegerField(
-        label="Indica la probabilidad con la que se te revelará información de tu IAT negro blanco si tu puntuación está fuera del rango moralmente aceptable:",
-        choices=[[80, "80"], [20, "20"]],
+    iat1_probability_right = models.BooleanField(
+        label="¿Quieres que se te revele la información sobre personas obesas y personas delgadas al tomar una decisión con consecuencias monetarias, si tu puntaje en el IAT queda a la derecha de tu rango moralmente aceptable?",
         widget=widgets.RadioSelect,
+        choices=[(True, "Sí"), (False, "No")],
+        blank=True
+    )
+
+    iat2_probability = models.BooleanField(
+        label="¿Quieres que se te revele la información sobre personas homosexuales y personas heterosexuales al tomar una decisión con consecuencias monetarias, si tu puntaje en el IAT queda dentro de tu rango moralmente aceptable?",
+        widget=widgets.RadioSelect,
+        choices=[(True, "Sí"), (False, "No")],
+        blank=True
+    )
+
+    iat1_probability = models.BooleanField(
+        label="¿Quieres que se te revele la información sobre personas obesas y personas delgadas al tomar una decisión con consecuencias monetarias, si tu puntaje en el IAT queda dentro de tu rango moralmente aceptable?",
+        widget=widgets.RadioSelect,
+        choices=[(True, "Sí"), (False, "No")],
         blank=True
     )
 
@@ -393,6 +408,16 @@ class Player(BasePlayer):
     # Nuevas variables para capturar si el iat del jugador está en su rango moralmente aceptable
     iat1_moral_range = models.BooleanField(blank=True)
     iat2_moral_range = models.BooleanField(blank=True)
+
+    # Nuevas variables para capturar si el iat del jugador está en su rango moralmente aceptable
+    iat1_moral_range_left = models.BooleanField(blank=True)
+    iat2_moral_range_left = models.BooleanField(blank=True)
+
+    # Nuevas variables para capturar si el iat del jugador está en su rango moralmente aceptable
+    iat1_moral_range_right = models.BooleanField(blank=True)
+    iat2_moral_range_right = models.BooleanField(blank=True)
+
+
 
     # campos para el juego del dictador.
     dictator_offer = models.CurrencyField(
@@ -961,11 +986,16 @@ class Comprension1(Page):
         'compr1_q5',
         'compr1_q6',
     ]
-
     @staticmethod
     def is_displayed(player: Player):
-        # Sólo si el orden ES [1..14]
-        return player.participant.vars.get('iat_round_order') == list(range(1, 15))
+        return (
+            player.participant.vars.get('iat_round_order') == list(range(1, 15))
+            and not player.participant.vars.get('compr1_shown', False)
+        )
+
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        player.participant.vars['compr1_shown'] = True
 
     @staticmethod
     def vars_for_template(player):
@@ -1001,10 +1031,15 @@ class Comprension2(Page):
 
     @staticmethod
     def is_displayed(player: Player):
-        # Sólo si el orden ES [8..14,1..7]
-        return player.participant.vars.get('iat_round_order') == (
-            list(range(8, 15)) + list(range(1, 8))
+        return (
+            player.participant.vars.get('iat_round_order')
+                == (list(range(8, 15)) + list(range(1, 8)))
+            and not player.participant.vars.get('compr2_shown', False)
         )
+
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        player.participant.vars['compr2_shown'] = True
 
     @staticmethod
     def vars_for_template(player):
@@ -1029,7 +1064,14 @@ class Comprension2(Page):
 class Feedback1(Page):
     @staticmethod
     def is_displayed(player: Player):
-        return player.participant.vars.get('iat_round_order', []) == list(range(1, 15))
+        return (
+            player.participant.vars.get('iat_round_order', []) == list(range(1, 15))
+            and not player.participant.vars.get('feedback1_shown', False)
+        )
+
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        player.participant.vars['feedback1_shown'] = True
 
     @staticmethod
     def vars_for_template(player: Player):
@@ -1103,10 +1145,17 @@ class Feedback1(Page):
 
 # Feedback para el grupo 2
 class Feedback2(Page):
-
     @staticmethod
     def is_displayed(player: Player):
-        return player.participant.vars.get('iat_round_order', []) == ([8, 9, 10, 11, 12, 13, 14] + list(range(1, 8)))
+        return (
+            player.participant.vars.get('iat_round_order', [])
+                == (list(range(8, 15)) + list(range(1, 8)))
+            and not player.participant.vars.get('feedback2_shown', False)
+        )
+
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        player.participant.vars['feedback2_shown'] = True
 
     @staticmethod
     def vars_for_template(player: Player):
@@ -1218,6 +1267,8 @@ class InstruccionesGenerales3(Page):
         player.participant.vars['user_generales3_completed'] = True
 
 
+
+# creo que hay el grave problema (no tan grave) que cambié algo de la sinxtaxis y ahora solamente permite guess neutral
 class IATAssessmentPage(Page):
     form_model = 'player'
     form_fields = [
@@ -1285,43 +1336,43 @@ class IATAssessmentPage(Page):
                 return "Neutral"
             if dscore < 0:
                 if -0.35 <= dscore <= -0.15:
-                    if category == "gato/perro":
-                        return "Leve: perro positivo, gato negativo"
-                    else:  # white/black
-                        return "Leve: black positivo, white negativo"
+                    if category == "Personas obesas/Personas delgadas":
+                        return "Leve: Personas delgadas positivo, Personas obesas negativo"
+                    else:  # Personas homosexuales/Personas heterosexuales
+                        return "Leve: Personas heterosexuales positivo, Personas homosexuales negativo "
                 elif -0.65 <= dscore < -0.35:
-                    if category == "gato/perro":
-                        return "Moderada: perro positivo, gato negativo"
+                    if category == "Personas obesas/Personas delgadas":
+                        return "Moderada: Personas delgadas positivo, Personas obesas negativo"
                     else:
-                        return "Moderada: black positivo, white negativo"
+                        return "Moderada: Personas heterosexuales positivo, Personas homosexuales negativo "
                 elif -2 <= dscore < -0.65:
-                    if category == "gato/perro":
-                        return "Fuerte: perro positivo, gato negativo"
+                    if category == "Personas obesas/Personas delgadas":
+                        return "Fuerte: Personas delgadas positivo, Personas obesas negativo"
                     else:
-                        return "Fuerte: black positivo, white negativo"
+                        return "Fuerte: Personas heterosexuales positivo, Personas homosexuales negativo "
             else:  # dscore > 0
                 if 0.15 <= dscore <= 0.35:
-                    if category == "gato/perro":
-                        return "Leve: gato positivo, perro negativo"
+                    if category == "Personas obesas/Personas delgadas":
+                        return "Leve: Personas obesas positivo, Personas delgadas negativo"
                     else:
-                        return "Leve: white positivo, black negativo"
+                        return "Leve: Personas homosexuales positivo, Personas heterosexuales negativo"
                 elif 0.35 < dscore <= 0.65:
-                    if category == "gato/perro":
-                        return "Moderada: gato positivo, perro negativo"
+                    if category == "Personas obesas/Personas delgadas":
+                        return "Moderada: Personas obesas positivo, Personas delgadas negativo"
                     else:
-                        return "Moderada: white positivo, black negativo"
+                        return "Moderada: Personas homosexuales positivo, Personas heterosexuales negativo"
                 elif 0.65 < dscore <= 2:
-                    if category == "gato/perro":
-                        return "Fuerte: gato positivo, perro negativo"
+                    if category == "Personas obesas/Personas delgadas":
+                        return "Fuerte: Personas obesas positivo, Personas delgadas negativo"
                     else:
-                        return "Fuerte: white positivo, black negativo"
+                        return "Fuerte: Personas homosexuales positivo, Personas heterosexuales negativo"
             return "Sin clasificación"
 
         # Se asigna la asociación de forma fija:
-        # - IAT1 corresponde siempre a "gato/perro"
-        # - IAT2 corresponde siempre a "white/black"
-        player.iat1_association = clasificar(player.dscore1, "gato/perro")
-        player.iat2_association = clasificar(player.dscore2, "white/black")
+        # - IAT1 corresponde siempre a "Personas obesas/Personas delgadas"
+        # - IAT2 corresponde siempre a "Personas homosexuales/Personas heterosexuales"
+        player.iat1_association = clasificar(player.dscore1, "Personas obesas/Personas delgadas")
+        player.iat2_association = clasificar(player.dscore2, "Personas homosexuales/Personas heterosexuales")
 
         return dict(
             category=category,
@@ -1337,17 +1388,17 @@ class IATAssessmentPage(Page):
         """
         Convierte el string de asociación calculado al formato de las opciones de la autoevaluación.
 
-        Para "white/black":
-            - "white positivo" se convierte en "blanco+feliz"
-            - "black negativo" se convierte en "negro+triste"
-            - "black positivo" se convierte en "negro+feliz"
-            - "white negativo" se convierte en "blanco+triste"
+        Para "Personas homosexuales/Personas heterosexuales":
+            - "Personas homosexuales positivo" se convierte en "Personas homosexuales+bueno"
+            - "Personas heterosexuales negativo" se convierte en "Personas heterosexuales+malo"
+            - "Personas heterosexuales positivo" se convierte en "Personas heterosexuales+bueno"
+            - "Personas homosexuales negativo" se convierte en "Personas homosexuales+malo"
 
-        Para "gato/perro":
-            - "gato positivo" se convierte en "gato+feliz"
-            - "perro negativo" se convierte en "perro+triste"
-            - "perro positivo" se convierte en "perro+feliz"
-            - "gato negativo" se convierte en "gato+triste"
+        Para "Personas obesas/Personas delgadas":
+            - "Personas obesas bueno" se convierte en "Personas obesas+bueno"
+            - "Personas delgadas" se convierte en "Personas delgadas+malo"
+            - "Personas delgadas positivo" se convierte en "Personas delgadas+bueno"
+            - "Personas obesas negativo" se convierte en "gato+malo"
 
         Además, transforma el prefijo:
             - "Leve: "    → "Asociación leve a "
@@ -1365,16 +1416,16 @@ class IATAssessmentPage(Page):
         else:
             prefix, rest = "", association
 
-        if category == "white/black":
-            rest = rest.replace("white positivo", "blanco+feliz") \
-                .replace("black negativo", "negro+triste") \
-                .replace("black positivo", "negro+feliz") \
-                .replace("white negativo", "blanco+triste")
-        elif category == "gato/perro":
-            rest = rest.replace("gato positivo", "gato+feliz") \
-                .replace("perro negativo", "perro+triste") \
-                .replace("perro positivo", "perro+feliz") \
-                .replace("gato negativo", "gato+triste")
+        if category == "Personas homosexuales/Personas heterosexuales":
+            rest = rest.replace("Personas homosexuales positivo", "Persona homosexual+bueno") \
+                .replace("Persona heterosexual negativo", "Persona heterosexual+malo") \
+                .replace("Persona heterosexual positivo", "Persona heterosexual+bueno") \
+                .replace("Personas homosexuales negativo", "Personas homosexuales+malo")
+        elif category == "Personas obesas/Personas delgadas":
+            rest = rest.replace("Personas obesas positivo", "Personas obesas+bueno") \
+                .replace("Personas delgadas negativo", "Personas delgadas+malo") \
+                .replace("Personas delgadas positivo", "Personas delgadas+bueno") \
+                .replace("Personas obesas negativo", "Personas obesas+malo")
         return prefix + rest
 
     @staticmethod
@@ -1394,56 +1445,105 @@ class IATAssessmentPage(Page):
         # Fijamos:
         # • IAT1 (gato y perro) se compara con player.iat1_association
         # • IAT2 (blanco y negro) se compara con player.iat2_association
-        expected_iat1 = IATAssessmentPage.convert_computed(player.iat1_association, "gato/perro")
-        expected_iat2 = IATAssessmentPage.convert_computed(player.iat2_association, "white/black")
+        expected_iat1 = IATAssessmentPage.convert_computed(player.iat1_association, "Personas obesas/Personas delgadas")
+        expected_iat2 = IATAssessmentPage.convert_computed(player.iat2_association, "Personas homosexuales/Personas heterosexuales")
 
         player.iat1_guess_correct = (player.iat1_self_assessment == expected_iat1)
         player.iat2_guess_correct = (player.iat2_self_assessment == expected_iat2)
 
+        # Validación de los rangos morales para IAT 1 y IAT 2
         iat1_moral_range = (
                 player.dscore1 >= player.iat1_lower_limit and
                 player.dscore1 <= player.iat1_upper_limit
         )
+
         iat2_moral_range = (
                 player.dscore2 >= player.iat2_lower_limit and
                 player.dscore2 <= player.iat2_upper_limit
         )
 
-        # asignaciones de las variables.
+        # Validación de los rangos para IAT 1 y IAT 2 en el rango izquierdo
+        iat1_moral_range_left = (
+                player.dscore1 < player.iat1_lower_limit
+        )
+
+        iat2_moral_range_left = (
+                player.dscore2 < player.iat2_lower_limit
+        )
+
+        # Validación de los rangos para IAT 1 y IAT 2 en el rango derecho
+        iat1_moral_range_right = (
+                player.dscore1 > player.iat1_upper_limit
+        )
+
+        iat2_moral_range_right = (
+                player.dscore2 > player.iat2_upper_limit
+        )
+
+        # Asignación de las variables al jugador
         player.iat1_moral_range = iat1_moral_range
         player.iat2_moral_range = iat2_moral_range
+        player.iat1_moral_range_left = iat1_moral_range_left
+        player.iat2_moral_range_left = iat2_moral_range_left
+        player.iat1_moral_range_right = iat1_moral_range_right
+        player.iat2_moral_range_right = iat2_moral_range_right
 
-        # Imprimir en consola las asociaciones correctas y las respuestas del usuario
-        # print("ahora, test del programa:")
-        # print("Asociación IAT1 (gato/perro) esperada:", expected_iat1)
-        # print("Asociación IAT1 (gato/perro) ingresada por el usuario:", player.iat1_self_assessment)
-        # print("Asociación IAT2 (blanco/negro) esperada:", expected_iat2)
-        # print("Asociación IAT2 (blanco/negro) ingresada por el usuario:", player.iat2_self_assessment)
-        #
-        # print("Resultado de la adivinanza IAT1 (gato/perro):", player.iat1_guess_correct)
-        # print("Resultado de la adivinanza IAT2 (blanco/negro):", player.iat2_guess_correct)
-        #
-        # print("¿el IAT negro blanco está dentro del rango moral del jugador?", player.iat2_moral_range)
-        # print("¿el IAT gato perro está dentro del rango moral del jugador?", player.iat1_moral_range)
+        # Configuración del logger
+        logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+        # Registrar las asociaciones correctas y las respuestas del usuario
+        logging.info("Asociación IAT1 (Personas obesas/Personas delgadas) esperada: %s", expected_iat1)
+        logging.info("Asociación IAT1 (Personas obesas/Personas delgadas) ingresada por el usuario: %s",
+                     player.iat1_self_assessment)
+        logging.info("Asociación IAT2 (Personas homosexuales/Personas heterosexuales) esperada: %s", expected_iat2)
+        logging.info("Asociación IAT2 (Personas homosexuales/Personas heterosexuales) ingresada por el usuario: %s",
+                     player.iat2_self_assessment)
+
+        logging.info("Resultado de la adivinanza IAT1 (Personas obesas/Personas delgadas): %s",
+                     player.iat1_guess_correct)
+        logging.info("Resultado de la adivinanza IAT2 (Personas homosexuales/Personas heterosexuales): %s",
+                     player.iat2_guess_correct)
+
+        logging.info("¿El IAT Personas obesas/Personas delgadas está dentro del rango moral del jugador? %s",
+                     player.iat1_moral_range)
+        logging.info(
+            "¿El IAT Personas homosexuales/Personas heterosexuales está dentro del rango moral del jugador? %s",
+            player.iat2_moral_range)
+
+        # Logs adicionales para especificar si el IAT está a la izquierda, derecha o en el rango
+        if iat1_moral_range:
+            logging.info("El IAT1 (Personas obesas/Personas delgadas) está dentro del rango moral.")
+        elif iat1_moral_range_left:
+            logging.info("El IAT1 (Personas obesas/Personas delgadas) está a la izquierda del rango moral.")
+        else:
+            logging.info("El IAT1 (Personas obesas/Personas delgadas) está a la derecha del rango moral.")
+
+        if iat2_moral_range:
+            logging.info("El IAT2 (Personas homosexuales/Personas heterosexuales) está dentro del rango moral.")
+        elif iat2_moral_range_left:
+            logging.info("El IAT2 (Personas homosexuales/Personas heterosexuales) está a la izquierda del rango moral.")
+        else:
+            logging.info("El IAT2 (Personas homosexuales/Personas heterosexuales) está a la derecha del rango moral.")
+
 
     @staticmethod
     def error_message(player, values):
         if not values.get('iat1_self_assessment'):
-            return "Por favor, selecciona una opción para el IAT de gato y perro."
+            return "Por favor, selecciona una opción para el IAT de Personas obesas y Personas delgadas."
         if not values.get('iat2_self_assessment'):
-            return "Por favor, selecciona una opción para el IAT de blanco y negro."
+            return "Por favor, selecciona una opción para el IAT de Personas homosexuales y Personas heterosexuales."
         if values.get('iat2_lower_limit') is None:
-            return "Por favor, ingresa un límite inferior para el rango moralmente aceptable del IAT negro blanco."
+            return "Por favor, ingresa un límite inferior para el rango moralmente aceptable del IAT de Personas homosexuales y Personas heterosexuales."
         if values.get('iat2_upper_limit') is None:
-            return "Por favor, ingresa un límite superior para el rango moralmente aceptable del IAT negro blanco."
+            return "Por favor, ingresa un límite superior para el rango moralmente aceptable del IAT de Personas homosexuales y Personas heterosexuales."
         if values['iat2_lower_limit'] >= values['iat2_upper_limit']:
-            return "El límite inferior para el IAT negro blanco debe ser menor que el límite superior."
+            return "El límite inferior para el IAT de Personas homosexuales y Personas heterosexuales debe ser menor que el límite superior."
         if values.get('iat1_lower_limit') is None:
-            return "Por favor, ingresa un límite inferior para el rango moralmente aceptable del IAT blanco negro."
+            return "Por favor, ingresa un límite inferior para el rango moralmente aceptable del IAT de Personas obesas y Personas delgadas."
         if values.get('iat1_upper_limit') is None:
-            return "Por favor, ingresa un límite superior para el rango moralmente aceptable del IAT blanco negro."
+            return "Por favor, ingresa un límite superior para el rango moralmente aceptable del IAT de Personas obesas y Personas delgadas."
         if values['iat1_lower_limit'] >= values['iat1_upper_limit']:
-            return "El límite inferior para el IAT blanco negro debe ser menor que el límite superior."
+            return "El límite inferior para el IAT de Personas obesas y Personas delgadas debe ser menor que el límite superior."
 
 
 # si Mauricio dice que quiere que el recordatorio se haga entre cada pregunta, tengo que dejar de usar formfields y crer
@@ -1452,11 +1552,12 @@ class MoralDecisionPageCerteza(Page):
     form_model = 'player'
     form_fields = [
         'iat1_probability',
-        'iat1_probability_out_of_range',
         'iat2_probability',
-        'iat2_probability_out_of_range'
+        'iat1_probability_left',
+        'iat2_probability_left',
+        'iat1_probability_right',
+        'iat2_probability_right',
     ]
-
     # aquí puedo considerar agregar validaciones al formulario para que el usuario no pueda agregar puntuaciones muy pequeñas al programa, con muchos números.
 
     @staticmethod
@@ -1465,12 +1566,30 @@ class MoralDecisionPageCerteza(Page):
 
     @staticmethod
     def vars_for_template(player):
+        iat1_moral_range = player.dscore1 >= player.iat1_lower_limit and player.dscore1 <= player.iat1_upper_limit
+        iat2_moral_range = player.dscore2 >= player.iat2_lower_limit and player.dscore2 <= player.iat2_upper_limit
+
         return {
+            'iat1_moral_range': iat1_moral_range,
+            'iat2_moral_range': iat2_moral_range,
             'iat1_lower_limit': player.iat1_lower_limit,
             'iat1_upper_limit': player.iat1_upper_limit,
             'iat2_lower_limit': player.iat2_lower_limit,
             'iat2_upper_limit': player.iat2_upper_limit,
         }
+
+    @staticmethod
+    def error_message(player, values):
+        # Validar las probabilidades (0-100) y decimales
+        for field in ['iat1_probability', 'iat1_probability_out_of_range', 'iat2_probability',
+                      'iat2_probability_out_of_range']:
+            value = values.get(field)
+            if value is not None:
+                if value < 0 or value > 100:
+                    return f"El valor de {field} debe estar entre 0 y 100."
+                elif len(str(value).split('.')[-1]) > 2:
+                    return f"El valor de {field} no puede tener más de dos decimales."
+        return None
 
 
 # queda por introducir la función que propuse para esta clase, está en esta página: https://chatgpt.com/g/g-p-6770700264fc81918f62555c338c6f02-literature-review-iat/c/67a0f18e-087c-800c-966d-f4186e249d2e?model=o3-mini-high
@@ -1490,12 +1609,6 @@ class DictatorIntroduction(Page):
         )
 
 
-# entonces, en la pagina anterior estoy calculando los dscores de los jugadores, hacerlos
-# en esta sección me permite que pueda acceder a estos valores dentro de las rondas.
-
-# una propuesta para que aparezca con 80% de probabilidad está en el siguiente chat: https://chatgpt.com/g/g-p-6770700264fc81918f62555c338c6f02-literature-review-iat/c/67a3c2bd-eff0-800c-a2c7-2c3614ae93a7
-
-# hace falta probar este caso, donde hago pruebas con la página que propuse para esta clase, el link es: https://chatgpt.com/g/g-p-6770700264fc81918f62555c338c6f02-literature-review-iat/c/67a64686-ecc0-800c-ac14-13e5f56b038e?model=o3-mini
 class DictatorOffer(Page):
     """
     Página donde el jugador decide cuánto mantener y cuánto asignar a la categoría.
@@ -1524,98 +1637,82 @@ class DictatorOffer(Page):
         part_vars = player.participant.vars
 
         # Para IAT1: moral_range y probabilidades
-        if 'iat1_moral_range' not in part_vars:
-            part_vars['iat1_moral_range'] = player.field_maybe_none("iat1_moral_range")
-        iat1_moral_range = part_vars['iat1_moral_range']
-
-        if 'iat1_probability' not in part_vars:
-            part_vars['iat1_probability'] = player.field_maybe_none("iat1_probability")
-        iat1_probability = part_vars['iat1_probability']
-
-        if 'iat1_probability_out_of_range' not in part_vars:
-            part_vars['iat1_probability_out_of_range'] = player.field_maybe_none("iat1_probability_out_of_range")
-        iat1_probability_out_of_range = part_vars['iat1_probability_out_of_range']
+        iat1_moral_range = part_vars.get('iat1_moral_range', player.field_maybe_none("iat1_moral_range"))
+        iat1_probability = part_vars.get('iat1_probability', player.field_maybe_none("iat1_probability"))
+        iat1_probability_left = part_vars.get('iat1_probability_left', player.field_maybe_none("iat1_probability_left"))
+        iat1_probability_right = part_vars.get('iat1_probability_right', player.field_maybe_none("iat1_probability_right"))
 
         # Para IAT2: moral_range y probabilidades
-        if 'iat2_moral_range' not in part_vars:
-            part_vars['iat2_moral_range'] = player.field_maybe_none("iat2_moral_range")
-        iat2_moral_range = part_vars['iat2_moral_range']
+        iat2_moral_range = part_vars.get('iat2_moral_range', player.field_maybe_none("iat2_moral_range"))
+        iat2_probability = part_vars.get('iat2_probability', player.field_maybe_none("iat2_probability"))
+        iat2_probability_left = part_vars.get('iat2_probability_left', player.field_maybe_none("iat2_probability_left"))
+        iat2_probability_right = part_vars.get('iat2_probability_right', player.field_maybe_none("iat2_probability_right"))
 
-        if 'iat2_probability' not in part_vars:
-            part_vars['iat2_probability'] = player.field_maybe_none("iat2_probability")
-        iat2_probability = part_vars['iat2_probability']
+        # Imprimir los valores de las variables obtenidas
+        print(f"DEBUG: iat1_moral_range: {iat1_moral_range}, iat1_probability: {iat1_probability}, "
+              f"iat1_probability_left: {iat1_probability_left}, iat1_probability_right: {iat1_probability_right}")
+        print(f"DEBUG: iat2_moral_range: {iat2_moral_range}, iat2_probability: {iat2_probability}, "
+              f"iat2_probability_left: {iat2_probability_left}, iat2_probability_right: {iat2_probability_right}")
 
-        if 'iat2_probability_out_of_range' not in part_vars:
-            part_vars['iat2_probability_out_of_range'] = player.field_maybe_none("iat2_probability_out_of_range")
-        iat2_probability_out_of_range = part_vars['iat2_probability_out_of_range']
-
-        # Lógica para categorías 'perro' o 'gato'
-        if original_category in ['perro', 'gato']:
-            substitute_label = "animal"
+        # Lógica para categorías 'perro' o 'gato' (Personas obesas/Personas delgadas)
+        if original_category in ['Personas delgadas', 'Personas obesas']:
+            substitute_label = "Personas"
             if iat1_moral_range is None:
                 threshold = 0.8
-                debug_msg = ("DEBUG: iat1_moral_range es None. Probabilidad ingresada: None. "
-                             "Usando probabilidad por defecto del 80%.")
-            elif iat1_moral_range is True:
+                print("DEBUG: iat1_moral_range es None. Probabilidad ingresada: None. Usando probabilidad por defecto del 80%.")
+            elif iat1_moral_range:  # iat1_moral_range es True
                 if iat1_probability is None:
                     threshold = 0.8
-                    debug_msg = (
-                        "DEBUG: iat1_moral_range True, pero iat1_probability en blanco. Probabilidad ingresada: None. "
-                        "Usando probabilidad por defecto del 80%.")
+                    print("DEBUG: iat1_moral_range True, pero iat1_probability en Personas obesas es None. Usando probabilidad por defecto del 80%.")
                 else:
                     threshold = iat1_probability / 100.0
-                    debug_msg = f"DEBUG: iat1_moral_range True. Probabilidad ingresada: {iat1_probability}%. Usando iat1_probability."
+                    print(f"DEBUG: iat1_moral_range True. Probabilidad ingresada: {iat1_probability}%. Usando iat1_probability.")
             else:  # iat1_moral_range es False
-                if iat1_probability_out_of_range is None:
+                if iat1_probability_left is None:
                     threshold = 0.2
-                    debug_msg = (
-                        "DEBUG: iat1_moral_range False, pero iat1_probability_out_of_range en blanco. Probabilidad ingresada: None. "
-                        "Usando probabilidad por defecto del 20%.")
+                    print("DEBUG: iat1_moral_range False, pero iat1_probability_left en Personas obesas es None. Usando probabilidad por defecto del 20%.")
                 else:
-                    threshold = iat1_probability_out_of_range / 100.0
-                    debug_msg = f"DEBUG: iat1_moral_range False. Probabilidad ingresada: {iat1_probability_out_of_range}%. Usando iat1_probability_out_of_range."
+                    threshold = iat1_probability_left / 100.0
+                    print(f"DEBUG: iat1_moral_range False. Probabilidad ingresada: {iat1_probability_left}%. Usando iat1_probability_left.")
+
             rand_val = random.random()
+            print(f"DEBUG: Generando valor aleatorio para IAT1: {rand_val:.4f}")
             if rand_val < threshold:
                 display_label = explicit_label
+                print(f"DEBUG: Se muestra la etiqueta explícita: {explicit_label}")
             else:
                 display_label = substitute_label
-            # print(f"{debug_msg} Recordatorio: Se define el threshold como {threshold:.2f} "
-            #       f"(valor mínimo para elegir la etiqueta explícita). Valor aleatorio generado: {rand_val:.2f}. "
-            #       f"Resultado: {display_label}")
+                print(f"DEBUG: Se muestra la etiqueta sustituida: {substitute_label}")
 
-        # Lógica para categorías 'blanco' o 'negro'
-        elif original_category in ['blanco', 'negro']:
-            substitute_label = "persona"
+        # Lógica para categorías 'blanco' o 'negro' (Personas homosexuales/Personas heterosexuales)
+        elif original_category in ['Personas homosexuales', 'Personas heterosexuales']:
+            substitute_label = "Personas"
             if iat2_moral_range is None:
                 threshold = 0.8
-                debug_msg = ("DEBUG: iat2_moral_range es None. Probabilidad ingresada: None. "
-                             "Usando probabilidad por defecto del 80%.")
-            elif iat2_moral_range is True:
+                print("DEBUG: iat2_moral_range es None. Probabilidad ingresada: None. Usando probabilidad por defecto del 80%.")
+            elif iat2_moral_range:  # iat2_moral_range es True
                 if iat2_probability is None:
                     threshold = 0.8
-                    debug_msg = (
-                        "DEBUG: iat2_moral_range True, pero iat2_probability en blanco. Probabilidad ingresada: None. "
-                        "Usando probabilidad por defecto del 80%.")
+                    print("DEBUG: iat2_moral_range True, pero iat2_probability en Personas homosexuales es None. Usando probabilidad por defecto del 80%.")
                 else:
                     threshold = iat2_probability / 100.0
-                    debug_msg = f"DEBUG: iat2_moral_range True. Probabilidad ingresada: {iat2_probability}%. Usando iat2_probability."
+                    print(f"DEBUG: iat2_moral_range True. Probabilidad ingresada: {iat2_probability}%. Usando iat2_probability.")
             else:  # iat2_moral_range es False
-                if iat2_probability_out_of_range is None:
+                if iat2_probability_left is None:
                     threshold = 0.2
-                    debug_msg = (
-                        "DEBUG: iat2_moral_range False, pero iat2_probability_out_of_range en blanco. Probabilidad ingresada: None. "
-                        "Usando probabilidad por defecto del 20%.")
+                    print("DEBUG: iat2_moral_range False, pero iat2_probability_left en Personas homosexuales es None. Usando probabilidad por defecto del 20%.")
                 else:
-                    threshold = iat2_probability_out_of_range / 100.0
-                    debug_msg = f"DEBUG: iat2_moral_range False. Probabilidad ingresada: {iat2_probability_out_of_range}%. Usando iat2_probability_out_of_range."
+                    threshold = iat2_probability_left / 100.0
+                    print(f"DEBUG: iat2_moral_range False. Probabilidad ingresada: {iat2_probability_left}%. Usando iat2_probability_left.")
+
             rand_val = random.random()
+            print(f"DEBUG: Generando valor aleatorio para IAT2: {rand_val:.4f}")
             if rand_val < threshold:
                 display_label = explicit_label
+                print(f"DEBUG: Se muestra la etiqueta explícita: {explicit_label}")
             else:
                 display_label = substitute_label
-            # print(f"{debug_msg} Recordatorio: Se define el threshold como {threshold:.2f} "
-            #       f"(valor mínimo para elegir la etiqueta explícita). Valor aleatorio generado: {rand_val:.2f}. "
-            #       f"Resultado: {display_label}")
+                print(f"DEBUG: Se muestra la etiqueta sustituida: {substitute_label}")
 
         player.participant.vars[f'visible_category_round_{player.round_number}'] = display_label
         return dict(
